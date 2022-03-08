@@ -19,9 +19,21 @@ class NavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: const [
-              Text("Home"),
+              Text ('Home',
+                style: TextStyle(
+                    color: Color.fromRGBO(195, 166, 96, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  )
+              ),
               SizedBox(width: 60,),
-              Text("Job Listings")
+              Text('Job Listings',
+                style: TextStyle(
+                    color: Color.fromRGBO(195, 166, 96, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  )
+              )
             ],
           ),
           Column(
