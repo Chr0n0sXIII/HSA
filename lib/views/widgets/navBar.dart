@@ -14,6 +14,31 @@ class NavBar extends StatelessWidget {
             height: 80,
             width: 150,
             child: Image.asset('assets/app_logo.png'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Text("Home"),
+              SizedBox(width: 60,),
+              Text("Job Listings")
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.asset(''),
+              ),
+              const Text('Username',
+                style: TextStyle(
+                  color: Color.fromRGBO(195, 166, 96, 1),
+                  fontWeight: FontWeight.bold,
+                )
+              ),
+            ],
           )
         ]
       ),
