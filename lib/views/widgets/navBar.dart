@@ -15,42 +15,48 @@ class NavBar extends StatelessWidget {
             width: 150,
             child: Image.asset('assets/app_logo.png'),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              Text ('Home',
-                style: TextStyle(
-                    color: Color.fromRGBO(195, 166, 96, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  )
-              ),
-              SizedBox(width: 60,),
-              Text('Job Listings',
-                style: TextStyle(
-                    color: Color.fromRGBO(195, 166, 96, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  )
-              )
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset(''),
-              ),
-              const Text('Username',
-                style: TextStyle(
-                  color: Color.fromRGBO(195, 166, 96, 1),
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text ('Home',
+                  style: TextStyle(
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    )
+                ),
+                SizedBox(width: 60,),
+                Text('Job Listings',
+                  style: TextStyle(
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    )
                 )
-              ),
-            ],
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset(''),
+                ),
+                const Text('Username',
+                  style: TextStyle(
+                    color: Color.fromRGBO(195, 166, 96, 1),
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+              ],
+            ),
           )
         ]
       ),
