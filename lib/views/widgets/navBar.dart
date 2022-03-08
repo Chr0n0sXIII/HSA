@@ -47,7 +47,7 @@ class NavBar extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   width: 50,
-                  child: Image.asset(''),
+                  child: Image.asset('assets/profile_picture_place_holder.png'),
                 ),
                 const Text('Username',
                   style: TextStyle(
