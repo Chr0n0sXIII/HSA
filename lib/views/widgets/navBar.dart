@@ -7,7 +7,7 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      color: Color.fromRGBO(4, 31, 81, 1),
+      color: const Color.fromRGBO(4, 31, 81, 1),
       child: Row(
         children: [
           SizedBox(
