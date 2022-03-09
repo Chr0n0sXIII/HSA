@@ -7,26 +7,37 @@ class loginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: Row(
-      children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(
-            height: 1080,
-            width: 900,
-            child: LoginBannerWidget(),
-          ),
-          SizedBox(
-            height: 1080,
-            width: 600,
-            child: Column(
-              children: [
-                LoginWidget(),
-              ],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Flexible(
+                flex: 1,
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 1350,
+                  width: 950,
+                  child: LoginBannerWidget(),
+                ),
+              )
+            ]),
+            SizedBox(
+              width: 47,
             ),
-          ),
-        ]),
-      ],
-    ));
+            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: SizedBox(
+                  height: 750,
+                  width: 480,
+                  child: LoginWidget(),
+                ),
+              ),
+            ]),
+          ],
+        ));
     // TODO: implement build
     throw UnimplementedError();
   }
