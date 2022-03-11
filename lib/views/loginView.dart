@@ -17,18 +17,17 @@ class loginView extends StatelessWidget {
                 fit: FlexFit.loose,
                 child: SizedBox(
                   height: 1350,
-                  width: 950,
+                  width: 850,
                   child: LoginBannerWidget(),
                 ),
               )
             ]),
             SizedBox(
-              width: 47,
+              width: 60,
             ),
-            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Flexible(
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Expanded(
                 flex: 1,
-                fit: FlexFit.tight,
                 child: SizedBox(
                   height: 750,
                   width: 480,
