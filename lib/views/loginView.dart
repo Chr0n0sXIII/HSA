@@ -4,6 +4,8 @@ import 'package:home_service_app/views/widgets/loginBannerWidget.dart';
 import 'package:home_service_app/views/widgets/loginWidget.dart';
 
 class loginView extends StatelessWidget {
+  const loginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
