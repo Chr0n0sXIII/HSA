@@ -305,8 +305,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       borderRadius: BorderRadius.all(Radius.circular(25)),
                     ),
                     child: TextField(
-                      obscureText: false,
-                      enableSuggestions: true,
+                      obscureText: true,
+                      enableSuggestions: false,
                       autocorrect: false,
                       style: TextStyle(fontSize: 30),
                       decoration: new InputDecoration.collapsed(hintText: ""),
@@ -348,14 +348,22 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   getTextInputData() {
     setState(() {
-      email = emailController.text;
+      widget.email = emailController.text;
       password = passController.text;
+      Fname = fnameController.text;
+      Lname = lnameController.text;
+      conPass = conpassController.text;
     });
   }
 
   setlogin() {
     setState(() {
       isLogin = true;
+      widget.email = "";
+      widget.password = "";
+      widget.Fname = "";
+      widget.Lname = "";
+      widget.conPass = "";
     });
   }
 
@@ -364,4 +372,6 @@ class _LoginWidgetState extends State<LoginWidget> {
       isLogin = false;
     });
   }
+
+  authCredentials() {}
 }
