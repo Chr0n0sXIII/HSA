@@ -8,7 +8,9 @@ class Footer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       height: 100,
-      color: Color.fromRGBO(51, 51, 51, 1),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(51, 51, 51, 1),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
       child: Row(
         children: [
           Expanded(
