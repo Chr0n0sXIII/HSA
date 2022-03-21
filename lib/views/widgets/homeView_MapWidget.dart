@@ -13,7 +13,7 @@ class _MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     String jobDesc = "No Current Job Taken";
     return Container(
-      height: 600,
+      height: 580,
       width: 450,
       decoration: BoxDecoration(
         color: Colors.white,
