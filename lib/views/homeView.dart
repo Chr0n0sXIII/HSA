@@ -15,28 +15,26 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     if (Responsive.isDesktop(context)) {
       return Scaffold(
         backgroundColor: Color.fromRGBO(229, 229, 229, 1),
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TopBar(),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MapView(),
-                    TileCluster()
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MapView(),
+                  TileCluster()
+                ],
               ),
               Footer()
             ],
           ),
-        )
+        ),
       );
     } 
     return Scaffold(
