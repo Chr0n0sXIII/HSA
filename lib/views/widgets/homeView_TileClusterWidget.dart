@@ -137,7 +137,51 @@ class CompleteJobTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
+        height: 150,
+      width: 215,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(5, 190, 231, 1),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(7.0,8.0)
+          )
+        ]
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Completed',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 34,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(
+              Icons.check_box,
+              color: Colors.white,
+              size: 50,
+              ),
+              Text(
+                'Jobs',
+                style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 34,
+            ),
+          ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -148,7 +192,39 @@ class AddNewJobTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
+      height: 150,
+      width: 215,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(7, 223, 81, 1),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(7.0,8.0)
+          )
+        ]
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.add_box_rounded,
+            color: Colors.white,
+            size: 50,
+          ),
+          Text(
+            'Add  a  New\n Job Listing',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 34,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
