@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/homeView_TileClusterWidget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
+import 'package:home_service_app/views/responsive.dart';
+import 'package:home_service_app/views/widgets/footer_Widget.dart';
+import 'package:home_service_app/views/widgets/homeView_MapWidget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({ Key? key }) : super(key: key);
@@ -11,12 +15,42 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return Scaffold(
+        backgroundColor: Color.fromRGBO(229, 229, 229, 1),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TopBar(),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MapView(),
+                    TileCluster()
+                  ],
+                ),
+              ),
+              Footer()
+            ],
+          ),
+        )
+      );
+    } 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(229, 229, 229, 1),
-      body: Column(
-        children: [
-          NavBar()
-        ],),
-    );
+        backgroundColor: Color.fromRGBO(229, 229, 229, 1),
+        drawer: SideNav(),
+        appBar: AppBar(backgroundColor: Color.fromRGBO(4, 31, 81, 1),),
+        body: 
+        SafeArea(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            ],
+          ),
+        ),
+      );
   }
 }
