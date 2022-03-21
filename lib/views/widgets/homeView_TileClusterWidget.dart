@@ -68,7 +68,7 @@ class _UserTileState extends State<UserTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RatingBar.builder(
-                  initialRating: 3,
+                  initialRating: 4,
                   minRating: 1,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
@@ -76,7 +76,7 @@ class _UserTileState extends State<UserTile> {
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, _) => Icon(
                     Icons.star,
-                    color: Colors.amber,
+                    color: Color.fromRGBO(195, 166, 96, 1),
                   ),
                   onRatingUpdate: (rating) {
                     print(rating);
