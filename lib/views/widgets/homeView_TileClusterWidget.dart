@@ -42,7 +42,7 @@ class _UserTileState extends State<UserTile> {
     return Padding(
       padding: EdgeInsets.all(5),
       child: Container(
-        height: 140,
+        height: 120,
         width: 450,
         decoration: BoxDecoration(
             color: Colors.white,
