@@ -88,7 +88,7 @@ class _UserTileState extends State<UserTile> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
                 Text(
