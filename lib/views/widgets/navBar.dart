@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class NavBar extends StatelessWidget {
-  const NavBar({Key? key}) : super(key: key);
+class Dropdown extends StatefulWidget {
+  const Dropdown({Key? key}) : super(key: key);
+
+  @override
+  State<Dropdown> createState() => _DropdownState();
+}
+
+class TopBar extends StatelessWidget {
+  const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +64,6 @@ class NavBar extends StatelessWidget {
   }
 }
 
-class Dropdown extends StatefulWidget {
-  const Dropdown({Key? key}) : super(key: key);
-
-  @override
-  State<Dropdown> createState() => _DropdownState();
-}
-
 class _DropdownState extends State<Dropdown> {
   final items = ['Settings', 'Logout'];
   String username = "Username";
@@ -75,7 +75,8 @@ class _DropdownState extends State<Dropdown> {
       iconSize: 32,
       underline: const SizedBox(),
       iconEnabledColor: const Color.fromRGBO(195, 166, 96, 1),
-      hint: Text(username, style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
+      hint: Text(username,
+          style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
       items: [
         DropdownMenuItem(
           child: Text(items[0]),
@@ -90,6 +91,60 @@ class _DropdownState extends State<Dropdown> {
         )
       ],
       onChanged: (value) => setState(() => dropdownValue = dropdownValue),
+    );
+  }
+}
+
+class SideNav extends StatelessWidget {
+  const SideNav({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: Color.fromRGBO(4, 31, 81, 1)),
+            child: Image.asset("assets/app_logo.png"),
+          ),
+           DrawerItem(
+            name: "Home",
+            onClick: () {},
+          ),
+           DrawerItem(
+            name: "Job Listings",
+            onClick: () {},
+          ),
+          DrawerItem(
+            name: "Settings",
+            onClick: () {},
+          ),
+          DrawerItem(
+            name: "Logout",
+            onClick: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  const DrawerItem({Key? key, required this.name, required this.onClick})
+      : super(key: key);
+
+  final String name;
+  final VoidCallback onClick;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: onClick,
+      horizontalTitleGap: 0.0,
+      title: Text(
+        name,
+        style: const TextStyle(color: Colors.black),
+      ),
     );
   }
 }
