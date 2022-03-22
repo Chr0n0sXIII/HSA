@@ -15,7 +15,7 @@ class loginView extends StatelessWidget {
           children: [
             Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Flexible(
-                flex: 1,
+                flex: 2,
                 fit: FlexFit.loose,
                 child: SizedBox(
                   height: 1350,

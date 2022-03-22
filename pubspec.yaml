@@ -61,6 +61,7 @@ flutter:
   assets:
     - app_logo.png
     - profile_picture_place_holder.png
+    - featured-image-cheap-landscaping.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
