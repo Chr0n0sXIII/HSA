@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/userProfileView.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown({Key? key}) : super(key: key);
@@ -93,7 +94,12 @@ class _DropdownState extends State<Dropdown> {
           value: items[1],
         )
       ],
-      onChanged: (value) => setState(() => dropdownValue = dropdownValue),
+      onChanged: (value) {
+        if (value == 'Settings') {
+          Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const UserProfileView()));
+        }
+      }
     );
   }
 }
@@ -110,11 +116,11 @@ class SideNav extends StatelessWidget {
             decoration: BoxDecoration(color: Color.fromRGBO(4, 31, 81, 1)),
             child: Image.asset("assets/app_logo.png"),
           ),
-           DrawerItem(
+          DrawerItem(
             name: "Home",
             onClick: () {},
           ),
-           DrawerItem(
+          DrawerItem(
             name: "Job Listings",
             onClick: () {},
           ),
