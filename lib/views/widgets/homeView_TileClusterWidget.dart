@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:home_service_app/views/userProfileView.dart';
 
 class TileCluster extends StatefulWidget {
   const TileCluster({Key? key}) : super(key: key);
@@ -39,69 +40,77 @@ class _UserTileState extends State<UserTile> {
   String user_desc = 'User Description about me';
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Container(
-        height: 120,
-        width: 450,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]),
-        child: Row(
-          children: [
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset('assets/profile_picture_place_holder.png',
-              scale: 0.65
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
+      onTap: (){
+        Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const UserProfileView()));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          height: 120,
+          width: 450,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
+          child: Row(
+            children: [
+              SizedBox(
+                height: 100,
+                width: 100,
+                child: Image.asset('assets/profile_picture_place_holder.png',
+                scale: 0.65
+                ),
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RatingBar.builder(
-                  initialRating: 4,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Color.fromRGBO(195, 166, 96, 1),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RatingBar.builder(
+                    initialRating: 4,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
                   ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                ),
-                Text(
-                  user_Skils,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                  Text(
+                    user_Skils,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                Text(
-                  user_desc,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14
+                  Text(
+                    user_desc,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
