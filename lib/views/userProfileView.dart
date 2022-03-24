@@ -2,6 +2,7 @@ import 'package:home_service_app/views/responsive.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 import 'package:home_service_app/views/widgets/userProfile_FormWidget.dart';
 
 class UserProfileView extends StatefulWidget {
@@ -22,6 +23,7 @@ class _UserProfileViewState extends State<UserProfileView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TopBar(),
+              PageTitle("User Profile"),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
