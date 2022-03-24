@@ -12,7 +12,7 @@ class _PageTitleState extends State<PageTitle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.fromLTRB(250, 25, 250, 25),
       child: Container(
         height: 50,
         decoration: BoxDecoration(
