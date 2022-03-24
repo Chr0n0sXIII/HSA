@@ -50,10 +50,13 @@ class TopBar extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset('assets/profile_picture_place_holder.png'),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset('assets/profile_picture_place_holder.png'),
+                ),
               ),
               const Dropdown()
             ],
