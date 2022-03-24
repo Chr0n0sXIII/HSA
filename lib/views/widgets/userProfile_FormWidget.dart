@@ -130,7 +130,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: const Offset(7.0, 8.0))
+                        offset: const Offset(1.0, 1.0))
                   ]),
                   child: TextField(
                     maxLines: 4,
