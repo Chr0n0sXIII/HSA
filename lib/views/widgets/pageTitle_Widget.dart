@@ -15,7 +15,7 @@ class _PageTitleState extends State<PageTitle> {
       padding: const EdgeInsets.fromLTRB(250, 25, 250, 25),
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color.fromRGBO(195, 166, 96, 1),
           borderRadius: BorderRadius.all(Radius.circular(30))
         ),
@@ -24,7 +24,7 @@ class _PageTitleState extends State<PageTitle> {
           children: [
             Text(
               widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
                 fontWeight: FontWeight.bold
