@@ -24,12 +24,15 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TopBar(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MapView(),
-                  TileCluster()
-                ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MapView(),
+                    TileCluster()
+                  ],
+                ),
               ),
               Footer()
             ],
