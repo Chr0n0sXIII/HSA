@@ -1,7 +1,7 @@
 import 'dart:js_util';
 
 import 'package:flutter/material.dart';
-import 'package:home_service_app/views/widgets/jobData.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 
 class JobListingCard extends StatelessWidget {
   JobData? jobData;

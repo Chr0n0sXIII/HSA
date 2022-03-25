@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:home_service_app/views/widgets/jobData.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:flutter/material.dart';
 
 class JobDataUtil {

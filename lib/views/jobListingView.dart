@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:home_service_app/views/widgets/jobData.dart';
-import 'package:home_service_app/views/widgets/jobDataUtil.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/views/widgets/jobListing_Card.dart';
 import 'package:home_service_app/views/widgets/jobListing_MapWidget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
