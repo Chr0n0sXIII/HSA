@@ -81,6 +81,19 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: (){}, 
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Request Location',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ),
+              )
             ],
           )
         ],
