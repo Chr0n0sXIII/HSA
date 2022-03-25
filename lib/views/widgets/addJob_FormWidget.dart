@@ -26,6 +26,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         children: [
           Column(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 400,
@@ -65,7 +66,21 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                   selectedItem = item;
                   }
                 )
-              )
+              ),
+              Container(
+                width: 200,
+                child: TextField(
+                  maxLength: 10,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      label: Text("Price"),
+                      errorText: Job_Title_Error,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
+                ),
+              ),
             ],
           )
         ],
