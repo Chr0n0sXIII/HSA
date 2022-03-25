@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class Dropdown extends StatefulWidget {
@@ -27,13 +28,20 @@ class TopBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              Text('Home',
-                  style: TextStyle(
-                    color: Color.fromRGBO(195, 166, 96, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  )),
+            children:  [
+              InkWell(
+                onTap: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomeView()));
+                },
+                hoverColor: Colors.transparent,
+                child: Text('Home',
+                    style: TextStyle(
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    )),
+              ),
               SizedBox(
                 width: 60,
               ),
