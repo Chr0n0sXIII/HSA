@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+
+class Add_Job_Form extends StatefulWidget {
+  const Add_Job_Form({ Key? key }) : super(key: key);
+
+  @override
+  State<Add_Job_Form> createState() => _Add_Job_FormState();
+}
+
+class _Add_Job_FormState extends State<Add_Job_Form> {
+  String? Job_Title_Error;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Column(),
+          Column(
+            children: [
+              Container(
+                width: 400,
+                child: TextField(
+                  maxLength: 40,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled:  true,
+                    label: Text("Job Title"),
+                    errorText: Job_Title_Error,
+                    border: OutlineInputBorder(
+                      borderRadius: 
+                        BorderRadius.all(Radius.circular(5))
+                    )
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
