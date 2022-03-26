@@ -10,7 +10,7 @@ class jobDetailsView extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Column(children: [
-          NavBar(),
+          TopBar(),
           Row(
             children: [
               jobDetails_ImageWidget(image: [

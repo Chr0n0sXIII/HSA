@@ -15,7 +15,7 @@ class jobListingView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          NavBar(),
+          TopBar(),
           Expanded(
             flex: 11,
             child: Padding(

@@ -29,7 +29,7 @@ class AcceptWorkerView extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
         body: SingleChildScrollView(
             child: Column(children: [
-          const NavBar(),
+          const TopBar(),
           Row(
             children: [
               Column(
