@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:home_service_app/views/loginView.dart';
+import 'package:home_service_app/views/views.dart';
+import 'package:home_service_app/views/widgets/acceptWorkers_ScrollWidget.dart';
 
 void main() {
-  runApp(
-    const MyApp(),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: loginView(),
-    );
+    return MaterialApp(home: AcceptWorkerView());
   }
 }
