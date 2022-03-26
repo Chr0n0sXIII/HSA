@@ -43,14 +43,13 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
         )
       ],
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 
   _onpressedleft() {
     widget.index--;
     if (widget.index == -1) {
       widget.index = widget.image!.length;
+      widget.createState();
     }
   }
 
