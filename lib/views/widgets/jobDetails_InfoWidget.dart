@@ -30,28 +30,31 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     blurRadius: 5.0,
                     spreadRadius: 0)
               ]),
-          child: Column(
-            //job
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                //Title
-                widget.jdata.jobName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                //Description
-                widget.jdata.jobDescription,
-                style: const TextStyle(
-                    color: Color.fromRGBO(136, 134, 134, 1),
+          child: Expanded(
+            flex: 1,
+            child: Column(
+              //job
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  //Title
+                  widget.jdata.jobName,
+                  style: const TextStyle(
+                    color: Colors.black,
                     fontSize: 18,
-                    fontWeight: FontWeight.w700),
-              )
-            ],
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  //Description
+                  widget.jdata.jobDescription,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(136, 134, 134, 1),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
           ),
         )
       ]),
