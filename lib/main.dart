@@ -6,9 +6,9 @@ import 'package:home_service_app/views/views.dart';
 import 'package:home_service_app/views/jobListingView.dart';
 
 void main() {
-  runApp(DevicePreview(
-    builder: (context) => const MyApp(),
-  ));
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
