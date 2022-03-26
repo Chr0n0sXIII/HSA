@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/homeView.dart';
+import 'package:home_service_app/views/userProfileView.dart';
 
-class NavBar extends StatelessWidget {
-  const NavBar({Key? key}) : super(key: key);
+class Dropdown extends StatefulWidget {
+  const Dropdown({Key? key}) : super(key: key);
+
+  @override
+  State<Dropdown> createState() => _DropdownState();
+}
+
+class TopBar extends StatelessWidget {
+  const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +28,20 @@ class NavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              Text('Home',
-                  style: TextStyle(
-                    color: Color.fromRGBO(195, 166, 96, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  )),
+            children:  [
+              InkWell(
+                onTap: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomeView()));
+                },
+                hoverColor: Colors.transparent,
+                child: Text('Home',
+                    style: TextStyle(
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    )),
+              ),
               SizedBox(
                 width: 60,
               ),
@@ -43,10 +59,13 @@ class NavBar extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset('assets/profile_picture_place_holder.png'),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset('assets/profile_picture_place_holder.png'),
+                ),
               ),
               const Dropdown()
             ],
@@ -55,13 +74,6 @@ class NavBar extends StatelessWidget {
       ]),
     );
   }
-}
-
-class Dropdown extends StatefulWidget {
-  const Dropdown({Key? key}) : super(key: key);
-
-  @override
-  State<Dropdown> createState() => _DropdownState();
 }
 
 class _DropdownState extends State<Dropdown> {
@@ -75,7 +87,8 @@ class _DropdownState extends State<Dropdown> {
       iconSize: 32,
       underline: const SizedBox(),
       iconEnabledColor: const Color.fromRGBO(195, 166, 96, 1),
-      hint: Text(username, style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
+      hint: Text(username,
+          style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
       items: [
         DropdownMenuItem(
           child: Text(items[0]),
@@ -89,7 +102,66 @@ class _DropdownState extends State<Dropdown> {
           value: items[1],
         )
       ],
-      onChanged: (value) => setState(() => dropdownValue = dropdownValue),
+      onChanged: (value) {
+        if (value == 'Settings') {
+          Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const UserProfileView()));
+        }
+      }
+    );
+  }
+}
+
+class SideNav extends StatelessWidget {
+  const SideNav({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: Color.fromRGBO(4, 31, 81, 1)),
+            child: Image.asset("assets/app_logo.png"),
+          ),
+          DrawerItem(
+            name: "Home",
+            onClick: () {},
+          ),
+          DrawerItem(
+            name: "Job Listings",
+            onClick: () {},
+          ),
+          DrawerItem(
+            name: "Settings",
+            onClick: () {},
+          ),
+          DrawerItem(
+            name: "Logout",
+            onClick: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  const DrawerItem({Key? key, required this.name, required this.onClick})
+      : super(key: key);
+
+  final String name;
+  final VoidCallback onClick;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: onClick,
+      horizontalTitleGap: 0.0,
+      title: Text(
+        name,
+        style: const TextStyle(color: Colors.black),
+      ),
     );
   }
 }

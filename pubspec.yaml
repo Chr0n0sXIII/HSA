@@ -29,7 +29,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-   
+  device_preview: 1.0.0
+  flutter_rating_bar: 4.0.0
+  image_picker_web: ^2.1.1
+  carousel_slider: ^4.0.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -61,6 +65,7 @@ flutter:
   assets:
     - app_logo.png
     - profile_picture_place_holder.png
+    - featured-image-cheap-landscaping.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
