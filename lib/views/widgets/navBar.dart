@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_service_app/views/homeView.dart';
+import 'package:home_service_app/views/jobListingView.dart';
+import 'package:home_service_app/views/loginView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class Dropdown extends StatefulWidget {
@@ -28,11 +30,13 @@ class TopBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
-            children:  [
+            children: [
               InkWell(
-                onTap: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HomeView()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeView()));
                 },
                 hoverColor: Colors.transparent,
                 child: Text('Home',
@@ -45,12 +49,21 @@ class TopBar extends StatelessWidget {
               SizedBox(
                 width: 60,
               ),
-              Text('Job Listings',
-                  style: TextStyle(
-                    color: Color.fromRGBO(195, 166, 96, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  ))
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => jobListingView()));
+                },
+                hoverColor: Colors.transparent,
+                child: Text('Job Listings',
+                    style: TextStyle(
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    )),
+              )
             ],
           ),
         ),
@@ -83,32 +96,37 @@ class _DropdownState extends State<Dropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      elevation: 12,
-      iconSize: 32,
-      underline: const SizedBox(),
-      iconEnabledColor: const Color.fromRGBO(195, 166, 96, 1),
-      hint: Text(username,
-          style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
-      items: [
-        DropdownMenuItem(
-          child: Text(items[0]),
-          value: items[0],
-        ),
-        DropdownMenuItem(
-          child: Text(
-            items[1],
-            style: const TextStyle(color: Colors.red),
+        elevation: 12,
+        iconSize: 32,
+        underline: const SizedBox(),
+        iconEnabledColor: const Color.fromRGBO(195, 166, 96, 1),
+        hint: Text(username,
+            style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
+        items: [
+          DropdownMenuItem(
+            child: Text(items[0]),
+            value: items[0],
           ),
-          value: items[1],
-        )
-      ],
-      onChanged: (value) {
-        if (value == 'Settings') {
-          Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const UserProfileView()));
-        }
-      }
-    );
+          DropdownMenuItem(
+            child: Text(
+              items[1],
+              style: const TextStyle(color: Colors.red),
+            ),
+            value: items[1],
+          )
+        ],
+        onChanged: (value) {
+          if (value == 'Settings') {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UserProfileView()));
+          }
+          if (value == "Logout") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const loginView()));
+          }
+        });
   }
 }
 

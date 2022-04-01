@@ -45,7 +45,7 @@ class JobDataUtil {
       JobData(
           jobName: "Paint Walls",
           jobDescription:
-              " I have a large brick fence surrounding my house that needs a fresh coat of paint, Tools are provided",
+              " I have a large brick fence surrounding my house that needs a fresh coat of paint, Tools are provided.",
           jobLocation: "San Juan",
           jobPrice: "\$500",
           pin: Icon(
@@ -58,6 +58,18 @@ class JobDataUtil {
           jobName: "Clean Pool",
           jobDescription:
               "We haven't used the pool in a while so it's pretty dirty",
+          jobLocation: "Port of Spain",
+          jobPrice: "\$500",
+          pin: Icon(
+            Icons.pin_drop,
+            color: Colors.red,
+          ),
+          jobImage:
+              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+      JobData(
+          jobName: "Move Materials",
+          jobDescription:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac velit eget mauris vestibulum dictum. Nulla facilisi. Integer felis ipsum, gravida suscipit nisi sit amet, molestie hendrerit dui. Vivamus sodales lacus nec ligula luctus varius sit amet a odio. Ut scelerisque finibus nulla vitae blandit. Mauris condimentum, odio id consequat lacinia, dolor elit vestibulum arcu, a auctor lectus metus ut erat. Cras et urna non velit aliquam porttitor. Nullam placerat augue non fringilla ullamcorper. Proin auctor rutrum est, dictum ullamcorper leo consequat non. ",
           jobLocation: "Port of Spain",
           jobPrice: "\$500",
           pin: Icon(

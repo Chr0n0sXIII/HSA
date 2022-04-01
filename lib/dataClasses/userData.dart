@@ -6,7 +6,7 @@ class userData {
   String email;
   String about;
   String contacts;
-  List<String> skills;
+  String skills;
   var clientRating;
   var workerRating;
   Image pfp;

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/userCredentials.dart';
+import 'package:home_service_app/dataClasses/userCredentialsUtil.dart';
+import 'package:home_service_app/views/homeView.dart';
 
 class LoginWidget extends StatefulWidget {
   String email = "";
@@ -7,6 +10,9 @@ class LoginWidget extends StatefulWidget {
   String Lname = "";
   String conPass = "";
 
+  List<userCredentials> testData =
+      userCredentialUtil().TestData_UserCredentials();
+
   LoginWidget({Key? key}) : super(key: key);
 
   @override
@@ -14,18 +20,13 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  String email = "";
-  String password = "";
-  String Fname = "";
-  String Lname = "";
-  String conPass = "";
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final fnameController = TextEditingController();
   final lnameController = TextEditingController();
   final conpassController = TextEditingController();
   bool isLogin = true;
-
+  bool wrongcred = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -142,9 +143,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                       autocorrect: false,
                       style: TextStyle(fontSize: 30),
                       decoration: new InputDecoration.collapsed(hintText: ""),
+                      onSubmitted: (String value) {
+                        getTextInputData();
+                      },
                       controller: passController,
                     ),
                   ),
+                  if (wrongcred)
+                    Container(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 200,
+                        height: 25,
+                        child: Text(
+                          "Wrong Email or Password",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                              fontSize: 12),
+                        ),
+                      ),
+                    ),
                   Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.all(15.0),
@@ -282,7 +302,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 25),
                       decoration: new InputDecoration.collapsed(hintText: ""),
                       controller: passController,
                     ),
@@ -342,17 +362,25 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
       ],
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 
   getTextInputData() {
     setState(() {
       widget.email = emailController.text;
-      password = passController.text;
-      Fname = fnameController.text;
-      Lname = lnameController.text;
-      conPass = conpassController.text;
+      widget.password = passController.text;
+      widget.Fname = fnameController.text;
+      widget.Lname = lnameController.text;
+      widget.conPass = conpassController.text;
+      if (isLogin) {
+        if (authCredentials()) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomeView()));
+        } else {
+          setState(() {
+            wrongcred = true;
+          });
+        }
+      }
     });
   }
 
@@ -370,8 +398,21 @@ class _LoginWidgetState extends State<LoginWidget> {
   setSignup() {
     setState(() {
       isLogin = false;
+      widget.email = "";
+      widget.password = "";
+      widget.Fname = "";
+      widget.Lname = "";
+      widget.conPass = "";
     });
   }
 
-  authCredentials() {}
+  authCredentials() {
+    for (userCredentials u in widget.testData) {
+      if (u.uName == widget.email && u.Password == widget.password) {
+        wrongcred = false;
+        return true;
+      }
+    }
+    return false;
+  }
 }

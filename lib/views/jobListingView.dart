@@ -4,6 +4,7 @@ import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/views/widgets/jobListing_Card.dart';
 import 'package:home_service_app/views/widgets/jobListing_MapWidget.dart';
+import 'package:home_service_app/views/widgets/jobListing_SearchWidget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 
 class jobListingView extends StatelessWidget {
@@ -16,6 +17,7 @@ class jobListingView extends StatelessWidget {
       body: Column(
         children: [
           TopBar(),
+          jobListing_SearchWidget(),
           Expanded(
             flex: 11,
             child: Padding(

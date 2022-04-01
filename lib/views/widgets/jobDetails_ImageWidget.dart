@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,47 +17,25 @@ class jobDetails_ImageWidget extends StatefulWidget {
 class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 400,
-          height: 550,
-          child: widget.image![widget.index],
-        ),
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: _onpressedleft,
-              child: Icon(
-                Icons.arrow_left_sharp,
-                color: Colors.black,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: _onpressedright,
-              child: Icon(
-                Icons.arrow_right_sharp,
-                color: Colors.black,
-              ),
-            )
-          ],
-        )
-      ],
+    return Container(
+      width: 400,
+      color: Colors.grey[400],
+      child: CarouselSlider(
+          items: widget.image,
+          options: CarouselOptions(
+            height: 500,
+            aspectRatio: 16 / 9,
+            viewportFraction: 0.8,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            reverse: false,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 3),
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enlargeCenterPage: true,
+            scrollDirection: Axis.horizontal,
+          )),
     );
-  }
-
-  _onpressedleft() {
-    widget.index--;
-    if (widget.index == -1) {
-      widget.index = widget.image!.length;
-      widget.createState();
-    }
-  }
-
-  _onpressedright() {
-    widget.index++;
-    if (widget.index >= widget.image!.length) {
-      widget.index = 0;
-    }
   }
 }
