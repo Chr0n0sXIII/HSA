@@ -22,6 +22,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   ];
   String? selectedItem = "Plumbing";
   List<Image>? fromPicker;
+  bool images_uploaded = false;
+  final staticImage = ['https://static.thenounproject.com/png/3322766-200.png'];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,17 +32,22 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
           Column(
             children: [
               Container(
-                width: 400,
-                color: Colors.grey[400],
-                child: CarouselSlider(
-                    items: fromPicker, options: CarouselOptions(height: 500)),
-              ),
+                  width: 400,
+                  child: CarouselSlider.builder(
+                    itemCount: staticImage.length,
+                    itemBuilder: (context, index, realIndex) {
+                      final urlimage = staticImage[index];
+                      return buildImage(urlimage, index);
+                    },
+                    options: CarouselOptions(
+                      height: 500,
+                      autoPlay: true
+                    ),
+                  )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900]
-                    ),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                     onPressed: () async {
                       fromPicker =
                           await ImagePickerWeb.getMultiImagesAsWidget();
@@ -156,6 +163,17 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget buildImage(String urlimage, int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 12),
+      color: Colors.grey,
+      child: Image.network(
+        urlimage,
+        fit: BoxFit.fill,
       ),
     );
   }
