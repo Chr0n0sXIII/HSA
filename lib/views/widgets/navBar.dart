@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home_service_app/views/homeView.dart';
 import 'package:home_service_app/views/jobListingView.dart';
 import 'package:home_service_app/views/loginView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
+import 'package:home_service_app/dataClasses/User.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown({Key? key}) : super(key: key);
@@ -91,10 +93,11 @@ class TopBar extends StatelessWidget {
 
 class _DropdownState extends State<Dropdown> {
   final items = ['Settings', 'Logout'];
-  String username = "Username";
+  String username = "";
   String? dropdownValue;
   @override
   Widget build(BuildContext context) {
+    loadUserProfile();
     return DropdownButton(
         elevation: 12,
         iconSize: 32,
@@ -127,6 +130,18 @@ class _DropdownState extends State<Dropdown> {
                 MaterialPageRoute(builder: (context) => const loginView()));
           }
         });
+  }
+
+  loadUserProfile() async {
+    final value = await FirebaseFirestore.instance
+        .collection("users")
+        .where('email', isEqualTo: User.email)
+        .get();
+    for (var doc in value.docs) {
+      setState(() {
+        username = doc.get('uName').toString();
+      });
+    }
   }
 }
 

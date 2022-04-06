@@ -1,7 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/dataClasses/userCredentials.dart';
 import 'package:home_service_app/dataClasses/userCredentialsUtil.dart';
+import 'package:home_service_app/dataClasses/userData.dart';
+import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/homeView.dart';
+import "package:home_service_app/dataClasses/User.dart";
 
 class LoginWidget extends StatefulWidget {
   String email = "";
@@ -11,7 +19,7 @@ class LoginWidget extends StatefulWidget {
   String conPass = "";
 
   List<userCredentials> testData =
-      userCredentialUtil().TestData_UserCredentials();
+      userCredentialUtil.TestData_UserCredentials();
 
   LoginWidget({Key? key}) : super(key: key);
 
@@ -27,6 +35,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final conpassController = TextEditingController();
   bool isLogin = true;
   bool wrongcred = false;
+  bool validated = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -329,7 +338,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                       enableSuggestions: false,
                       autocorrect: false,
                       style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
+                      decoration: InputDecoration(
+                          hintText: "",
+                          errorText: _validateSamePass(),
+                          errorStyle: TextStyle(color: Colors.red)),
                       controller: conpassController,
                     ),
                   ),
@@ -364,7 +376,9 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  getTextInputData() {
+  getTextInputData() async {
+    await authCredentials();
+
     setState(() {
       widget.email = emailController.text;
       widget.password = passController.text;
@@ -372,12 +386,21 @@ class _LoginWidgetState extends State<LoginWidget> {
       widget.Lname = lnameController.text;
       widget.conPass = conpassController.text;
       if (isLogin) {
-        if (authCredentials()) {
+        print(validated);
+        if (validated) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const HomeView()));
         } else {
           setState(() {
             wrongcred = true;
+          });
+        }
+      } else {
+        if (_validateSamePass() == null) {
+          submitUser();
+          submitCredentials();
+          setState(() {
+            isLogin = true;
           });
         }
       }
@@ -406,13 +429,57 @@ class _LoginWidgetState extends State<LoginWidget> {
     });
   }
 
-  authCredentials() {
-    for (userCredentials u in widget.testData) {
-      if (u.uName == widget.email && u.Password == widget.password) {
-        wrongcred = false;
-        return true;
+  _validateSamePass() {
+    if (conpassController.text != passController.text) {
+      return "Passwords don't match";
+    }
+    return null;
+  }
+
+  authCredentials() async {
+    final value = await FirebaseFirestore.instance
+        .collection("credentials")
+        .where('uName', isEqualTo: emailController.text)
+        .get();
+    for (var doc in value.docs) {
+      String val = doc.get('Password');
+      //print(val.toString());
+      // print(passController.text);
+      print((passController.text.compareTo(val.toString())));
+      if (passController.text.compareTo(val.toString()) == 0) {
+        setState(() {
+          validated = true;
+        });
+        break;
+      } else {
+        setState(() {
+          validated = false;
+        });
       }
     }
-    return false;
+  }
+
+  submitUser() {
+    var udata = userData(
+      uName: fnameController.text + " " + lnameController.text,
+      email: emailController.text,
+      about: "n/a",
+      contacts: "na",
+      skills: "na",
+      activeJob: "3",
+      activeRequests: ["1", "2"],
+      clientRating: "0",
+      workerRating: "0",
+      //pfp:
+    ).toMap();
+    FirebaseFirestore.instance.collection("users").add(udata);
+  }
+
+  submitCredentials() {
+    var cred = userCredentials(
+            uName: emailController.text, Password: passController.text)
+        .toMap();
+
+    FirebaseFirestore.instance.collection("credentials").add(cred);
   }
 }

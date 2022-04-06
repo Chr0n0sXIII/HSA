@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/dataClasses/userData.dart';
 
 class UserDataUtil {
@@ -12,19 +13,24 @@ class UserDataUtil {
         about: "I am Tommy",
         contacts: "(868) 222 4431, (868) 123 1242",
         skills: "Mason, Plumber",
+        activeJob: "3",
+        activeRequests: ["1", "2"],
         clientRating: 3,
         workerRating: 4,
-        pfp: Image.asset("assets/profile_picture_place_holder.png"),
+        // pfp: "assets/profile_picture_place_holder.png",
       ),
       userData(
-          uName: "Alex Mason",
-          email: "AlexM@gmail.com",
-          about: "This is Alex",
-          contacts: "2353243",
-          skills: "skills, LandScaping",
-          clientRating: 2,
-          workerRating: 2,
-          pfp: Image.asset("assets/profile_picture_place_holder.png"))
+        uName: "Alex Mason",
+        email: "AlexM@gmail.com",
+        about: "This is Alex",
+        contacts: "2353243",
+        skills: "skills, LandScaping",
+        activeJob: "3",
+        activeRequests: ["1", "2"],
+        clientRating: 2,
+        workerRating: 2,
+        //  pfp: "assets/profile_picture_place_holder.png"
+      )
     ];
   }
 }

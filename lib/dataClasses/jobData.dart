@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'dart:ui';
 
 class JobData {
+  String jobID;
   String jobName;
   String jobDescription;
   String jobLocation;
@@ -10,11 +11,15 @@ class JobData {
   Image jobImage;
 
   JobData({
+    required this.jobID,
     required this.jobName,
     required this.jobDescription,
     required this.jobLocation,
     required this.jobPrice,
-    required this.pin,
+    this.pin = const Icon(
+      Icons.pin_drop,
+      color: Colors.red,
+    ),
     required this.jobImage,
   });
 }
