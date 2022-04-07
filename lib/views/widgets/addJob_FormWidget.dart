@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:io' show File;
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Add_Job_Form extends StatefulWidget {
   const Add_Job_Form({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   ];
   String? selectedItem = "Plumbing";
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
+  final controller = CarouselController();
 
   List<Widget> PhotoWidgetList = <Widget>[];
   final ImagePicker _picker = ImagePicker();
@@ -34,6 +36,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   List<String> imageURL_list = <String>[];
   bool imageUploaded = false;
 
+  int activeIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,15 +44,15 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         children: [
           Column(
             children: [
-              InkWell(
-                onTap: pickImagesFromDevice,
-                hoverColor: Colors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      width: 400,
-                      child: imageUploaded == false
-                          ? Container(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: 400,
+                    child: imageUploaded == false
+                        ? InkWell(
+                          onTap: pickImagesFromDevice,
+                          hoverColor: Colors.transparent,
+                          child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Color.fromRGBO(196, 196, 196, 1)),
@@ -58,17 +61,56 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                               child: Image(
                                 image: NetworkImage(staticImage),
                               ),
-                            )
-                          : CarouselSlider.builder(
-                              itemCount: imageURL_list.length,
-                              itemBuilder: (context, index, realIndex) {
-                                final imageURL = imageURL_list[index];
-                                return buildImage(imageURL, index);
-                              },
-                              options:
-                                  CarouselOptions(height: 500, autoPlay: true),
-                            )),
-                ),
+                            ),
+                        )
+                        : Column(
+                            children: [
+                              InkWell(
+                                onTap: pickImagesFromDevice,
+                                hoverColor: Colors.transparent,
+                                child: CarouselSlider.builder(
+                                  carouselController: controller,
+                                  itemCount: imageURL_list.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final imageURL = imageURL_list[index];
+                                    return buildImage(imageURL, index);
+                                  },
+                                  options: CarouselOptions(
+                                    height: 500,
+                                    autoPlay: true,
+                                    viewportFraction: 1,
+                                    enableInfiniteScroll: false,
+                                    onPageChanged: (index, reason) =>
+                                        setState(() => activeIndex = index),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(15),
+                                            primary:
+                                                Color.fromRGBO(4, 30, 81, 1)),
+                                        onPressed: back,
+                                        child: Icon(Icons.arrow_back)),
+                                    buildImageIndicator(),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(15),
+                                            primary:
+                                                Color.fromRGBO(4, 30, 81, 1)),
+                                        onPressed: next,
+                                        child: Icon(Icons.arrow_forward))
+                                  ],
+                                ),
+                              )
+                            ],
+                          )),
               ),
             ],
           ),
@@ -204,5 +246,27 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     for (var bytes in image!) {
       imageURL_list.add(File(bytes.path).path.toString());
     }
+  }
+
+  buildImageIndicator() {
+    return AnimatedSmoothIndicator(
+      onDotClicked: moveToImage,
+      activeIndex: activeIndex,
+      count: imageURL_list.length,
+      effect:
+          ScrollingDotsEffect(activeDotColor: Color.fromRGBO(195, 166, 96, 1)),
+    );
+  }
+
+  void back() {
+    controller.previousPage();
+  }
+
+  void next() {
+    controller.nextPage();
+  }
+
+  moveToImage(int index) {
+    controller.animateToPage(index);
   }
 }
