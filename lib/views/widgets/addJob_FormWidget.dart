@@ -24,7 +24,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     'Misc'
   ];
   String? selectedItem = "Plumbing";
-  final staticImage = ['https://static.thenounproject.com/png/3322766-200.png'];
+  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
 
   List<Widget> PhotoWidgetList = <Widget>[];
   final ImagePicker _picker = ImagePicker();
@@ -43,14 +43,27 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
             children: [
               Container(
                   width: 400,
-                  child: CarouselSlider.builder(
+                  child: imageUploaded == false
+                  ? Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color.fromRGBO(196, 196, 196, 1)
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 12),
+                    height: 500,
+                    child: Image(
+                      image: NetworkImage(staticImage), 
+                      ),
+                  )
+                  : CarouselSlider.builder(
                     itemCount: staticImage.length,
                     itemBuilder: (context, index, realIndex) {
                       final urlimage = staticImage[index];
                       return buildImage(urlimage, index);
                     },
                     options: CarouselOptions(height: 500, autoPlay: true),
-                  )),
+                  )
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
