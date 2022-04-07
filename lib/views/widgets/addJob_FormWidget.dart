@@ -31,7 +31,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   File? file;
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
-  List<String> imageURL = <String>[];
+  List<String> imageURL_list = <String>[];
   bool imageUploaded = false;
 
   @override
@@ -56,10 +56,10 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                       ),
                   )
                   : CarouselSlider.builder(
-                    itemCount: staticImage.length,
+                    itemCount: imageURL_list.length,
                     itemBuilder: (context, index, realIndex) {
-                      final urlimage = staticImage[index];
-                      return buildImage(urlimage, index);
+                      final imageURL = imageURL_list[index];
+                      return buildImage(imageURL, index);
                     },
                     options: CarouselOptions(height: 500, autoPlay: true),
                   )
@@ -187,7 +187,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   Widget buildImage(String urlimage, int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 12),
-      color: Colors.grey,
+      color: Color.fromRGBO(196, 196, 196, 1),
       child: Image.network(
         urlimage,
         fit: BoxFit.fill,
