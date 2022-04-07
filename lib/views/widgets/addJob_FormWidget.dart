@@ -70,20 +70,6 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                             )),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
-                    onPressed: () async {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Upload Images',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    )),
-              )
             ],
           ),
           Column(
