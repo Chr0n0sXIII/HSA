@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'dart:io' show File;
 
 class Add_Job_Form extends StatefulWidget {
   const Add_Job_Form({Key? key}) : super(key: key);
@@ -39,18 +42,13 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                       final urlimage = staticImage[index];
                       return buildImage(urlimage, index);
                     },
-                    options: CarouselOptions(
-                      height: 500,
-                      autoPlay: true
-                    ),
+                    options: CarouselOptions(height: 500, autoPlay: true),
                   )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                     onPressed: () async {
-                      fromPicker =
-                          await ImagePickerWeb.getMultiImagesAsWidget();
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
