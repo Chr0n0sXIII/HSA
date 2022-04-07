@@ -24,9 +24,16 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     'Misc'
   ];
   String? selectedItem = "Plumbing";
-  List<Image>? fromPicker;
-  bool images_uploaded = false;
   final staticImage = ['https://static.thenounproject.com/png/3322766-200.png'];
+
+  List<Widget> PhotoWidgetList = <Widget>[];
+  final ImagePicker _picker = ImagePicker();
+  File? file;
+  List<XFile>? image = <XFile>[];
+  List<XFile> ImageList = <XFile>[];
+  List<String> imageURL = <String>[];
+  bool imageUploaded = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,8 +55,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
-                    onPressed: () async {
-                    },
+                    onPressed: () async {},
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
