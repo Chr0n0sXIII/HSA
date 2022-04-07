@@ -58,7 +58,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                               child: Image(
                                 image: NetworkImage(staticImage),
                               ),
-                          )
+                            )
                           : CarouselSlider.builder(
                               itemCount: imageURL_list.length,
                               itemBuilder: (context, index, realIndex) {
@@ -67,8 +67,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                               },
                               options:
                                   CarouselOptions(height: 500, autoPlay: true),
-                          )
-                  ),
+                            )),
                 ),
               ),
               Padding(
@@ -204,6 +203,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   pickImagesFromDevice() async {
     image = await _picker.pickMultiImage();
     imageURL_list.clear();
+    ImageList.clear();
     if (image != null) {
       setState(() {
         ImageList = ImageList + image!;
@@ -215,7 +215,6 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   }
 
   void addImage() {
-
     for (var bytes in image!) {
       imageURL_list.add(File(bytes.path).path.toString());
     }
