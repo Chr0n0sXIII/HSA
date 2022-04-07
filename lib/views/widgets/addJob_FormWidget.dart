@@ -43,28 +43,32 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
             children: [
               InkWell(
                 onTap: pickImagesFromDevice,
-                child: Container(
-                    width: 400,
-                    child: imageUploaded == false
-                    ? Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color.fromRGBO(196, 196, 196, 1)
-                      ),
-                      margin: EdgeInsets.symmetric(horizontal: 12),
-                      height: 500,
-                      child: Image(
-                        image: NetworkImage(staticImage), 
-                        ),
-                    )
-                    : CarouselSlider.builder(
-                      itemCount: imageURL_list.length,
-                      itemBuilder: (context, index, realIndex) {
-                        final imageURL = imageURL_list[index];
-                        return buildImage(imageURL, index);
-                      },
-                      options: CarouselOptions(height: 500, autoPlay: true),
-                    )
+                hoverColor: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: 400,
+                      child: imageUploaded == false
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Color.fromRGBO(196, 196, 196, 1)),
+                              margin: EdgeInsets.symmetric(horizontal: 12),
+                              height: 500,
+                              child: Image(
+                                image: NetworkImage(staticImage),
+                              ),
+                          )
+                          : CarouselSlider.builder(
+                              itemCount: imageURL_list.length,
+                              itemBuilder: (context, index, realIndex) {
+                                final imageURL = imageURL_list[index];
+                                return buildImage(imageURL, index);
+                              },
+                              options:
+                                  CarouselOptions(height: 500, autoPlay: true),
+                          )
+                  ),
                 ),
               ),
               Padding(
@@ -189,17 +193,17 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
 
   Widget buildImage(String urlimage, int index) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12),
-      color: Color.fromRGBO(196, 196, 196, 1),
+      margin: EdgeInsets.symmetric(horizontal: 5),
       child: Image.network(
         urlimage,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }
 
-   pickImagesFromDevice() async {
+  pickImagesFromDevice() async {
     image = await _picker.pickMultiImage();
+    imageURL_list.clear();
     if (image != null) {
       setState(() {
         ImageList = ImageList + image!;
@@ -207,7 +211,13 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         image!.clear();
       });
     }
+    imageUploaded = true;
   }
 
-  void addImage() {}
+  void addImage() {
+
+    for (var bytes in image!) {
+      imageURL_list.add(File(bytes.path).path.toString());
+    }
+  }
 }
