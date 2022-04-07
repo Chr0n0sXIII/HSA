@@ -41,28 +41,30 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         children: [
           Column(
             children: [
-              Container(
-                  width: 400,
-                  child: imageUploaded == false
-                  ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Color.fromRGBO(196, 196, 196, 1)
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 12),
-                    height: 500,
-                    child: Image(
-                      image: NetworkImage(staticImage), 
-                      ),
-                  )
-                  : CarouselSlider.builder(
-                    itemCount: imageURL_list.length,
-                    itemBuilder: (context, index, realIndex) {
-                      final imageURL = imageURL_list[index];
-                      return buildImage(imageURL, index);
-                    },
-                    options: CarouselOptions(height: 500, autoPlay: true),
-                  )
+              InkWell(
+                onTap: pickImagesFromDevice(),
+                child: Container(
+                    width: 400,
+                    child: imageUploaded == false
+                        ? Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color.fromRGBO(196, 196, 196, 1)),
+                            margin: EdgeInsets.symmetric(horizontal: 12),
+                            height: 500,
+                            child: Image(
+                              image: NetworkImage(staticImage),
+                            ),
+                          )
+                        : CarouselSlider.builder(
+                            itemCount: imageURL_list.length,
+                            itemBuilder: (context, index, realIndex) {
+                              final imageURL = imageURL_list[index];
+                              return buildImage(imageURL, index);
+                            },
+                            options:
+                                CarouselOptions(height: 500, autoPlay: true),
+                          )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -194,4 +196,17 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       ),
     );
   }
+
+  pickImagesFromDevice() async {
+    image = await _picker.pickMultiImage();
+    if (image != null) {
+      setState(() {
+        ImageList = ImageList + image!;
+        addImage();
+        image!.clear();
+      });
+    }
+  }
+
+  void addImage() {}
 }
