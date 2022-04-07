@@ -40,180 +40,185 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    width: 400,
-                    child: imageUploaded == false
-                        ? InkWell(
-                          onTap: pickImagesFromDevice,
-                          hoverColor: Colors.transparent,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Color.fromRGBO(196, 196, 196, 1)),
-                              margin: EdgeInsets.symmetric(horizontal: 12),
-                              height: 500,
-                              child: Image(
-                                image: NetworkImage(staticImage),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(250, 25, 250, 25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: 400,
+                      child: imageUploaded == false
+                          ? InkWell(
+                            onTap: pickImagesFromDevice,
+                            hoverColor: Colors.transparent,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Color.fromRGBO(196, 196, 196, 1)),
+                                margin: EdgeInsets.symmetric(horizontal: 12),
+                                height: 500,
+                                child: Image(
+                                  image: NetworkImage(staticImage),
+                                ),
                               ),
-                            ),
-                        )
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: pickImagesFromDevice,
-                                hoverColor: Colors.transparent,
-                                child: CarouselSlider.builder(
-                                  carouselController: controller,
-                                  itemCount: imageURL_list.length,
-                                  itemBuilder: (context, index, realIndex) {
-                                    final imageURL = imageURL_list[index];
-                                    return buildImage(imageURL, index);
-                                  },
-                                  options: CarouselOptions(
-                                    height: 500,
-                                    autoPlay: true,
-                                    viewportFraction: 1,
-                                    enableInfiniteScroll: false,
-                                    onPageChanged: (index, reason) =>
-                                        setState(() => activeIndex = index),
+                          )
+                          : Column(
+                              children: [
+                                InkWell(
+                                  onTap: pickImagesFromDevice,
+                                  hoverColor: Colors.transparent,
+                                  child: CarouselSlider.builder(
+                                    carouselController: controller,
+                                    itemCount: imageURL_list.length,
+                                    itemBuilder: (context, index, realIndex) {
+                                      final imageURL = imageURL_list[index];
+                                      return buildImage(imageURL, index);
+                                    },
+                                    options: CarouselOptions(
+                                      height: 500,
+                                      autoPlay: true,
+                                      viewportFraction: 1,
+                                      enableInfiniteScroll: false,
+                                      onPageChanged: (index, reason) =>
+                                          setState(() => activeIndex = index),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.all(15),
-                                            primary:
-                                                Color.fromRGBO(4, 30, 81, 1)),
-                                        onPressed: back,
-                                        child: Icon(Icons.arrow_back)),
-                                    buildImageIndicator(),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.all(15),
-                                            primary:
-                                                Color.fromRGBO(4, 30, 81, 1)),
-                                        onPressed: next,
-                                        child: Icon(Icons.arrow_forward))
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 400,
-                  child: TextField(
-                    maxLength: 40,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        label: Text("Job Title..."),
-                        errorText: Job_Title_Error,
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5)))),
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.all(15),
+                                              primary:
+                                                  Color.fromRGBO(4, 30, 81, 1)),
+                                          onPressed: back,
+                                          child: Icon(Icons.arrow_back)),
+                                      buildImageIndicator(),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.all(15),
+                                              primary:
+                                                  Color.fromRGBO(4, 30, 81, 1)),
+                                          onPressed: next,
+                                          child: Icon(Icons.arrow_forward))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 400,
+                    child: TextField(
+                      maxLength: 40,
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          label: Text("Job Title..."),
+                          errorText: Job_Title_Error,
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)))),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 400,
-                  child: TextField(
-                    maxLength: 250,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        label: Text("Job Description..."),
-                        errorText: Job_Title_Error,
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5)))),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 400,
+                    child: TextField(
+                      maxLength: 250,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          label: Text("Job Description..."),
+                          errorText: Job_Title_Error,
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)))),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<String>(
-                    value: selectedItem,
-                    items: items
-                        .map((String item) => DropdownMenuItem<String>(
-                            value: item, child: Text(item)))
-                        .toList(),
-                    onChanged: (item) => setState(() {
-                          selectedItem = item;
-                        })),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 200,
-                  child: TextField(
-                    maxLength: 10,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        label: Text("Price..."),
-                        errorText: Job_Title_Error,
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5)))),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<String>(
+                      value: selectedItem,
+                      items: items
+                          .map((String item) => DropdownMenuItem<String>(
+                              value: item, child: Text(item)))
+                          .toList(),
+                      onChanged: (item) => setState(() {
+                            selectedItem = item;
+                          })),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 200,
+                    child: TextField(
+                      maxLength: 10,
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          label: Text("Price..."),
+                          errorText: Job_Title_Error,
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)))),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Request Location',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(11, 206, 131, 1)),
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    )),
-              )
-            ],
-          )
-        ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Request Location',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(11, 206, 131, 1)),
+                      onPressed: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
