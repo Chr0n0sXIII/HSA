@@ -15,7 +15,7 @@ class _Worker_Review_ViewState extends State<Worker_Review_View> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(229, 229, 299, 1),
+      backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
       body: SingleChildScrollView(
         child: Column(
           children: [
