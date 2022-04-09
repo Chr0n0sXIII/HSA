@@ -226,9 +226,12 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   Widget buildImage(String urlimage, int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Image.network(
-        urlimage,
-        fit: BoxFit.cover,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          urlimage,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
