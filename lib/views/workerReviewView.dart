@@ -3,6 +3,7 @@ import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/responsive.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
+import 'package:home_service_app/views/widgets/workerReview_FormWidget.dart';
 
 class Worker_Review_View extends StatefulWidget {
   const Worker_Review_View({ Key? key }) : super(key: key);
@@ -21,6 +22,7 @@ class _Worker_Review_ViewState extends State<Worker_Review_View> {
           children: [
             TopBar(),
             PageTitle("Review This Worker"),
+            Worker_Review_Fo(),
             Footer(),
           ],
         ),
