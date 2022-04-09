@@ -26,6 +26,29 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
               child: Center(
                 child: CircularProgressIndicator()
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(15),
+                      primary: Color.fromRGBO(4, 30, 81, 1)
+                    ),
+                    onPressed: back(), 
+                    child: Icon(Icons.arrow_back)
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(15),
+                      primary: Color.fromRGBO(4, 30, 81, 1)
+                    ),
+                    onPressed: next(), 
+                    child: Icon(Icons.arrow_forward)
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -33,4 +56,8 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
       ],
     );
   }
+
+  back() {}
+
+  next() {}
 }
