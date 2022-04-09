@@ -14,7 +14,21 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Column(),
+        Column(
+          children: [
+            Container(
+              width: 400,
+              height: 500,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Color.fromRGBO(196, 196, 196, 1)
+              ),
+              child: Center(
+                child: CircularProgressIndicator()
+              ),
+            )
+          ],
+        ),
         Column(),
       ],
     );
