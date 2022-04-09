@@ -10,6 +10,7 @@ class Worker_Review_Fo extends StatefulWidget {
 }
 
 class _Worker_Review_FoState extends State<Worker_Review_Fo> {
+  final controller = CarouselController();
   bool imagesLoaded = false;
   List<String> imageURL_list = <String>[];
   int activeIndex = 0;
@@ -28,6 +29,7 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                 child: imagesLoaded == false
                     ? Center(child: CircularProgressIndicator())
                     : CarouselSlider.builder(
+                        carouselController: controller,
                         itemCount: imageURL_list.length,
                         itemBuilder: (context, index, realIndex) {
                           final imageURL = imageURL_list[index];
@@ -48,13 +50,13 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(15),
                           primary: Color.fromRGBO(4, 30, 81, 1)),
-                      onPressed: back(),
+                      onPressed: back,
                       child: Icon(Icons.arrow_back)),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(15),
                           primary: Color.fromRGBO(4, 30, 81, 1)),
-                      onPressed: next(),
+                      onPressed: next,
                       child: Icon(Icons.arrow_forward))
                 ],
               ),
@@ -66,9 +68,17 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
     );
   }
 
-  back() {}
+  back() {
+    if (imagesLoaded == true) {
+      controller.previousPage();
+    }
+  }
 
-  next() {}
+  next() {
+    if (imagesLoaded == true) {
+      controller.nextPage();
+    }
+  }
 
   Widget buildImage(String imageURL, int index) {
     return Container(
