@@ -17,20 +17,19 @@ class UserDataUtil {
         activeRequests: ["1", "2"],
         clientRating: 3,
         workerRating: 4,
-        // pfp: "assets/profile_picture_place_holder.png",
+        pfp: "assets/profile_picture_place_holder.png",
       ),
       userData(
-        uName: "Alex Mason",
-        email: "AlexM@gmail.com",
-        about: "This is Alex",
-        contacts: "2353243",
-        skills: "skills, LandScaping",
-        activeJob: "3",
-        activeRequests: ["1", "2"],
-        clientRating: 2,
-        workerRating: 2,
-        //  pfp: "assets/profile_picture_place_holder.png"
-      )
+          uName: "Alex Mason",
+          email: "AlexM@gmail.com",
+          about: "This is Alex",
+          contacts: "2353243",
+          skills: "skills, LandScaping",
+          activeJob: "3",
+          activeRequests: ["1", "2"],
+          clientRating: 2,
+          workerRating: 2,
+          pfp: "assets/profile_picture_place_holder.png")
     ];
   }
 }

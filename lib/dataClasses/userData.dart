@@ -14,20 +14,19 @@ class userData {
   String activeJob;
   var clientRating;
   var workerRating;
-  //Image pfp;
+  String pfp;
 
-  userData({
-    required this.uName,
-    required this.email,
-    required this.about,
-    required this.contacts,
-    required this.skills,
-    required this.activeRequests,
-    required this.activeJob,
-    required this.clientRating,
-    required this.workerRating,
-    //required this.pfp
-  });
+  userData(
+      {required this.uName,
+      required this.email,
+      required this.about,
+      required this.contacts,
+      required this.skills,
+      required this.activeRequests,
+      required this.activeJob,
+      required this.clientRating,
+      required this.workerRating,
+      required this.pfp});
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,7 +39,7 @@ class userData {
       'activeJob': activeJob,
       'clientRating': clientRating,
       'workerRating': workerRating,
-      //'pfp': ImageHandler.toBytes(path)
+      'pfp': pfp,
     };
   }
 }

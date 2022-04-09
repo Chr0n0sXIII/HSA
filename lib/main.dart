@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/views/views.dart';
 import 'package:home_service_app/views/jobListingView.dart';
 import "package:firebase_core/firebase_core.dart";
-import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart';
 
 void main() async {
@@ -18,6 +18,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
+
+  User currentUser = new User();
 
   final Future<FirebaseApp> _init = Firebase.initializeApp(
       options: const FirebaseOptions(
