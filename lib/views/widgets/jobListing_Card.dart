@@ -1,14 +1,17 @@
 import 'dart:js_util';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 
 class JobListingCard extends StatelessWidget {
   JobData? jobData;
   Function? onCardClick;
+  Image image = Image.asset('assets/featured-image-cheap-landscaping.jpeg');
 
   JobListingCard({
     this.jobData,
+    required this.image,
   });
 
   @override
@@ -37,7 +40,7 @@ class JobListingCard extends StatelessWidget {
                   SizedBox(
                     height: 180,
                     width: 180,
-                    child: jobData!.jobImage,
+                    child: image,
                   )
                 ],
               ),

@@ -1,5 +1,7 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'dart:io' show File;
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({Key? key}) : super(key: key);
@@ -17,6 +19,13 @@ class _ProfileFormState extends State<ProfileForm> {
   String currentUser_TradeSkils = "demo_TradeSkills";
   String? contactInfo_Error;
   String currentUser_Contact = "demo_Contact";
+
+  final ImagePicker _picker = ImagePicker();
+  File? file;
+  List<XFile>? image = <XFile>[];
+  List<XFile> ImageList = <XFile>[];
+  List<String> imageURL_list = <String>[];
+  bool imageLoaded = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,27 +37,29 @@ class _ProfileFormState extends State<ProfileForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(196, 196, 196, 1),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(7.0, 8.0))
-                      ]),
-                  child: Image.asset("profile_picture_place_holder.png"),
-                ),
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(196, 196, 196, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(7.0, 8.0))
+                          ]),
+                      child: imageLoaded == false
+                          ? Image.asset("profile_picture_place_holder.png")
+                          : Image.network(imageURL_list[0]))),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      getImageFromDevice();
+                    },
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
@@ -97,15 +108,14 @@ class _ProfileFormState extends State<ProfileForm> {
                       errorText: username_Error,
                       hintText: currentUser_Username,
                       border: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5)))),
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
                 ),
               )
             ],
           ),
         ),
         // About Me Row
-        Padding(  
+        Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -139,8 +149,7 @@ class _ProfileFormState extends State<ProfileForm> {
                       hintText: currentUser_AboutMe,
                       errorText: AboutMe_Error,
                       border: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5)))),
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
                 ),
               )
             ],
@@ -181,8 +190,7 @@ class _ProfileFormState extends State<ProfileForm> {
                       errorText: TradeSkills_Error,
                       hintText: currentUser_TradeSkils,
                       border: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5)))),
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
                 ),
               )
             ],
@@ -225,8 +233,7 @@ class _ProfileFormState extends State<ProfileForm> {
                       errorText: contactInfo_Error,
                       hintText: currentUser_Contact,
                       border: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5)))),
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
                 ),
               )
             ],
@@ -249,5 +256,25 @@ class _ProfileFormState extends State<ProfileForm> {
         )
       ],
     );
+  }
+
+  void getImageFromDevice() async {
+    image = await _picker.pickMultiImage();
+    imageURL_list.clear();
+    ImageList.clear();
+    if (image != null) {
+      setState(() {
+        ImageList = ImageList + image!;
+        addImage();
+        image!.clear();
+      });
+    }
+    imageLoaded = true;
+  }
+
+  void addImage() {
+    for (var bytes in image!) {
+      imageURL_list.add(File(bytes.path).path.toString());
+    }
   }
 }
