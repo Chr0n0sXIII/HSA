@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Worker_Review_Fo extends StatefulWidget {
@@ -14,6 +15,8 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
   bool imagesLoaded = false;
   List<String> imageURL_list = <String>[];
   int activeIndex = 0;
+
+  String? review_Error;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -80,7 +83,46 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
           ],
         ),
         Column(
-
+          children: [
+            Text(
+              'Worker Review',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            Container(
+              width: 400,
+              child: TextField(
+                maxLines: 5,
+                maxLength: 250,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: 'Write your review...',
+                  errorText: review_Error,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5)
+                  )
+                ),
+              ),
+            ),
+            RatingBar.builder(
+              initialRating: 1,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => Icon(
+                Icons.star,
+                color: Color.fromRGBO(195, 166, 96, 1),
+              ),
+              onRatingUpdate: (rating) {
+                  print(rating);
+              },
+            ),
+          ],
         ),
       ],
     );
