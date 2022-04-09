@@ -37,6 +37,20 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   bool imageUploaded = false;
 
   int activeIndex = 0;
+
+  final job_Title_controller = TextEditingController();
+  final job_Description_controller = TextEditingController();
+  final job_Price_controller = TextEditingController();
+
+
+  @override
+  void dispose() {
+    job_Description_controller.dispose();
+    job_Price_controller.dispose();
+    job_Title_controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,9 +68,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                       width: 400,
                       child: imageUploaded == false
                           ? InkWell(
-                            onTap: pickImagesFromDevice,
-                            hoverColor: Colors.transparent,
-                            child: Container(
+                              onTap: pickImagesFromDevice,
+                              hoverColor: Colors.transparent,
+                              child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     color: Color.fromRGBO(196, 196, 196, 1)),
@@ -66,7 +80,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                                   image: NetworkImage(staticImage),
                                 ),
                               ),
-                          )
+                            )
                           : Column(
                               children: [
                                 InkWell(
@@ -136,6 +150,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)))),
+                      controller: job_Title_controller,
                     ),
                   ),
                 ),
@@ -154,6 +169,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)))),
+                      controller: job_Description_controller,
                     ),
                   ),
                 ),
@@ -184,6 +200,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)))),
+                      controller: job_Price_controller,
                     ),
                   ),
                 ),
@@ -205,7 +222,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(11, 206, 131, 1)),
-                      onPressed: () {},
+                      onPressed: () {
+                        openConfirmPopUp();
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
@@ -277,4 +296,125 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   moveToImage(int index) {
     controller.animateToPage(index);
   }
+
+  Future openConfirmPopUp() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(40)),
+              title: Text(
+                'Conform Your Listing',
+                textAlign: TextAlign.center,
+              ),
+              content: Container(
+                width: 400,
+                height: 300,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Job Title',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text(job_Title_controller.text),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Description',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text(job_Description_controller.text),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Type',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text(selectedItem!),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Price',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text(job_Price_controller.text),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Job Location',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text('placeholder')
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(20)),
+                              primary: Color.fromRGBO(244, 67, 54, 1)),
+                          onPressed: cancel,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(20)),
+                              primary: Color.fromRGBO(11, 206, 131, 1)),
+                          onPressed: confirm,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Confirm',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ));
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void confirm() {}
 }
