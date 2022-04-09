@@ -122,6 +122,28 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                   print(rating);
               },
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(11, 206, 131, 1),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20)
+                  )
+                ),
+                onPressed: (){}, 
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ),
+            )
           ],
         ),
       ],
