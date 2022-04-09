@@ -83,6 +83,7 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
           ],
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               'Worker Review',
