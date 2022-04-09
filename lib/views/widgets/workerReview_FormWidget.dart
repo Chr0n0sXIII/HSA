@@ -92,7 +92,17 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
               ),
             ),
             Container(
-              width: 400,
+              width: 500,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0,8.0)
+                  )
+                ]
+              ),
               child: TextField(
                 maxLines: 5,
                 maxLength: 250,
