@@ -134,27 +134,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
-  firebase_database:
+  firebase_storage:
     dependency: "direct main"
     description:
-      name: firebase_database
+      name: firebase_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.0.9"
-  firebase_database_platform_interface:
+    version: "10.2.11"
+  firebase_storage_platform_interface:
     dependency: transitive
     description:
-      name: firebase_database_platform_interface
+      name: firebase_storage_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1+2"
-  firebase_database_web:
+    version: "4.1.2"
+  firebase_storage_web:
     dependency: transitive
     description:
-      name: firebase_database_web
+      name: firebase_storage_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0+8"
+    version: "3.2.11"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -238,6 +238,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.4.0"
+  latlng:
+    dependency: "direct main"
+    description:
+      name: latlng
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   lints:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:flutter/material.dart';
+import 'package:latlng/latlng.dart';
 
 class JobDataUtil {
   static List<JobData> TestData_JobsData() {
@@ -13,7 +14,8 @@ class JobDataUtil {
           jobDescription: "none",
           jobLocation: "none",
           jobPrice: "none",
-          jobImage: Image.asset("app_logo.png")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "1",
           jobName: "Cut Grass",
@@ -24,8 +26,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "2",
           jobName: "Water plants Daily",
@@ -37,8 +39,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "3",
           jobName: "Repair water lines",
@@ -50,8 +52,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "4",
           jobName: "Paint Walls",
@@ -63,8 +65,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "5",
           jobName: "Clean Pool",
@@ -76,8 +78,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "6",
           jobName: "Move Materials",
@@ -89,8 +91,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          jobImage:
-              Image.asset("assets/featured-image-cheap-landscaping.jpeg")),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41)),
     ];
   }
 }

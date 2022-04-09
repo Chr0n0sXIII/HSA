@@ -1,5 +1,12 @@
+import 'dart:async';
+import 'dart:html';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class TileCluster extends StatefulWidget {
@@ -36,16 +43,22 @@ class UserTile extends StatefulWidget {
 }
 
 class _UserTileState extends State<UserTile> {
+  double rating = 1;
   String user_Skils = 'User Trade Skills and Profession';
   String user_desc = 'User Description about me';
+  String pfp = "";
+  var imageurl = "";
+  var isEmpty = false;
+
   @override
   Widget build(BuildContext context) {
+    waitbox();
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(30)),
       hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
-      onTap: (){
+      onTap: () {
         Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const UserProfileView()));
+            MaterialPageRoute(builder: (context) => const UserProfileView()));
       },
       child: Padding(
         padding: EdgeInsets.all(5),
@@ -64,47 +77,57 @@ class _UserTileState extends State<UserTile> {
               ]),
           child: Row(
             children: [
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: Image.asset('assets/profile_picture_place_holder.png',
-                scale: 0.65
-                ),
-              ),
+              isEmpty == false
+                  ? SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Image.asset(
+                        'assets/profile_picture_place_holder.png',
+                        scale: 0.6,
+                      ),
+                    )
+                  : Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: new NetworkImage(imageurl))),
+                    ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RatingBar.builder(
-                    initialRating: 4,
-                    minRating: 1,
+                  RatingBarIndicator(
+                    rating: rating.toDouble(),
                     direction: Axis.horizontal,
-                    allowHalfRating: true,
                     itemCount: 5,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
                       color: Color.fromRGBO(195, 166, 96, 1),
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
                   ),
-                  Text(
-                    user_Skils,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      user_Skils,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
-                  Text(
-                    user_desc,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      user_desc,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
                   ),
                 ],
@@ -114,6 +137,37 @@ class _UserTileState extends State<UserTile> {
         ),
       ),
     );
+  }
+
+  waitbox() async {
+    await getRating();
+  }
+
+  getRating() async {
+    //Get String from DB
+    final value = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: User.email)
+        .get();
+    for (var doc in value.docs) {
+      setState(() {
+        rating = doc.get('workerRating');
+        user_Skils = doc.get('skills');
+        user_desc = doc.get('about');
+        pfp = doc.get('pfp');
+        print(pfp);
+      });
+      //Use PFP name too get from FireStorage
+      Reference ref = FirebaseStorage.instance.ref().child(pfp);
+// no need of the file extension, the name will do fine.
+      var url = await ref.getDownloadURL();
+      setState(() {
+        imageurl = url;
+      });
+      print(url);
+      isEmpty = true;
+      return;
+    }
   }
 }
 

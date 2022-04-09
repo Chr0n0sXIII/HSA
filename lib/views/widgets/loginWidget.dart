@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/dataClasses/jobDataUtil.dart';
@@ -461,17 +460,18 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   submitUser() {
     var udata = userData(
-      uName: fnameController.text + " " + lnameController.text,
-      email: emailController.text,
-      about: "n/a",
-      contacts: "na",
-      skills: "na",
-      activeJob: "3",
-      activeRequests: ["1", "2"],
-      clientRating: "0",
-      workerRating: "0",
-      //pfp:
-    ).toMap();
+            uName: fnameController.text + " " + lnameController.text,
+            email: emailController.text,
+            about: "n/a",
+            contacts: "na",
+            skills: "na",
+            activeJob: "3",
+            activeRequests: ["1", "2"],
+            clientRating: "0",
+            workerRating: "0",
+            pfp:
+                "https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/shrekpfp.jpg?alt=media&token=174f1566-8caf-4969-8b66-a11b0b680027")
+        .toMap();
     FirebaseFirestore.instance.collection("users").add(udata);
   }
 

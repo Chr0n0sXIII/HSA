@@ -6,8 +6,10 @@ class User {
   static String skills = "";
   static List<String> activeRequests = [""];
   static String activeJob = "";
-  static var clientRating = 0;
-  static var workerRating = 0;
+  static double clientRating = 0;
+  static double workerRating = 0;
+
+  static String pfp = "";
 
   static setUname(String uName) {
     User.uName = uName;
@@ -43,5 +45,9 @@ class User {
 
   static setworkerRating(var workerRating) {
     User.workerRating = workerRating;
+  }
+
+  static setpfp(String pfp) {
+    User.pfp = pfp;
   }
 }
