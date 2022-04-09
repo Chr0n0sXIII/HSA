@@ -188,9 +188,12 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
   Widget buildImage(String imageURL, int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Image.network(
-        imageURL,
-        fit: BoxFit.cover,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          imageURL,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
