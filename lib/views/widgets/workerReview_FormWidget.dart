@@ -107,20 +107,23 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                 ),
               ),
             ),
-            RatingBar.builder(
-              initialRating: 1,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Color.fromRGBO(195, 166, 96, 1),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RatingBar.builder(
+                initialRating: 1,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Color.fromRGBO(195, 166, 96, 1),
+                ),
+                onRatingUpdate: (rating) {
+                    print(rating);
+                },
               ),
-              onRatingUpdate: (rating) {
-                  print(rating);
-              },
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
