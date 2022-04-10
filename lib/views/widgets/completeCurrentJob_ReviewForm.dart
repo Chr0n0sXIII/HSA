@@ -46,6 +46,17 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
             )
           ],
         ),
+        Column(
+          children: [
+            Text(
+              'Client Review',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
