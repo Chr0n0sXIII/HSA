@@ -17,6 +17,8 @@ class Complete_Job_Form extends StatefulWidget {
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
   bool imageUploaded = false;
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
+
+  String? review_Error;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -55,6 +57,32 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                   fontWeight: FontWeight.bold
               ),
             ),
+            Container(
+              width: 500,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0,8.0)
+                  )
+                ]
+              ),
+              child: TextField(
+                maxLines: 5,
+                maxLength: 250,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: 'Write your review...',
+                  errorText: review_Error,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5)
+                  )
+                ),
+              ),
+            )
           ],
         ),
       ],
