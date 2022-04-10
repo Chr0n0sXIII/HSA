@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/completedJobs_TilesWidget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
@@ -20,6 +21,7 @@ class _Complete_Job_List_ViewState extends State<Complete_Job_List_View> {
           children: [
             TopBar(),
             PageTitle("View Your Completed Jobs"),
+            Completed_Lising(),
             Footer(),
           ],
         )
