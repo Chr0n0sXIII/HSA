@@ -48,12 +48,12 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                   width: 400,
-                  height: 500,
                   child: imageUploaded == false
                       ? InkWell(
                           onTap: pickImagesFromDevice,
                           hoverColor: Colors.transparent,
                           child: Container(
+                            height: 500,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: Color.fromRGBO(196, 196, 196, 1)),
@@ -66,6 +66,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                               onTap: pickImagesFromDevice,
                               hoverColor: Colors.transparent,
                               child: CarouselSlider.builder(
+                                carouselController: controller,
                                   itemCount: imageURL_list.length,
                                   itemBuilder: (context, index, realIndex) {
                                     final imageURL = imageURL_list[index];
@@ -80,22 +81,25 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                                         setState(() => activeIndex = index),
                                   )),
                             ),
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.all(15),
-                                        primary: Color.fromRGBO(4, 30, 81, 1)),
-                                    onPressed: back,
-                                    child: Icon(Icons.arrow_back)),
-                                buildImageIndicator(),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.all(15),
-                                        primary: Color.fromRGBO(4, 30, 81, 1)),
-                                    onPressed: back,
-                                    child: Icon(Icons.arrow_forward))
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.all(15),
+                                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                                      onPressed: back,
+                                      child: Icon(Icons.arrow_back)),
+                                  buildImageIndicator(),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.all(15),
+                                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                                      onPressed: next,
+                                      child: Icon(Icons.arrow_forward))
+                                ],
+                              ),
                             )
                           ],
                         )),
@@ -217,7 +221,13 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     }
   }
 
-  void back() {}
+  void back() {
+    controller.previousPage();
+  }
+
+  void next() {
+    controller.nextPage();
+  }
 
   buildImageIndicator() {
     return AnimatedSmoothIndicator(
