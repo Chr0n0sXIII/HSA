@@ -26,24 +26,30 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
         Column(),
         Column(
           children: [
-            Text(
-              'Proof of Completion',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Proof of Completion',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            Container(
-                width: 400,
-                height: 500,
-                child: imageUploaded == false
-                    ? Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color.fromRGBO(196, 196, 196, 1)),
-                        child: Image(image: NetworkImage(staticImage)),
-                      )
-                    : Column())
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: 400,
+                  height: 500,
+                  child: imageUploaded == false
+                      ? Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Color.fromRGBO(196, 196, 196, 1)),
+                          child: Image(image: NetworkImage(staticImage)),
+                        )
+                      : Column()),
+            )
           ],
         ),
         Column(
