@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:html';
 
 import "package:flutter/material.dart";
@@ -12,7 +13,9 @@ class JobData {
   LatLng latLng;
   String jobPrice;
   Icon pin;
-  List<String> JobImages;
+  List<String> ActiveJobImages;
+  List<String> CompletedJobImages;
+  bool isCompleted;
 
   JobData({
     required this.jobID,
@@ -25,7 +28,9 @@ class JobData {
       Icons.pin_drop,
       color: Colors.red,
     ),
-    required this.JobImages,
+    required this.ActiveJobImages,
+    required this.CompletedJobImages,
+    this.isCompleted = false,
   });
 
   toMap() {
@@ -33,11 +38,13 @@ class JobData {
       jobID: jobID,
       jobName: jobName,
       jobDescription: jobDescription,
-      JobImages: JobImages,
+      ActiveJobImages: ActiveJobImages,
+      CompletedJobImages: CompletedJobImages,
       jobLocation: jobLocation,
       latLng: latLng,
       pin: pin,
       jobPrice: jobPrice,
+      isCompleted: isCompleted,
     };
   }
 }

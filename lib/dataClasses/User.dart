@@ -6,6 +6,7 @@ class User {
   static String skills = "";
   static List<String> activeRequests = [""];
   static String activeJob = "";
+  static List<String> completedJobs = [""];
   static double clientRating = 0;
   static double workerRating = 0;
 

@@ -9,13 +9,15 @@ class JobDataUtil {
   static List<JobData> TestData_JobsData() {
     return [
       JobData(
-          jobID: "none",
-          jobName: "none",
-          jobDescription: "none",
-          jobLocation: "none",
-          jobPrice: "none",
-          JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+        jobID: "none",
+        jobName: "none",
+        jobDescription: "none",
+        jobLocation: "none",
+        jobPrice: "none",
+        ActiveJobImages: ["app_logo.png"],
+        CompletedJobImages: [],
+        latLng: LatLng(35.68, 51.41),
+      ),
       JobData(
           jobID: "1",
           jobName: "Cut Grass",
@@ -26,7 +28,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "2",
@@ -39,7 +42,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "3",
@@ -52,7 +56,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "4",
@@ -65,7 +70,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "5",
@@ -78,7 +84,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
       JobData(
           jobID: "6",
@@ -91,7 +98,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [],
           latLng: LatLng(35.68, 51.41)),
     ];
   }
