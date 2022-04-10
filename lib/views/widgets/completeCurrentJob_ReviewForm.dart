@@ -18,6 +18,10 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
 
   List<String> imageURL_list = <String>[];
+  final ImagePicker _picker = ImagePicker();
+  File? file;
+  List<XFile>? image = <XFile>[];
+  List<XFile> ImageList = <XFile>[];
 
   String? review_Error;
 
@@ -46,12 +50,16 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                   width: 400,
                   height: 500,
                   child: imageUploaded == false
-                      ? Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Color.fromRGBO(196, 196, 196, 1)),
-                          child: Image(image: NetworkImage(staticImage)),
-                        )
+                      ? InkWell(
+                        onTap: pickImagesFromDevice,
+                        hoverColor: Colors.transparent,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color.fromRGBO(196, 196, 196, 1)),
+                            child: Image(image: NetworkImage(staticImage)),
+                          ),
+                      )
                       : Column(
                           children: [
                             CarouselSlider.builder(
@@ -166,5 +174,25 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
         ),
       ),
     );
+  }
+
+  void pickImagesFromDevice() async {
+    image = await _picker.pickMultiImage();
+    imageURL_list.clear();
+    ImageList.clear();
+    if (image != null) {
+      setState(() {
+        ImageList = ImageList + image!;
+        addImage();
+        image!.clear();
+      });
+    }
+    imageUploaded = true;
+  }
+
+  void addImage() {
+    for (var bytes in image!) {
+      imageURL_list.add(File(bytes.path).path.toString());
+    }
   }
 }
