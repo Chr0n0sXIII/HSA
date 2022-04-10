@@ -84,6 +84,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   ElevatedButton(
                                       style: ElevatedButton.styleFrom(
