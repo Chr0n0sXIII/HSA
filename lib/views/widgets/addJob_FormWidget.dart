@@ -1,10 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:latlng/latlng.dart';
 import 'dart:io';
 import 'dart:io' show File;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:uuid/uuid.dart';
 
 class Add_Job_Form extends StatefulWidget {
   const Add_Job_Form({Key? key}) : super(key: key);
@@ -41,7 +47,6 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   final job_Title_controller = TextEditingController();
   final job_Description_controller = TextEditingController();
   final job_Price_controller = TextEditingController();
-
 
   @override
   void dispose() {
@@ -416,5 +421,16 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     Navigator.of(context).pop();
   }
 
-  void confirm() {}
+  void confirm() {
+    // LatLng position = getLatlng();
+
+    //JobData jobData = JobData(jobID:Uuid().v1(), jobName: job_Title_controller.text , jobDescription: job_Description_controller.text, jobLocation: jobLocation, latLng: latLng, jobPrice: jobPrice, JobImages: JobImages)
+    // FirebaseFirestore.instance.collection('openjobs').add(jobData.toMap());
+  }
+
+  getLatlng() async {
+    // Position latLng = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+    // Placemark().locality
+    //return LatLng(latLng.latitude,latLng.longitude);
+  }
 }
