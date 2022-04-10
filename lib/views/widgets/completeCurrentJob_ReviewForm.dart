@@ -21,6 +21,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(),
         Column(
@@ -46,6 +47,8 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
           ],
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
