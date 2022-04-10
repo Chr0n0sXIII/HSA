@@ -16,7 +16,7 @@ class Complete_Job_Form extends StatefulWidget {
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
   bool imageUploaded = false;
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
-
+  final controller = CarouselController();
   List<String> imageURL_list = <String>[];
   final ImagePicker _picker = ImagePicker();
   File? file;
@@ -51,15 +51,15 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                   height: 500,
                   child: imageUploaded == false
                       ? InkWell(
-                        onTap: pickImagesFromDevice,
-                        hoverColor: Colors.transparent,
-                        child: Container(
+                          onTap: pickImagesFromDevice,
+                          hoverColor: Colors.transparent,
+                          child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: Color.fromRGBO(196, 196, 196, 1)),
                             child: Image(image: NetworkImage(staticImage)),
                           ),
-                      )
+                        )
                       : Column(
                           children: [
                             InkWell(
@@ -77,33 +77,28 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                                     viewportFraction: 1,
                                     enableInfiniteScroll: false,
                                     onPageChanged: (index, reason) =>
-                                      setState(() => activeIndex = index),
-                                  )
-                              ),
+                                        setState(() => activeIndex = index),
+                                  )),
                             ),
                             Row(
                               children: [
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(15),
-                                    primary: Color.fromRGBO(4, 30, 81, 1)
-                                  ),
-                                  onPressed: back, 
-                                  child: Icon(Icons.arrow_back)
-                                ),
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(15),
+                                        primary: Color.fromRGBO(4, 30, 81, 1)),
+                                    onPressed: back,
+                                    child: Icon(Icons.arrow_back)),
+                                buildImageIndicator(),
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(15),
-                                    primary: Color.fromRGBO(4, 30, 81, 1)
-                                  ),
-                                  onPressed: back, 
-                                  child: Icon(Icons.arrow_forward)
-                                )
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(15),
+                                        primary: Color.fromRGBO(4, 30, 81, 1)),
+                                    onPressed: back,
+                                    child: Icon(Icons.arrow_forward))
                               ],
                             )
                           ],
-                      )
-              ),
+                        )),
             )
           ],
         ),
@@ -222,6 +217,19 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     }
   }
 
-  void back() {
+  void back() {}
+
+  buildImageIndicator() {
+    return AnimatedSmoothIndicator(
+      onDotClicked: moveToImage,
+      activeIndex: activeIndex,
+      count: imageURL_list.length,
+      effect:
+          ScrollingDotsEffect(activeDotColor: Color.fromRGBO(195, 166, 96, 1)),
+    );
+  }
+
+  moveToImage(int index) {
+    controller.animateToPage(index);
   }
 }
