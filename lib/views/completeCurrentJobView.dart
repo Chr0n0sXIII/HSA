@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/completeCurrentJob_ReviewForm.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
@@ -20,6 +21,7 @@ class _Completed_Current_Job_ViewState extends State<Completed_Current_Job_View>
           children: [
             TopBar(),
             PageTitle("Complete Current Job"),
+            Complete_Job_Form(),
             Footer(),
           ],
         )
