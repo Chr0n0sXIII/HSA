@@ -15,12 +15,37 @@ class Complete_Job_Form extends StatefulWidget {
 }
 
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
+  bool imageUploaded = false;
+  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Column(),
-        Column(),
+        Column(
+          children: [
+            Text(
+              'Proof of Completion',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Container(
+              width: 400,
+              height: 500,
+              child: imageUploaded == false
+              ?Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Color.fromRGBO(196, 196, 196, 1)
+                ),
+                child: Image(image: NetworkImage(staticImage)),
+              )
+              :Column()
+            )
+          ],
+        ),
       ],
     );
   }
