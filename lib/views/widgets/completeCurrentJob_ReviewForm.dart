@@ -36,48 +36,50 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   String job_Price = 'Placeholder Price';
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: [
-            Container(
-              width: 400,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15), color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  imageLoadedFromWorker == false
-                      ? Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color.fromRGBO(196, 196, 196, 1)
-                        ),
-                          child: Center(child: CircularProgressIndicator()),
-                      )
-                      : CarouselSlider.builder(
-                          itemCount: workerImageURL_list.length,
-                          itemBuilder: (context, index, realIndex) {
-                            final workerImageURL = workerImageURL_list[index];
-                            return buildWorkerImage(workerImageURL, index);
-                          },
-                          options: CarouselOptions(
-                            height: 200,
-                            autoPlay: true,
-                            viewportFraction: 1,
-                            enableInfiniteScroll: true,
-                          )
-                      ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(250, 0, 250, 25),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 47, 8, 8),
+                child: Container(
+                  width: 400,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      imageLoadedFromWorker == false
+                          ? Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Color.fromRGBO(196, 196, 196, 1)),
+                              child: Center(child: CircularProgressIndicator()),
+                            )
+                          : CarouselSlider.builder(
+                              itemCount: workerImageURL_list.length,
+                              itemBuilder: (context, index, realIndex) {
+                                final workerImageURL =
+                                    workerImageURL_list[index];
+                                return buildWorkerImage(workerImageURL, index);
+                              },
+                              options: CarouselOptions(
+                                height: 200,
+                                autoPlay: true,
+                                viewportFraction: 1,
+                                enableInfiniteScroll: true,
+                              )),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           jobTile,
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
@@ -93,9 +95,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                             Text(
                               job_Location,
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             Icon(
                               Icons.pin_drop,
@@ -109,172 +109,173 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         child: Text(
                           job_Price,
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red
-                          ),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red),
                         ),
                       )
-                ],
-              ),
-            )
-          ],
-        ),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Proof of Completion',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Proof of Completion',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: 400,
-                  child: imageUploaded == false
-                      ? InkWell(
-                          onTap: pickImagesFromDevice,
-                          hoverColor: Colors.transparent,
-                          child: Container(
-                            height: 500,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Color.fromRGBO(196, 196, 196, 1)),
-                            child: Image(image: NetworkImage(staticImage)),
-                          ),
-                        )
-                      : Column(
-                          children: [
-                            InkWell(
-                              onTap: pickImagesFromDevice,
-                              hoverColor: Colors.transparent,
-                              child: CarouselSlider.builder(
-                                  carouselController: controller,
-                                  itemCount: imageURL_list.length,
-                                  itemBuilder: (context, index, realIndex) {
-                                    final imageURL = imageURL_list[index];
-                                    return buildImage(imageURL, index);
-                                  },
-                                  options: CarouselOptions(
-                                    height: 500,
-                                    autoPlay: true,
-                                    viewportFraction: 1,
-                                    enableInfiniteScroll: false,
-                                    onPageChanged: (index, reason) =>
-                                        setState(() => activeIndex = index),
-                                  )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: 400,
+                    child: imageUploaded == false
+                        ? InkWell(
+                            onTap: pickImagesFromDevice,
+                            hoverColor: Colors.transparent,
+                            child: Container(
+                              height: 500,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Color.fromRGBO(196, 196, 196, 1)),
+                              child: Image(image: NetworkImage(staticImage)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(15),
-                                          primary:
-                                              Color.fromRGBO(4, 30, 81, 1)),
-                                      onPressed: back,
-                                      child: Icon(Icons.arrow_back)),
-                                  buildImageIndicator(),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(15),
-                                          primary:
-                                              Color.fromRGBO(4, 30, 81, 1)),
-                                      onPressed: next,
-                                      child: Icon(Icons.arrow_forward))
-                                ],
+                          )
+                        : Column(
+                            children: [
+                              InkWell(
+                                onTap: pickImagesFromDevice,
+                                hoverColor: Colors.transparent,
+                                child: CarouselSlider.builder(
+                                    carouselController: controller,
+                                    itemCount: imageURL_list.length,
+                                    itemBuilder: (context, index, realIndex) {
+                                      final imageURL = imageURL_list[index];
+                                      return buildImage(imageURL, index);
+                                    },
+                                    options: CarouselOptions(
+                                      height: 500,
+                                      autoPlay: true,
+                                      viewportFraction: 1,
+                                      enableInfiniteScroll: false,
+                                      onPageChanged: (index, reason) =>
+                                          setState(() => activeIndex = index),
+                                    )),
                               ),
-                            )
-                          ],
-                        )),
-            )
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Client Review',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 500,
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(7.0, 8.0))
-                ]),
-                child: TextField(
-                  maxLines: 5,
-                  maxLength: 250,
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Write your review...',
-                      errorText: review_Error,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(15),
+                                            primary:
+                                                Color.fromRGBO(4, 30, 81, 1)),
+                                        onPressed: back,
+                                        child: Icon(Icons.arrow_back)),
+                                    buildImageIndicator(),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(15),
+                                            primary:
+                                                Color.fromRGBO(4, 30, 81, 1)),
+                                        onPressed: next,
+                                        child: Icon(Icons.arrow_forward))
+                                  ],
+                                ),
+                              )
+                            ],
+                          )),
+              )
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Client Review',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RatingBar.builder(
-                  initialRating: 1,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4),
-                  itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Color.fromRGBO(195, 166, 96, 1),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 500,
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(7.0, 8.0))
+                  ]),
+                  child: TextField(
+                    maxLines: 5,
+                    maxLength: 250,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: 'Write your review...',
+                        errorText: review_Error,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RatingBar.builder(
+                    initialRating: 1,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4),
+                    itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Color.fromRGBO(195, 166, 96, 1),
+                        ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(
+                          11,
+                          206,
+                          131,
+                          1,
+                        ),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(20))),
+                    onPressed: submit,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(
-                        11,
-                        206,
-                        131,
-                        1,
-                      ),
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20))),
-                  onPressed: submit,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Submit',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  )),
-            )
-          ],
-        ),
-      ],
+                    )),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
