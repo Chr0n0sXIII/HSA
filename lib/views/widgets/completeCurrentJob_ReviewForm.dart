@@ -85,10 +85,33 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                     ),
                 onRatingUpdate: (rating) {
                   print(rating);
-                })
+                }
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromRGBO(11, 206, 131, 1,),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20)
+                )
+              ),
+              onPressed: submit, 
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Submit',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              )
+            )
           ],
         ),
       ],
     );
+  }
+
+  void submit() {
   }
 }
