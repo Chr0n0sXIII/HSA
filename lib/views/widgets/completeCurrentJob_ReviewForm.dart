@@ -17,7 +17,11 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   bool imageUploaded = false;
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
 
+  List<String> imageURL_list = <String>[];
+
   String? review_Error;
+
+  int activeIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -48,7 +52,24 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                               color: Color.fromRGBO(196, 196, 196, 1)),
                           child: Image(image: NetworkImage(staticImage)),
                         )
-                      : Column()),
+                      : Column(
+                          children: [
+                            CarouselSlider.builder(
+                                itemCount: imageURL_list.length,
+                                itemBuilder: (context, index, realIndex) {
+                                  final imageURL = imageURL_list[index];
+                                  return buildImage(imageURL, index);
+                                },
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  viewportFraction: 1,
+                                  enableInfiniteScroll: false,
+                                  onPageChanged: (index, reason) =>
+                                    setState(() => activeIndex = index),
+                                )
+                            )
+                          ],
+                        )),
             )
           ],
         ),
@@ -102,30 +123,29 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       ),
                   onRatingUpdate: (rating) {
                     print(rating);
-                  }
-              ),
+                  }),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(11, 206, 131, 1,),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20)
-                  )
-                ),
-                onPressed: submit, 
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(
+                        11,
+                        206,
+                        131,
+                        1,
+                      ),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20))),
+                  onPressed: submit,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Submit',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                )
-              ),
+                  )),
             )
           ],
         ),
@@ -133,6 +153,18 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     );
   }
 
-  void submit() {
+  void submit() {}
+
+  Widget buildImage(String imageURL, int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          imageURL,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 }
