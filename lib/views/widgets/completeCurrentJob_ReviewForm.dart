@@ -6,9 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:io' show File;
 
-
 class Complete_Job_Form extends StatefulWidget {
-  const Complete_Job_Form({ Key? key }) : super(key: key);
+  const Complete_Job_Form({Key? key}) : super(key: key);
 
   @override
   State<Complete_Job_Form> createState() => _Complete_Job_FormState();
@@ -34,55 +33,59 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
               ),
             ),
             Container(
-              width: 400,
-              height: 500,
-              child: imageUploaded == false
-              ?Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color.fromRGBO(196, 196, 196, 1)
-                ),
-                child: Image(image: NetworkImage(staticImage)),
-              )
-              :Column()
-            )
+                width: 400,
+                height: 500,
+                child: imageUploaded == false
+                    ? Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color.fromRGBO(196, 196, 196, 1)),
+                        child: Image(image: NetworkImage(staticImage)),
+                      )
+                    : Column())
           ],
         ),
         Column(
           children: [
             Text(
               'Client Review',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
               width: 500,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(7.0,8.0)
-                  )
-                ]
-              ),
+                    offset: Offset(7.0, 8.0))
+              ]),
               child: TextField(
                 maxLines: 5,
                 maxLength: 250,
                 decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: 'Write your review...',
-                  errorText: review_Error,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5)
-                  )
-                ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Write your review...',
+                    errorText: review_Error,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
               ),
-            )
+            ),
+            RatingBar.builder(
+                initialRating: 1,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4),
+                itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Color.fromRGBO(195, 166, 96, 1),
+                    ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                })
           ],
         ),
       ],
