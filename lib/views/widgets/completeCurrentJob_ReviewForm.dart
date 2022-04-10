@@ -29,6 +29,11 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   String? review_Error;
 
   int activeIndex = 0;
+
+  String jobTile = 'PlaceHolder Title';
+  String job_description = "Placeholder Description";
+  String job_Location = 'Placeholder Location';
+  String job_Price = 'Placeholder Price';
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -63,7 +68,41 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                             autoPlay: true,
                             viewportFraction: 1,
                             enableInfiniteScroll: true,
-                          ))
+                          )
+                      ),
+                      Text(
+                        jobTile,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        job_description,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            job_Location,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          Icon(
+                            Icons.pin_drop,
+                            color: Colors.red,
+                          )
+                        ],
+                      ),
+                      Text(
+                        job_Price,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red
+                        ),
+                      )
                 ],
               ),
             )
