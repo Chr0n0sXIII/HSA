@@ -43,10 +43,10 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
           children: [
             Container(
               width: 400,
-              height: 500,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15), color: Colors.white),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   imageLoadedFromWorker == false
                       ? Container(
@@ -70,37 +70,49 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                             enableInfiniteScroll: true,
                           )
                       ),
-                      Text(
-                        jobTile,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          jobTile,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
                       ),
-                      Text(
-                        job_description,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          job_description,
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            job_Location,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              job_Location,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.pin_drop,
-                            color: Colors.red,
-                          )
-                        ],
+                            Icon(
+                              Icons.pin_drop,
+                              color: Colors.red,
+                            )
+                          ],
+                        ),
                       ),
-                      Text(
-                        job_Price,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          job_Price,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red
+                          ),
                         ),
                       )
                 ],
