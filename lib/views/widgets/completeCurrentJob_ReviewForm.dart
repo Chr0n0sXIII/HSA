@@ -80,9 +80,22 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                                       setState(() => activeIndex = index),
                                   )
                               ),
+                            ),
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(15),
+                                    primary: Color.fromRGBO(4, 30, 81, 1)
+                                  ),
+                                  onPressed: back, 
+                                  child: Icon(Icons.arrow_back)
+                                ),
+                              ],
                             )
                           ],
-                        )),
+                      )
+              ),
             )
           ],
         ),
@@ -199,5 +212,8 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     for (var bytes in image!) {
       imageURL_list.add(File(bytes.path).path.toString());
     }
+  }
+
+  void back() {
   }
 }
