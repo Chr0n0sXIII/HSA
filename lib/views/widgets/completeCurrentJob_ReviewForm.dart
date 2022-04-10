@@ -69,6 +69,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                                   return buildImage(imageURL, index);
                                 },
                                 options: CarouselOptions(
+                                  height: 500,
                                   autoPlay: true,
                                   viewportFraction: 1,
                                   enableInfiniteScroll: false,
