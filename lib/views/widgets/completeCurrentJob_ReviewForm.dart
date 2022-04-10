@@ -62,20 +62,24 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       )
                       : Column(
                           children: [
-                            CarouselSlider.builder(
-                                itemCount: imageURL_list.length,
-                                itemBuilder: (context, index, realIndex) {
-                                  final imageURL = imageURL_list[index];
-                                  return buildImage(imageURL, index);
-                                },
-                                options: CarouselOptions(
-                                  height: 500,
-                                  autoPlay: true,
-                                  viewportFraction: 1,
-                                  enableInfiniteScroll: false,
-                                  onPageChanged: (index, reason) =>
-                                    setState(() => activeIndex = index),
-                                )
+                            InkWell(
+                              onTap: pickImagesFromDevice,
+                              hoverColor: Colors.transparent,
+                              child: CarouselSlider.builder(
+                                  itemCount: imageURL_list.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final imageURL = imageURL_list[index];
+                                    return buildImage(imageURL, index);
+                                  },
+                                  options: CarouselOptions(
+                                    height: 500,
+                                    autoPlay: true,
+                                    viewportFraction: 1,
+                                    enableInfiniteScroll: false,
+                                    onPageChanged: (index, reason) =>
+                                      setState(() => activeIndex = index),
+                                  )
+                              ),
                             )
                           ],
                         )),
