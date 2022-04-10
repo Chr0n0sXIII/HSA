@@ -75,7 +75,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                                 enableInfiniteScroll: true,
                               )),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
                           jobTile,
                           style: TextStyle(
@@ -83,13 +83,13 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
                           job_description,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Row(
                           children: [
                             Text(
@@ -105,7 +105,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
                           job_Price,
                           style: TextStyle(
