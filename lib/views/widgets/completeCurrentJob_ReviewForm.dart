@@ -15,6 +15,7 @@ class Complete_Job_Form extends StatefulWidget {
 
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
   bool imageUploaded = false;
+  bool imageLoadedFromWorker = false;
   final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   final controller = CarouselController();
   List<String> imageURL_list = <String>[];
@@ -22,6 +23,8 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   File? file;
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
+
+  List<String> workerImageURL_list = <String>[];
 
   String? review_Error;
 
@@ -31,7 +34,41 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(),
+        Column(
+          children: [
+            Container(
+              width: 400,
+              height: 500,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15), color: Colors.white),
+              child: Column(
+                children: [
+                  imageLoadedFromWorker == false
+                      ? Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color.fromRGBO(196, 196, 196, 1)
+                        ),
+                          child: Center(child: CircularProgressIndicator()),
+                      )
+                      : CarouselSlider.builder(
+                          itemCount: workerImageURL_list.length,
+                          itemBuilder: (context, index, realIndex) {
+                            final workerImageURL = workerImageURL_list[index];
+                            return buildWorkerImage(workerImageURL, index);
+                          },
+                          options: CarouselOptions(
+                            height: 200,
+                            autoPlay: true,
+                            viewportFraction: 1,
+                            enableInfiniteScroll: true,
+                          ))
+                ],
+              ),
+            )
+          ],
+        ),
         Column(
           children: [
             Padding(
@@ -66,7 +103,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                               onTap: pickImagesFromDevice,
                               hoverColor: Colors.transparent,
                               child: CarouselSlider.builder(
-                                carouselController: controller,
+                                  carouselController: controller,
                                   itemCount: imageURL_list.length,
                                   itemBuilder: (context, index, realIndex) {
                                     final imageURL = imageURL_list[index];
@@ -84,19 +121,22 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           padding: EdgeInsets.all(15),
-                                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                                          primary:
+                                              Color.fromRGBO(4, 30, 81, 1)),
                                       onPressed: back,
                                       child: Icon(Icons.arrow_back)),
                                   buildImageIndicator(),
                                   ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           padding: EdgeInsets.all(15),
-                                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                                          primary:
+                                              Color.fromRGBO(4, 30, 81, 1)),
                                       onPressed: next,
                                       child: Icon(Icons.arrow_forward))
                                 ],
@@ -242,5 +282,18 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
 
   moveToImage(int index) {
     controller.animateToPage(index);
+  }
+
+  Widget buildWorkerImage(String workerImageURL, int index) {
+    return Container(
+      width: 400,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(
+          workerImageURL,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 }
