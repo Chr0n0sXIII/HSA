@@ -19,7 +19,11 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      color: Colors.grey[400],
+      height: 500,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color.fromRGBO(196, 196, 196, 1)
+      ),
       child: CarouselSlider(
           items: widget.image,
           options: CarouselOptions(
