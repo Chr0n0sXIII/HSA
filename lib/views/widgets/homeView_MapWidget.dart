@@ -45,38 +45,41 @@ class _MapViewState extends State<MapView> {
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(196, 196, 196, 1),
-                borderRadius: BorderRadius.all(Radius.circular(45))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      'Looking For A Job',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+            child: InkWell(
+              onTap: (){},
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(196, 196, 196, 1),
+                  borderRadius: BorderRadius.all(Radius.circular(45))
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(
+                        'Looking For A Job',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                       color: Colors.white,
-                       borderRadius: BorderRadius.all(Radius.circular(30))
-                    ),
-                    child: const Icon(
-                      Icons.search_outlined,
-                      color: Colors.grey,
-                      size: 36,
-                    ),
-                  )
-                ],
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                         color: Colors.white,
+                         borderRadius: BorderRadius.all(Radius.circular(30))
+                      ),
+                      child: const Icon(
+                        Icons.search_outlined,
+                        color: Colors.grey,
+                        size: 36,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
