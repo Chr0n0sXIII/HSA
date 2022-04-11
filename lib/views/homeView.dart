@@ -28,6 +28,7 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MapView(),
                     TileCluster()

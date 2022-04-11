@@ -20,8 +20,9 @@ class _TileClusterState extends State<TileCluster> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserTile(),
           EditJobTile(),
