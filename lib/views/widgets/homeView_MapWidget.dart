@@ -13,9 +13,10 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   bool active_Job = true;
+  String job_Title = 'Placeholder job title';
+  String jobDesc = 'Placeholder job description';
   @override
   Widget build(BuildContext context) {
-    String jobDesc = "No Current Job Taken";
     return Container(
       height: 580,
       width: 450,
@@ -33,16 +34,39 @@ class _MapViewState extends State<MapView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 70,
+            height: 80,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 25, 0, 0),
-              child: Text(
-                jobDesc,
+              padding: EdgeInsets.fromLTRB(20, 25, 5, 0),
+              child: active_Job == false
+              ?Text(
+                'No Current Job Taken',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
-              ),
+              )
+              :Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      job_Title,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                  Text(
+                    jobDesc,
+                    maxLines: 1,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis
+                    ),
+                  )
+                ],
+              )
             ),
           ),
           Expanded(
