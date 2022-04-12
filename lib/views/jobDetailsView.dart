@@ -6,6 +6,10 @@ import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 
 class jobDetailsView extends StatelessWidget {
+  List<String> imageURL_List = <String>[
+    'https://picsum.photos/id/237/200/300',
+    'https://picsum.photos/id/237/200/300'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,21 +17,15 @@ class jobDetailsView extends StatelessWidget {
         child: Column(children: [
           TopBar(),
           PageTitle(" Job Details"),
-          Row(
-            children: [
-              SizedBox(
-                width: 300,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: jobDetails_ImageWidget(image: [
-                  Image.asset("assets/app_logo.png"),
-                  Image.asset("assets/featured-image-cheap-landscaping.jpeg"),
-                  Image.asset("assets/profile_picture_place_holder.png")
-                ]),
-              ),
-              jobDetails_InfoWidget(),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 250,right: 250),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                jobDetails_ImageWidget(imagelist: imageURL_List),
+                jobDetails_InfoWidget(),
+              ],
+            ),
           )
         ]),
       ),
