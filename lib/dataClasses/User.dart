@@ -74,18 +74,18 @@ class User {
 
   toMap() {
     return {
-      uName:uName,
-      email:email,
-      about:about,
-      contacts:contacts,
-      skills:skills,
-      activeRequests:activeRequests,
+      uName: uName,
+      email: email,
+      about: about,
+      contacts: contacts,
+      skills: skills,
+      activeRequests: activeRequests,
       completedRequests: completedRequests,
-      activeJob:activeJob,
+      activeJob: activeJob,
       completedJobs: completedJobs,
       clientRating: clientRating,
       workerRating: workerRating,
-      pfp:pfp
-};
+      pfp: pfp
+    };
   }
 }
