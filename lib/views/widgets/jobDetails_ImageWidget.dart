@@ -38,22 +38,26 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
                 onPageChanged: (index, reason) =>
                     setState(() => activeIndex = index),
               )),
-          Row(
-            children: [
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(15),
-                      primary: Color.fromRGBO(4, 30, 81, 1)),
-                  onPressed: back,
-                  child: Icon(Icons.arrow_back)),
-              buildImageIndicator(),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(15),
-                      primary: Color.fromRGBO(4, 30, 81, 1)),
-                  onPressed: next,
-                  child: Icon(Icons.arrow_forward))
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        primary: Color.fromRGBO(4, 30, 81, 1)),
+                    onPressed: back,
+                    child: Icon(Icons.arrow_back)),
+                buildImageIndicator(),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        primary: Color.fromRGBO(4, 30, 81, 1)),
+                    onPressed: next,
+                    child: Icon(Icons.arrow_forward))
+              ],
+            ),
           )
         ],
       ),
