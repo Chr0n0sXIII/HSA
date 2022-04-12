@@ -4,8 +4,11 @@ import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 
+import '../dataClasses/User.dart';
+
 class Complete_Job_List_View extends StatefulWidget {
-  const Complete_Job_List_View({ Key? key }) : super(key: key);
+  final User user;
+  const Complete_Job_List_View({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Complete_Job_List_View> createState() => _Complete_Job_List_ViewState();
@@ -17,15 +20,14 @@ class _Complete_Job_List_ViewState extends State<Complete_Job_List_View> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(229, 229, 229, 1),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TopBar(),
-            PageTitle("View Your Completed Jobs"),
-            Completed_Lising(),
-            Footer(),
-          ],
-        )
-      ),
+          child: Column(
+        children: [
+          TopBar(user: widget.user,),
+          PageTitle("View Your Completed Jobs"),
+          Completed_Lising(),
+          Footer(),
+        ],
+      )),
     );
   }
 }

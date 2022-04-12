@@ -7,9 +7,14 @@ import 'package:home_service_app/dataClasses/userData.dart';
 import 'package:home_service_app/dataClasses/userDataUtil.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
+import '../../dataClasses/User.dart';
+
 class jobDetails_InfoWidget extends StatefulWidget {
   userData udata = UserDataUtil.TestData_UserData()[1];
   JobData jdata = JobDataUtil.TestData_JobsData()[1];
+  final User user;
+
+  jobDetails_InfoWidget({Key? key, required this.user}) : super(key: key);
   @override
   jobDetails_InfoWidget_State createState() => jobDetails_InfoWidget_State();
 }
@@ -26,7 +31,9 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const UserProfileView()));
+                    builder: (context) => UserProfileView(
+                          user: widget.user,
+                        )));
           },
           child: Padding(
             padding: EdgeInsets.all(5),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/views/widgets/jobListing_Card.dart';
@@ -11,15 +12,16 @@ import 'package:home_service_app/views/widgets/navBar.dart';
 class jobListingView extends StatelessWidget {
   List<JobData> jobdata = [];
   List<Image> images = [];
+  final User user;
 
-  jobListingView({Key? key}) : super(key: key);
+  jobListingView({Key? key, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     initjobs();
     return Scaffold(
       body: Column(
         children: [
-          TopBar(),
+          TopBar(user: user,),
           jobListing_SearchWidget(),
           Expanded(
             flex: 11,

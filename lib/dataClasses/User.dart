@@ -1,54 +1,91 @@
+import 'dart:html';
+
+import 'package:flutter/material.dart';
+
 class User {
-  static String uName = "Jiles Ramjattan";
-  static String email = "jilesramjattan@gmail.com";
-  static String about = "Na";
-  static String contacts = "Na";
-  static String skills = "";
-  static List<String> activeRequests = [""];
-  static String activeJob = "";
-  static List<String> completedJobs = [""];
-  static double clientRating = 0;
-  static double workerRating = 0;
+  String uName = "Jiles Ramjattan";
+  String email = "jilesramjattan@gmail.com";
+  String about = "Na";
+  String contacts = "Na";
+  String skills = "";
+  List<String> activeRequests = [""];
+  List<String> completedRequests = [""];
+  List<String> completedJobs = [""];
+  String activeJob = "";
+  double clientRating = 0;
+  double workerRating = 0;
+  Image pfpImage = Image.asset("assets/profile_picture_place_holder.png");
+  String pfp = "";
 
-  static String pfp = "";
+  User(
+      {required this.uName,
+      required this.email,
+      required this.about,
+      required this.contacts,
+      required this.skills,
+      required this.activeRequests,
+      required this.completedRequests,
+      required this.activeJob,
+      required this.completedJobs,
+      required this.clientRating,
+      required this.workerRating,
+      required this.pfp,
+      required this.pfpImage});
 
-  static setUname(String uName) {
-    User.uName = uName;
+  setUname(String uName) {
+    this.uName = uName;
   }
 
-  static setemail(String email) {
-    User.email = email;
+  setemail(String email) {
+    this.email = email;
   }
 
-  static setabout(String about) {
-    User.about = about;
+  setabout(String about) {
+    this.about = about;
   }
 
-  static setcontacts(String contacts) {
-    User.contacts = contacts;
+  setcontacts(String contacts) {
+    this.contacts = contacts;
   }
 
-  static setskills(String skills) {
-    User.skills = skills;
+  setskills(String skills) {
+    this.skills = skills;
   }
 
-  static setactiveRequest(List<String> Requests) {
-    User.activeRequests = Requests;
+  setactiveRequest(List<String> Requests) {
+    this.activeRequests = Requests;
   }
 
-  static setactiveJob(String job) {
-    User.activeJob = job;
+  setactiveJob(String job) {
+    this.activeJob = job;
   }
 
-  static setclientRating(var clientRating) {
-    User.clientRating = clientRating;
+  setclientRating(var clientRating) {
+    this.clientRating = clientRating;
   }
 
-  static setworkerRating(var workerRating) {
-    User.workerRating = workerRating;
+  setworkerRating(var workerRating) {
+    this.workerRating = workerRating;
   }
 
-  static setpfp(String pfp) {
-    User.pfp = pfp;
+  setpfp(String pfp) {
+    this.pfp = pfp;
+  }
+
+  toMap() {
+    return {
+      uName: uName,
+      email: email,
+      about: about,
+      contacts: contacts,
+      skills: skills,
+      activeRequests: activeRequests,
+      completedRequests: completedRequests,
+      activeJob: activeJob,
+      completedJobs: completedJobs,
+      clientRating: clientRating,
+      workerRating: workerRating,
+      pfp: pfp
+    };
   }
 }

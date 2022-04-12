@@ -7,14 +7,16 @@ import 'package:home_service_app/views/userProfileView.dart';
 import 'package:home_service_app/dataClasses/User.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown({Key? key}) : super(key: key);
+  final User user;
+  const Dropdown({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Dropdown> createState() => _DropdownState();
 }
 
 class TopBar extends StatelessWidget {
-  const TopBar({Key? key}) : super(key: key);
+  final User user;
+  const TopBar({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,9 @@ class TopBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeView()));
+                          builder: (context) => HomeView(
+                                user: user,
+                              )));
                 },
                 hoverColor: Colors.transparent,
                 child: Text('Home',
@@ -56,7 +60,7 @@ class TopBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => jobListingView()));
+                          builder: (context) => jobListingView(user: user,)));
                 },
                 hoverColor: Colors.transparent,
                 child: Text('Job Listings',
@@ -76,13 +80,20 @@ class TopBar extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                child: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: Image.asset('assets/profile_picture_place_holder.png'),
-                ),
+                child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          // ignore: unnecessary_new
+                          image: new DecorationImage(
+                              fit: BoxFit.cover, image: user.pfpImage.image)),
+                    ),
               ),
-              const Dropdown()
+              Dropdown(
+                user: user,
+              )
             ],
           ),
         )
@@ -93,17 +104,18 @@ class TopBar extends StatelessWidget {
 
 class _DropdownState extends State<Dropdown> {
   final items = ['Settings', 'Logout'];
-  String username = "";
-  String? dropdownValue;
+  //String username = "";
+  //String? dropdownValue;
+  
   @override
   Widget build(BuildContext context) {
-    loadUserProfile();
+    User user = widget.user;
     return DropdownButton(
         elevation: 12,
         iconSize: 32,
         underline: const SizedBox(),
         iconEnabledColor: const Color.fromRGBO(195, 166, 96, 1),
-        hint: Text(username,
+        hint: Text(user.uName,
             style: const TextStyle(color: Color.fromRGBO(195, 166, 96, 1))),
         items: [
           DropdownMenuItem(
@@ -123,7 +135,7 @@ class _DropdownState extends State<Dropdown> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const UserProfileView()));
+                    builder: (context) =>  UserProfileView(user: user,)));
           }
           if (value == "Logout") {
             Navigator.push(context,
@@ -132,17 +144,7 @@ class _DropdownState extends State<Dropdown> {
         });
   }
 
-  loadUserProfile() async {
-    final value = await FirebaseFirestore.instance
-        .collection("users")
-        .where('email', isEqualTo: User.email)
-        .get();
-    for (var doc in value.docs) {
-      setState(() {
-        username = doc.get('uName').toString();
-      });
-    }
-  }
+ 
 }
 
 class SideNav extends StatelessWidget {

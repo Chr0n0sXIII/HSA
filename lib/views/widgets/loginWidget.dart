@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/dataClasses/jobDataUtil.dart';
@@ -376,8 +377,24 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   getTextInputData() async {
+    User user = User(
+        uName: 'uName',
+        email: 'email',
+        about: 'about',
+        contacts: 'contacts',
+        skills: 'skills',
+        activeRequests: ['activeRequests'],
+        completedRequests: ['completedRequests'],
+        activeJob: 'activeJob',
+        completedJobs: ['completedjobs'],
+        clientRating: 0,
+        workerRating: 0,
+        pfp: 'pfp',
+        pfpImage: Image.asset("assets/profile_picture_place_holder.png"));
     await authCredentials();
-
+    if (validated) {
+      user = await loadUserProfile();
+    }
     setState(() {
       widget.email = emailController.text;
       widget.password = passController.text;
@@ -387,8 +404,12 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (isLogin) {
         print(validated);
         if (validated) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeView()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeView(
+                        user: user,
+                      )));
         } else {
           setState(() {
             wrongcred = true;
@@ -449,7 +470,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         setState(() {
           validated = true;
         });
-        break;
       } else {
         setState(() {
           validated = false;
@@ -481,5 +501,52 @@ class _LoginWidgetState extends State<LoginWidget> {
         .toMap();
 
     FirebaseFirestore.instance.collection("credentials").add(cred);
+  }
+
+  loadUserProfile() async {
+    final value = await FirebaseFirestore.instance
+        .collection("users")
+        .where('email', isEqualTo: emailController.text)
+        .get();
+    for (var doc in value.docs) {
+      Reference ref = FirebaseStorage.instance.ref().child(doc.get("pfp"));
+// no need of the file extension, the name will do fine.
+      var url = await ref.getDownloadURL();
+      List a = doc.get("activeRequests");
+      List<String> activeRequest = [];
+      List<String> completedRequests = [];
+      List<String> completedJobs = [];
+
+      for (String s in a) {
+        activeRequest.add(s);
+      }
+      a = doc.get("completedRequests");
+      for (String s in a) {
+        completedRequests.add(s);
+      }
+      a = doc.get("completedJobs");
+      for (String s in a) {
+        completedJobs.add(s);
+      }
+      print(activeRequest.toString());
+      final User user = User(
+        uName: doc.get("uName"),
+        email: doc.get("email"),
+        about: doc.get("about"),
+        contacts: doc.get("contacts"),
+        skills: doc.get("skills"),
+        activeRequests: activeRequest,
+        completedRequests: completedRequests,
+        activeJob: doc.get("activeJob"),
+        completedJobs: completedJobs,
+        clientRating: doc.get("clientRating"),
+        workerRating: doc.get("workerRating"),
+        pfp: doc.get("pfp"),
+        pfpImage: Image.network(url),
+      );
+      print("here");
+
+      return user;
+    }
   }
 }

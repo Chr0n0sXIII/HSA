@@ -5,9 +5,13 @@ import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/acceptWorkers_JobDesc.dart';
 import 'package:home_service_app/views/widgets/acceptWorkers_ScrollWidget.dart';
 
+import '../dataClasses/User.dart';
+
 class AcceptWorkerView extends StatelessWidget {
   var workers = [1, 2, 3, 4, 5];
   var itemCount;
+  final User user;
+  AcceptWorkerView({Key? key, required this.user}) : super(key: key);
   // _fecthData() async {
   //   const url = 'https://api.letsbuildthatapp.com/youtube/home_feed';
   //   final response = await http.get(Uri.parse(url));
@@ -29,7 +33,7 @@ class AcceptWorkerView extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
         body: SingleChildScrollView(
             child: Column(children: [
-          const TopBar(),
+           TopBar(user: user,),
           Row(
             children: [
               Column(

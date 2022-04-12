@@ -10,7 +10,8 @@ import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class TileCluster extends StatefulWidget {
-  const TileCluster({Key? key}) : super(key: key);
+  final User user;
+  const TileCluster({Key? key, required this.user}) : super(key: key);
 
   @override
   State<TileCluster> createState() => _TileClusterState();
@@ -19,11 +20,14 @@ class TileCluster extends StatefulWidget {
 class _TileClusterState extends State<TileCluster> {
   @override
   Widget build(BuildContext context) {
+    User user = widget.user;
     return Padding(
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
-          UserTile(),
+          UserTile(
+            user: user,
+          ),
           EditJobTile(),
           AcceptWorksTile(),
           Row(
@@ -36,29 +40,33 @@ class _TileClusterState extends State<TileCluster> {
 }
 
 class UserTile extends StatefulWidget {
-  const UserTile({Key? key}) : super(key: key);
+  final User user;
+  const UserTile({Key? key, required this.user}) : super(key: key);
 
   @override
   State<UserTile> createState() => _UserTileState();
 }
 
 class _UserTileState extends State<UserTile> {
-  double rating = 1;
-  String user_Skils = 'User Trade Skills and Profession';
-  String user_desc = 'User Description about me';
-  String pfp = "";
-  var imageurl = "";
+ 
   var isEmpty = false;
 
   @override
   Widget build(BuildContext context) {
-    waitbox();
+    User user = widget.user;
+    if (user.pfpImage != null) {
+      isEmpty = true;
+    }
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(30)),
       hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const UserProfileView()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UserProfileView(
+                      user: user,
+                    )));
       },
       child: Padding(
         padding: EdgeInsets.all(5),
@@ -92,16 +100,16 @@ class _UserTileState extends State<UserTile> {
                       decoration: BoxDecoration(
                           color: Colors.black,
                           shape: BoxShape.circle,
+                          // ignore: unnecessary_new
                           image: new DecorationImage(
-                              fit: BoxFit.cover,
-                              image: new NetworkImage(imageurl))),
+                              fit: BoxFit.cover, image: user.pfpImage.image)),
                     ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RatingBarIndicator(
-                    rating: rating.toDouble(),
+                    rating: user.workerRating.toDouble(),
                     direction: Axis.horizontal,
                     itemCount: 5,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -113,7 +121,7 @@ class _UserTileState extends State<UserTile> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      user_Skils,
+                      user.skills,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.black,
@@ -125,7 +133,7 @@ class _UserTileState extends State<UserTile> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      user_desc,
+                      user.about,
                       textAlign: TextAlign.start,
                       style: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
@@ -139,36 +147,7 @@ class _UserTileState extends State<UserTile> {
     );
   }
 
-  waitbox() async {
-    await getRating();
-  }
-
-  getRating() async {
-    //Get String from DB
-    final value = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: User.email)
-        .get();
-    for (var doc in value.docs) {
-      setState(() {
-        rating = doc.get('workerRating');
-        user_Skils = doc.get('skills');
-        user_desc = doc.get('about');
-        pfp = doc.get('pfp');
-        print(pfp);
-      });
-      //Use PFP name too get from FireStorage
-      Reference ref = FirebaseStorage.instance.ref().child(pfp);
-// no need of the file extension, the name will do fine.
-      var url = await ref.getDownloadURL();
-      setState(() {
-        imageurl = url;
-      });
-      print(url);
-      isEmpty = true;
-      return;
-    }
-  }
+  
 }
 
 class EditJobTile extends StatelessWidget {

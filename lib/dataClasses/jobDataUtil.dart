@@ -9,15 +9,13 @@ class JobDataUtil {
   static List<JobData> TestData_JobsData() {
     return [
       JobData(
-        jobID: "none",
-        jobName: "none",
-        jobDescription: "none",
-        jobLocation: "none",
-        jobPrice: "none",
-        ActiveJobImages: ["app_logo.png"],
-        CompletedJobImages: [],
-        latLng: LatLng(35.68, 51.41),
-      ),
+          jobID: "none",
+          jobName: "none",
+          jobDescription: "none",
+          jobLocation: "none",
+          jobPrice: "none",
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "1",
           jobName: "Cut Grass",
@@ -28,9 +26,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "2",
           jobName: "Water plants Daily",
@@ -42,9 +39,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "3",
           jobName: "Repair water lines",
@@ -56,9 +52,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "4",
           jobName: "Paint Walls",
@@ -70,9 +65,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "5",
           jobName: "Clean Pool",
@@ -84,9 +78,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "6",
           jobName: "Move Materials",
@@ -98,9 +91,8 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          ActiveJobImages: ["app_logo.png"],
-          CompletedJobImages: [],
-          latLng: LatLng(35.68, 51.41)),
+          JobImages: ["app_logo.png"],
+          latLng: LatLng(35.68, 51.41), jobType: ''),
     ];
   }
 }
