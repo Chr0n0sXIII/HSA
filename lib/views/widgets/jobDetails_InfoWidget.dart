@@ -56,28 +56,34 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RatingBar.builder(
-                        initialRating: 4,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Color.fromRGBO(195, 166, 96, 1),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RatingBar.builder(
+                          initialRating: 4,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Color.fromRGBO(195, 166, 96, 1),
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
                       ),
-                      Text(
-                        widget.udata.uName,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+                        child: Text(
+                          widget.udata.uName,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ],
