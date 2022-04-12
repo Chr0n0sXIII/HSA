@@ -58,9 +58,11 @@ class TopBar extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => jobListingView(user: user,)));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => jobListingView(
+                        user: user,
+                      )));
                 },
                 hoverColor: Colors.transparent,
                 child: Text('Job Listings',

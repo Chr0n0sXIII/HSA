@@ -17,7 +17,7 @@ class jobListingView extends StatelessWidget {
   jobListingView({Key? key, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    initjobs();
+    
     return Scaffold(
       body: Column(
         children: [
@@ -36,7 +36,9 @@ class jobListingView extends StatelessWidget {
                           Text("Map PlaceHolder"),
                         ],
                       )),
-                  Expanded(
+                  jobdata.isNotEmpty
+                
+                  ?Expanded(
                     flex: 5,
                     child: ListView.builder(
                         itemCount: jobdata.length,
@@ -46,7 +48,7 @@ class jobListingView extends StatelessWidget {
                             image: images[index],
                           );
                         }),
-                  ),
+                  ):Text("Empty")
                 ],
               ),
             ),
