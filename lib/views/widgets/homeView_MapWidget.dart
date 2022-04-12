@@ -6,8 +6,11 @@ import 'dart:ui' as ui;
 
 import 'package:home_service_app/views/completeCurrentJobView.dart';
 
+import '../../dataClasses/User.dart';
+
 class MapView extends StatefulWidget {
-  const MapView({Key? key}) : super(key: key);
+  final User user;
+  const MapView({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MapView> createState() => _MapViewState();
@@ -128,7 +131,7 @@ class _MapViewState extends State<MapView> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Completed_Current_Job_View()));
+                          builder: (context) => Completed_Current_Job_View(user: widget.user)));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),

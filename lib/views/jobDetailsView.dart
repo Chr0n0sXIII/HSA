@@ -9,8 +9,11 @@ import '../dataClasses/User.dart';
 
 class jobDetailsView extends StatelessWidget {
   final User user;
-  const jobDetailsView({Key? key,required this.user}) : super(key: key);
-
+  List<String> imageURL_List = <String>[
+    'https://picsum.photos/id/237/200/300',
+    'https://picsum.photos/id/237/200/300'
+  ];
+  jobDetailsView({Key? key,required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,7 @@ class jobDetailsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 jobDetails_ImageWidget(imagelist: imageURL_List),
-                jobDetails_InfoWidget(),
+                jobDetails_InfoWidget(user: user),
               ],
             ),
           )

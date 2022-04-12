@@ -7,18 +7,11 @@ import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:latlng/latlng.dart';
-<<<<<<< HEAD
-import 'dart:io';
-import 'dart:io' show File;
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:uuid/uuid.dart';
-=======
 import 'dart:io' show File;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../dataClasses/User.dart';
->>>>>>> origin/Jiles
 
 class Add_Job_Form extends StatefulWidget {
   final User user;
@@ -57,11 +50,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   final job_Description_controller = TextEditingController();
   final job_Price_controller = TextEditingController();
 
-<<<<<<< HEAD
-=======
   String Address = "";
 
->>>>>>> origin/Jiles
   @override
   void dispose() {
     job_Description_controller.dispose();
@@ -448,7 +438,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         jobType: selectedItem.toString(),
         latLng: latLng,
         jobPrice: job_Price_controller.text,
-        JobImages: imageURL_list);
+        ActiveJobImages: imageURL_list,  CompletedJobImages: []);
     widget.user.activeRequests.add(jobID);
     FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
     final val = await FirebaseFirestore.instance

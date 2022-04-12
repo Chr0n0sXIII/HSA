@@ -35,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MapView(),
+                    MapView(user: widget.user,),
                     TileCluster(
                       user: widget.user,
                     )
