@@ -34,6 +34,26 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
                 autoPlay: true,
               )
           ),
+          Row(
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(15),
+                  primary: Color.fromRGBO(4, 30, 81, 1)
+                ),
+                onPressed: back, 
+                child: Icon(Icons.arrow_back)
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(15),
+                  primary: Color.fromRGBO(4, 30, 81, 1)
+                ),
+                onPressed: next, 
+                child: Icon(Icons.arrow_forward)
+              )
+            ],
+          )
         ],
       ),
     );
@@ -51,5 +71,11 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
         ),
       ),
     );
+  }
+
+  void back() {
+  }
+
+  void next() {
   }
 }
