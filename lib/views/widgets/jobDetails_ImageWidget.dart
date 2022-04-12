@@ -24,7 +24,7 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
       child: Column(
         children: [
           CarouselSlider.builder(
-            carouselController: controller,
+              carouselController: controller,
               itemCount: widget.imagelist!.length,
               itemBuilder: (context, index, realIndex) {
                 final imageURL = widget.imagelist![index];
@@ -35,8 +35,8 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
                 viewportFraction: 1,
                 enableInfiniteScroll: true,
                 autoPlay: true,
-                onPageChanged: (index,reason) =>
-                  setState(() => activeIndex = index),
+                onPageChanged: (index, reason) =>
+                    setState(() => activeIndex = index),
               )),
           Row(
             children: [
@@ -74,9 +74,13 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
     );
   }
 
-  void back() {}
+  void back() {
+    controller.previousPage();
+  }
 
-  void next() {}
+  void next() {
+    controller.nextPage();
+  }
 
   buildImageIndicator() {
     return AnimatedSmoothIndicator(
