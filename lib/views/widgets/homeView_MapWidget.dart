@@ -116,7 +116,8 @@ class _MapViewState extends State<MapView> {
             ],
           ),
         ),
-        Padding(
+        active_Job == true
+        ?Padding(
           padding: const EdgeInsets.all(15.0),
           child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -137,6 +138,7 @@ class _MapViewState extends State<MapView> {
                   ),
                 )),
         )
+        :Container()
       ],
     );
   }
