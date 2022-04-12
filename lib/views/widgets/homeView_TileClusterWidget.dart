@@ -22,8 +22,9 @@ class _TileClusterState extends State<TileCluster> {
   Widget build(BuildContext context) {
     User user = widget.user;
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserTile(
             user: user,

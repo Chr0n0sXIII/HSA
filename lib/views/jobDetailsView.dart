@@ -9,8 +9,11 @@ import '../dataClasses/User.dart';
 
 class jobDetailsView extends StatelessWidget {
   final User user;
-  const jobDetailsView({Key? key,required this.user}) : super(key: key);
-
+  List<String> imageURL_List = <String>[
+    'https://picsum.photos/id/237/200/300',
+    'https://picsum.photos/id/237/200/300'
+  ];
+  jobDetailsView({Key? key,required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,21 +21,15 @@ class jobDetailsView extends StatelessWidget {
         child: Column(children: [
           TopBar(user: user,),
           PageTitle(" Job Details"),
-          Row(
-            children: [
-              SizedBox(
-                width: 300,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: jobDetails_ImageWidget(image: [
-                  Image.asset("assets/app_logo.png"),
-                  Image.asset("assets/featured-image-cheap-landscaping.jpeg"),
-                  Image.asset("assets/profile_picture_place_holder.png")
-                ]),
-              ),
-              jobDetails_InfoWidget(user: user,),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 250,right: 250),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                jobDetails_ImageWidget(imagelist: imageURL_List),
+                jobDetails_InfoWidget(user: user),
+              ],
+            ),
           )
         ]),
       ),

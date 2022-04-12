@@ -14,7 +14,9 @@ class JobDataUtil {
           jobDescription: "none",
           jobLocation: "none",
           jobPrice: "none",
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "1",
@@ -26,7 +28,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "2",
@@ -39,7 +43,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "3",
@@ -52,7 +58,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "4",
@@ -65,7 +73,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "5",
@@ -78,7 +88,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "6",
@@ -91,7 +103,9 @@ class JobDataUtil {
             Icons.pin_drop,
             color: Colors.red,
           ),
-          JobImages: ["app_logo.png"],
+          ActiveJobImages: ["app_logo.png"],
+          CompletedJobImages: [''],
+          isCompleted: false,
           latLng: LatLng(35.68, 51.41), jobType: ''),
     ];
   }

@@ -438,7 +438,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         jobType: selectedItem.toString(),
         latLng: latLng,
         jobPrice: job_Price_controller.text,
-        JobImages: imageURL_list);//change this
+        ActiveJobImages: imageURL_list,  CompletedJobImages: []);
     widget.user.activeRequests.add(jobID);
     FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
     final val = await FirebaseFirestore.instance
