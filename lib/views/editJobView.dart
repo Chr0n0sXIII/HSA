@@ -24,6 +24,7 @@ class _editJobViewState extends State<editJobView> {
           children: [
             TopBar(user: widget.user,),
             PageTitle('View Your Current Jobs and Edit'),
+            editJobTileListing(),
             Footer(),
           ],
         ),
