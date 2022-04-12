@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/User.dart';
+import 'package:home_service_app/views/acceptWorkerList.dart';
 import 'package:home_service_app/views/acceptWorkersView.dart';
 import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
@@ -221,7 +222,7 @@ class AcceptWorksTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AcceptWorkerView(
+                builder: (context) => Active_Job_List_View(
                       user: user,
                     )));
       },
