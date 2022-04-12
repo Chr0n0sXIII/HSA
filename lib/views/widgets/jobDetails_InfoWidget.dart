@@ -19,77 +19,67 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const UserProfileView()));
-          },
-          child: Padding(
-            padding: EdgeInsets.all(5),
-            child: Container(
-              height: 120,
-              width: 500,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(7.0, 8.0))
-                  ]),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Image.asset(
-                        'assets/profile_picture_place_holder.png',
-                        scale: 0.65),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RatingBar.builder(
-                          initialRating: 4,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Color.fromRGBO(195, 166, 96, 1),
-                          ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+        Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            height: 120,
+            width: 500,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(7.0, 8.0))
+                ]),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset(
+                      'assets/profile_picture_place_holder.png',
+                      scale: 0.65),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RatingBar.builder(
+                        initialRating: 4,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Color.fromRGBO(195, 166, 96, 1),
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+                      child: Text(
+                        widget.udata.uName,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
-                        child: Text(
-                          widget.udata.uName,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
