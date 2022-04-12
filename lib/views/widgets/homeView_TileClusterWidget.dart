@@ -7,6 +7,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/User.dart';
+import 'package:home_service_app/views/acceptWorkerList.dart';
+import 'package:home_service_app/views/acceptWorkersView.dart';
+import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class TileCluster extends StatefulWidget {
@@ -29,8 +32,10 @@ class _TileClusterState extends State<TileCluster> {
           UserTile(
             user: user,
           ),
-          EditJobTile(),
-          AcceptWorksTile(),
+          EditJobTile(
+            user: user,
+          ),
+          AcceptWorksTile(user: user,),
           Row(
             children: [CompleteJobTile(), AddNewJobTile()],
           )
@@ -49,7 +54,6 @@ class UserTile extends StatefulWidget {
 }
 
 class _UserTileState extends State<UserTile> {
- 
   var isEmpty = false;
 
   @override
@@ -147,47 +151,58 @@ class _UserTileState extends State<UserTile> {
       ),
     );
   }
-
-  
 }
 
 class EditJobTile extends StatelessWidget {
-  const EditJobTile({Key? key}) : super(key: key);
+  final User user;
+  const EditJobTile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Container(
-        height: 140,
-        width: 450,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.border_color_outlined,
-              color: Color.fromRGBO(195, 166, 96, 1),
-              size: 100,
-            ),
-            Text(
-              'View Your Job Listings \nand Edit',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => editJobView(
+                      user: user,
+                    )));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          height: 140,
+          width: 450,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.border_color_outlined,
+                color: Color.fromRGBO(195, 166, 96, 1),
+                size: 100,
               ),
-            )
-          ],
+              Text(
+                'View Your Job Listings \nand Edit',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -195,47 +210,60 @@ class EditJobTile extends StatelessWidget {
 }
 
 class AcceptWorksTile extends StatelessWidget {
-  const AcceptWorksTile({Key? key}) : super(key: key);
+  final User user;
+  const AcceptWorksTile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Container(
-        height: 140,
-        width: 450,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.person_add,
-                color: Color.fromRGBO(195, 166, 96, 1),
-                size: 100,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                'Accept Workers',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Active_Job_List_View(
+                      user: user,
+                    )));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          height: 140,
+          width: 450,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Icon(
+                  Icons.person_add,
+                  color: Color.fromRGBO(195, 166, 96, 1),
+                  size: 100,
                 ),
               ),
-            )
-          ],
+              Expanded(
+                flex: 3,
+                child: Text(
+                  'Accept Workers',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
