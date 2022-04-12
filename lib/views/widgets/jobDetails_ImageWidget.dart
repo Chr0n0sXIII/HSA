@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class jobDetails_ImageWidget extends StatefulWidget {
   List<String>? imagelist = <String>[];
-  int activeIndex = 0;
 
   jobDetails_ImageWidget({
     required this.imagelist,
@@ -15,6 +15,8 @@ class jobDetails_ImageWidget extends StatefulWidget {
 }
 
 class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
+  int activeIndex = 0;
+  final controller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,6 +24,7 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
       child: Column(
         children: [
           CarouselSlider.builder(
+            carouselController: controller,
               itemCount: widget.imagelist!.length,
               itemBuilder: (context, index, realIndex) {
                 final imageURL = widget.imagelist![index];
@@ -32,26 +35,24 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
                 viewportFraction: 1,
                 enableInfiniteScroll: true,
                 autoPlay: true,
-              )
-          ),
+                onPageChanged: (index,reason) =>
+                  setState(() => activeIndex = index),
+              )),
           Row(
             children: [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(15),
-                  primary: Color.fromRGBO(4, 30, 81, 1)
-                ),
-                onPressed: back, 
-                child: Icon(Icons.arrow_back)
-              ),
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(15),
+                      primary: Color.fromRGBO(4, 30, 81, 1)),
+                  onPressed: back,
+                  child: Icon(Icons.arrow_back)),
+              buildImageIndicator(),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(15),
-                  primary: Color.fromRGBO(4, 30, 81, 1)
-                ),
-                onPressed: next, 
-                child: Icon(Icons.arrow_forward)
-              )
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(15),
+                      primary: Color.fromRGBO(4, 30, 81, 1)),
+                  onPressed: next,
+                  child: Icon(Icons.arrow_forward))
             ],
           )
         ],
@@ -73,9 +74,21 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
     );
   }
 
-  void back() {
+  void back() {}
+
+  void next() {}
+
+  buildImageIndicator() {
+    return AnimatedSmoothIndicator(
+      onDotClicked: moveToImage,
+      activeIndex: activeIndex,
+      count: widget.imagelist!.length,
+      effect:
+          ScrollingDotsEffect(activeDotColor: Color.fromRGBO(195, 166, 96, 1)),
+    );
   }
 
-  void next() {
+  moveToImage(int index) {
+    controller.animateToPage(index);
   }
 }
