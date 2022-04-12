@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class jobDetails_ImageWidget extends StatefulWidget {
-  List<Image>? image;
-  int index = 0;
+  List<String>? imagelist = <String>[];
+  int activeIndex = 0;
 
   jobDetails_ImageWidget({
-    required this.image,
+    required this.imagelist,
   });
 
   @override
@@ -19,27 +19,37 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 500,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color.fromRGBO(196, 196, 196, 1)
+      child: Column(
+        children: [
+          CarouselSlider.builder(
+              itemCount: widget.imagelist!.length,
+              itemBuilder: (context, index, realIndex) {
+                final imageURL = widget.imagelist![index];
+                return buildImage(imageURL, index);
+              },
+              options: CarouselOptions(
+                height: 500,
+                viewportFraction: 1,
+                enableInfiniteScroll: true,
+                autoPlay: true,
+              )
+          ),
+        ],
       ),
-      child: CarouselSlider(
-          items: widget.image,
-          options: CarouselOptions(
-            height: 500,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-          )),
+    );
+  }
+
+  Widget buildImage(String imageURL, int index) {
+    return Container(
+      width: 400,
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          imageURL,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
