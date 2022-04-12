@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/accepWorkersList_widget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
@@ -23,6 +24,7 @@ class _Active_Job_List_ViewState extends State<Active_Job_List_View> {
         children: [
           TopBar(user: widget.user,),
           PageTitle("Active Jobs"),
+          Active_Jobs_List(user: widget.user,),
           Footer(),
         ],
       )),
