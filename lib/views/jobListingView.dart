@@ -37,7 +37,6 @@ class jobListingView extends StatelessWidget {
                         ],
                       )),
                   jobdata.isNotEmpty
-                
                   ?Expanded(
                     flex: 5,
                     child: ListView.builder(

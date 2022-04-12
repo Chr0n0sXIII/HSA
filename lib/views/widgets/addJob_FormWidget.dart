@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:geocoding/geocoding.dart';
@@ -51,6 +52,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   final job_Price_controller = TextEditingController();
 
   String Address = "";
+
+  bool uploading = false;
 
   @override
   void dispose() {
@@ -438,29 +441,26 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         jobType: selectedItem.toString(),
         latLng: latLng,
         jobPrice: job_Price_controller.text,
-        ActiveJobImages: imageURL_list,  CompletedJobImages: []);
+        ActiveJobImages: imageURL_list,
+        CompletedJobImages: []);
     widget.user.activeRequests.add(jobID);
+    //add Job Data
     FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
+    //Update User Data
     final val = await FirebaseFirestore.instance
         .collection("users")
         .where("uName", isEqualTo: widget.user.uName)
         .get();
 
     for (var doc in val.docs) {
-      doc.data().update("activeRequests",((value) => widget.user.activeRequests) );
+      doc
+          .data()
+          .update("activeRequests", ((value) => widget.user.activeRequests));
     }
+    upload( jobID);
   }
 
-  /*getLocation() async {
-    Position pos;
-    if (await Geolocator.isLocationServiceEnabled()) {
-      pos = await Geolocator.getCurrentPosition();
-    } else {
-      await Geolocator.requestPermission();
-      return getLocation();
-    }
-    return LatLng(pos.latitude, pos.longitude);
-  }*/
+  
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -501,5 +501,37 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     setState(() {
       Address = ' ${place.locality}';
     });
+  }
+
+  upload(String jobID) async {
+    String productId = await uplaodImageAndSaveItemInfo(jobID);
+    setState(() {
+      uploading = false;
+    });
+  }
+
+  Future<String> uplaodImageAndSaveItemInfo(String jobID) async {
+    setState(() {
+      uploading = true;
+    });
+    PickedFile? pickedFile;
+    String? productId = jobID;
+    for (int i = 0; i < ImageList.length; i++) {
+      file = File(ImageList[i].path);
+      pickedFile = PickedFile(file!.path);
+      await uploadImageToStorage(pickedFile, productId);
+    }
+    return productId;
+  }
+
+  uploadImageToStorage(PickedFile? pickedFile, String productId) async {
+    String? pId = const Uuid().v4();
+    Reference reference =
+        FirebaseStorage.instance.ref().child('Jobs/$productId/$pId');
+    await reference.putData(
+      await pickedFile!.readAsBytes(),
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+    String value = await reference.getDownloadURL();
   }
 }

@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/User.dart';
+import 'package:home_service_app/views/addJobView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
 class TileCluster extends StatefulWidget {
@@ -20,7 +21,6 @@ class TileCluster extends StatefulWidget {
 class _TileClusterState extends State<TileCluster> {
   @override
   Widget build(BuildContext context) {
-    User user = widget.user;
     return Padding(
       padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: Column(
@@ -192,6 +192,7 @@ class EditJobTile extends StatelessWidget {
       ),
     );
   }
+  
 }
 
 class AcceptWorksTile extends StatelessWidget {
@@ -303,39 +304,49 @@ class AddNewJobTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Container(
-        height: 150,
-        width: 215,
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(7, 223, 81, 1),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add_box_rounded,
-              color: Colors.white,
-              size: 50,
-            ),
-            Text(
-              'Add  a  New\n Job Listing',
-              textAlign: TextAlign.center,
-              style: TextStyle(
+    return InkWell(
+      onTap: (){
+        Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Add_New_Job_View(
+                                user: widget.user,
+                              )));
+      } ,
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          height: 150,
+          width: 215,
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(7, 223, 81, 1),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add_box_rounded,
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 34,
+                size: 50,
               ),
-            ),
-          ],
+              Text(
+                'Add  a  New\n Job Listing',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 34,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
