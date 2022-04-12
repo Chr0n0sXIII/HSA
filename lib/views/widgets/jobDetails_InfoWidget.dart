@@ -6,6 +6,9 @@ import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/dataClasses/userData.dart';
 import 'package:home_service_app/dataClasses/userDataUtil.dart';
 import 'package:home_service_app/views/userProfileView.dart';
+import 'package:google_maps/google_maps.dart' as gm;
+import 'dart:html';
+import 'dart:ui' as ui;
 
 class jobDetails_InfoWidget extends StatefulWidget {
   userData udata = UserDataUtil.TestData_UserData()[1];
@@ -17,46 +20,39 @@ class jobDetails_InfoWidget extends StatefulWidget {
 class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const UserProfileView()));
-          },
-          child: Padding(
-            padding: EdgeInsets.all(5),
-            child: Container(
-              height: 120,
-              width: 500,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(7.0, 8.0))
-                  ]),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Image.asset(
-                        'assets/profile_picture_place_holder.png',
-                        scale: 0.65),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RatingBar.builder(
+        Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            height: 120,
+            width: 500,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(7.0, 8.0))
+                ]),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset('assets/profile_picture_place_holder.png',
+                      scale: 0.65),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RatingBar.builder(
                         initialRating: 4,
                         minRating: 1,
                         direction: Axis.horizontal,
@@ -71,7 +67,10 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                           print(rating);
                         },
                       ),
-                      Text(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+                      child: Text(
                         widget.udata.uName,
                         textAlign: TextAlign.start,
                         style: TextStyle(
@@ -80,10 +79,10 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                           fontSize: 18,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -136,6 +135,49 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
             ),
           ),
         ),
+        Container(
+          width: 500,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0),
+                )
+              ]),
+          child: Container(
+            height: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        widget.jdata.jobLocation,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.pin_drop,
+                        color: Colors.red,
+                        )
+                    ],
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(45)),
+                  child: GoogleMap(),
+                ))
+              ],
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(5.0),
           child: Container(
@@ -152,43 +194,42 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     offset: Offset(7.0, 8.0),
                   ),
                 ]),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      widget.jdata.jobPrice,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 229, 0, 0),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        widget.jdata.jobPrice,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 229, 0, 0),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 250,
-                    height: 100,
-                  ),
-                  ElevatedButton(
-                    onPressed: requestJob,
-                    child: Text(
-                      "Request Job",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(11, 206, 131, 1)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              side: BorderSide(color: Colors.white))),
-                      fixedSize:
-                          MaterialStateProperty.all<Size>(Size.fromHeight(50)),
-                    ),
-                  )
-                ]),
+                    ElevatedButton(
+                      onPressed: requestJob,
+                      child: Text(
+                        "Request Job",
+                        style: TextStyle(color: Colors.white, fontSize: 24),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromRGBO(11, 206, 131, 1)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                side: BorderSide(color: Colors.white))),
+                        fixedSize:
+                            MaterialStateProperty.all<Size>(Size.fromHeight(50)),
+                      ),
+                    )
+                  ]),
+            ),
           ),
         ),
       ]),
@@ -197,4 +238,35 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
   }
 
   requestJob() {}
+
+  GoogleMap() {
+    String htmlId = "7";
+
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
+      final myLatlng = gm.LatLng(10.640821, -61.398547);
+
+      final mapOptions = gm.MapOptions()
+        ..zoom = 13
+        ..center = gm.LatLng(10.640821, -61.398547);
+
+      final elem = DivElement()
+        ..id = htmlId
+        ..style.width = "100%"
+        ..style.height = "100%"
+        ..style.border = 'none'
+        ..style.borderRadius = '30px';
+
+      final map = gm.GMap(elem, mapOptions);
+
+      gm.Marker(gm.MarkerOptions()
+        ..position = myLatlng
+        ..map = map
+        ..title = 'Active Job Location');
+
+      return elem;
+    });
+
+    return HtmlElementView(viewType: htmlId);
+  }
 }

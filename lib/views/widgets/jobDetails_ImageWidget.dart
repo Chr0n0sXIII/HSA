@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class jobDetails_ImageWidget extends StatefulWidget {
-  List<Image>? image;
-  int index = 0;
+  List<String>? imagelist = <String>[];
 
   jobDetails_ImageWidget({
-    required this.image,
+    required this.imagelist,
   });
 
   @override
@@ -15,27 +15,91 @@ class jobDetails_ImageWidget extends StatefulWidget {
 }
 
 class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
+  int activeIndex = 0;
+  final controller = CarouselController();
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      child: Container(
+        width: 400,
+        child: Column(
+          children: [
+            CarouselSlider.builder(
+                carouselController: controller,
+                itemCount: widget.imagelist!.length,
+                itemBuilder: (context, index, realIndex) {
+                  final imageURL = widget.imagelist![index];
+                  return buildImage(imageURL, index);
+                },
+                options: CarouselOptions(
+                  height: 500,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: true,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) =>
+                      setState(() => activeIndex = index),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(15),
+                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                      onPressed: back,
+                      child: Icon(Icons.arrow_back)),
+                  buildImageIndicator(),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(15),
+                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                      onPressed: next,
+                      child: Icon(Icons.arrow_forward))
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildImage(String imageURL, int index) {
     return Container(
       width: 400,
-      color: Colors.grey[400],
-      child: CarouselSlider(
-          items: widget.image,
-          options: CarouselOptions(
-            height: 500,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-          )),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          imageURL,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
+  }
+
+  void back() {
+    controller.previousPage();
+  }
+
+  void next() {
+    controller.nextPage();
+  }
+
+  buildImageIndicator() {
+    return AnimatedSmoothIndicator(
+      onDotClicked: moveToImage,
+      activeIndex: activeIndex,
+      count: widget.imagelist!.length,
+      effect:
+          ScrollingDotsEffect(activeDotColor: Color.fromRGBO(195, 166, 96, 1)),
+    );
+  }
+
+  moveToImage(int index) {
+    controller.animateToPage(index);
   }
 }
