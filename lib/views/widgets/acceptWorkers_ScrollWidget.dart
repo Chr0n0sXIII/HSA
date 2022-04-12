@@ -20,7 +20,7 @@ class _workerListState extends State<workerList> {
     return total_workers >= 1
     ?Container(
       width: 600,
-      height: 550,
+      height: 650,
       child: ListView.builder(
         shrinkWrap: true,
           itemCount: total_workers,
