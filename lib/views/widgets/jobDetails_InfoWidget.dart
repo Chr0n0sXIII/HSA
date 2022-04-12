@@ -194,43 +194,42 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     offset: Offset(7.0, 8.0),
                   ),
                 ]),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      widget.jdata.jobPrice,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 229, 0, 0),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        widget.jdata.jobPrice,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 229, 0, 0),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 250,
-                    height: 100,
-                  ),
-                  ElevatedButton(
-                    onPressed: requestJob,
-                    child: Text(
-                      "Request Job",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(11, 206, 131, 1)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              side: BorderSide(color: Colors.white))),
-                      fixedSize:
-                          MaterialStateProperty.all<Size>(Size.fromHeight(50)),
-                    ),
-                  )
-                ]),
+                    ElevatedButton(
+                      onPressed: requestJob,
+                      child: Text(
+                        "Request Job",
+                        style: TextStyle(color: Colors.white, fontSize: 24),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromRGBO(11, 206, 131, 1)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                side: BorderSide(color: Colors.white))),
+                        fixedSize:
+                            MaterialStateProperty.all<Size>(Size.fromHeight(50)),
+                      ),
+                    )
+                  ]),
+            ),
           ),
         ),
       ]),
