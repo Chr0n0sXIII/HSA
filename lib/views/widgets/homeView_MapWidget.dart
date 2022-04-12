@@ -14,7 +14,7 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  bool active_Job = true;
+  bool active_Job = false;
   String job_Title = 'Placeholder job title';
   String jobDesc = 'Placeholder job description';
   @override
