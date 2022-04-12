@@ -19,47 +19,50 @@ class jobDetails_ImageWidget_state extends State<jobDetails_ImageWidget> {
   final controller = CarouselController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 400,
-      child: Column(
-        children: [
-          CarouselSlider.builder(
-              carouselController: controller,
-              itemCount: widget.imagelist!.length,
-              itemBuilder: (context, index, realIndex) {
-                final imageURL = widget.imagelist![index];
-                return buildImage(imageURL, index);
-              },
-              options: CarouselOptions(
-                height: 500,
-                viewportFraction: 1,
-                enableInfiniteScroll: true,
-                autoPlay: true,
-                onPageChanged: (index, reason) =>
-                    setState(() => activeIndex = index),
-              )),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15),
-                        primary: Color.fromRGBO(4, 30, 81, 1)),
-                    onPressed: back,
-                    child: Icon(Icons.arrow_back)),
-                buildImageIndicator(),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15),
-                        primary: Color.fromRGBO(4, 30, 81, 1)),
-                    onPressed: next,
-                    child: Icon(Icons.arrow_forward))
-              ],
-            ),
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      child: Container(
+        width: 400,
+        child: Column(
+          children: [
+            CarouselSlider.builder(
+                carouselController: controller,
+                itemCount: widget.imagelist!.length,
+                itemBuilder: (context, index, realIndex) {
+                  final imageURL = widget.imagelist![index];
+                  return buildImage(imageURL, index);
+                },
+                options: CarouselOptions(
+                  height: 500,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: true,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) =>
+                      setState(() => activeIndex = index),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(15),
+                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                      onPressed: back,
+                      child: Icon(Icons.arrow_back)),
+                  buildImageIndicator(),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(15),
+                          primary: Color.fromRGBO(4, 30, 81, 1)),
+                      onPressed: next,
+                      child: Icon(Icons.arrow_forward))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
