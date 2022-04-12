@@ -1,75 +1,46 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:flutter/material.dart';
+import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/acceptWorkers_JobDesc.dart';
 import 'package:home_service_app/views/widgets/acceptWorkers_ScrollWidget.dart';
+import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 
 import '../dataClasses/User.dart';
 
-class AcceptWorkerView extends StatelessWidget {
-  var workers = [1, 2, 3, 4, 5];
-  var itemCount;
+class AcceptWorkerView extends StatefulWidget {
   final User user;
-  AcceptWorkerView({Key? key, required this.user}) : super(key: key);
-  // _fecthData() async {
-  //   const url = 'https://api.letsbuildthatapp.com/youtube/home_feed';
-  //   final response = await http.get(Uri.parse(url));
-
-  //   if (response.statusCode == 200) {
-  //     final map = jsonDecode(response.body);
-  //     final workersJson = map['videos'];
-  //     workers = workersJson;
-  //     print(workers);
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
+  const AcceptWorkerView({Key? key, required this.user}) : super(key: key);
 
   @override
+  State<AcceptWorkerView> createState() => _AcceptWorkerViewState();
+}
+
+class _AcceptWorkerViewState extends State<AcceptWorkerView> {
+  @override
   Widget build(BuildContext context) {
-    itemCount = this.workers != null ? this.workers.length : 0;
     return Scaffold(
-        backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
-        body: SingleChildScrollView(
-            child: Column(children: [
-           TopBar(user: user,),
-          Row(
-            children: [
-              Column(
+      backgroundColor: Color.fromRGBO(229, 229, 229, 1),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopBar(user: widget.user),
+            PageTitle('Request From Workers'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(250, 8, 250, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 500,
-                    width: 400,
-                    color: const Color.fromRGBO(255, 255, 255, 1),
-                    child: JobDesc(),
-                  )
+                  accpectWorkerJobDescription(),
+                  workerList()
                 ],
               ),
-              Column(
-                children: [
-                  if (itemCount > 0)
-                    ListView.builder(
-                      itemCount: itemCount,
-                      itemBuilder: (BuildContext context, int i) {
-                        //final worker = workers[i];
-                        return acceptWorkers_Scollwidget(workers[i]);
-                      },
-                    )
-                  else
-                    Column(
-                      children: [
-                        Container(
-                            height: 500,
-                            width: 400,
-                            color: const Color.fromRGBO(255, 255, 255, 1),
-                            child: const Text('No items')),
-                      ],
-                    ),
-                ],
-              ),
-            ],
-          )
-        ])));
+            ),
+            Footer(),
+          ],
+        ),
+      ),
+    );
   }
 }
