@@ -15,7 +15,7 @@ class JobDataUtil {
           jobLocation: "none",
           jobPrice: "none",
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "1",
           jobName: "Cut Grass",
@@ -27,7 +27,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "2",
           jobName: "Water plants Daily",
@@ -40,7 +40,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "3",
           jobName: "Repair water lines",
@@ -53,7 +53,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "4",
           jobName: "Paint Walls",
@@ -66,7 +66,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "5",
           jobName: "Clean Pool",
@@ -79,7 +79,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
       JobData(
           jobID: "6",
           jobName: "Move Materials",
@@ -92,7 +92,7 @@ class JobDataUtil {
             color: Colors.red,
           ),
           JobImages: ["app_logo.png"],
-          latLng: LatLng(35.68, 51.41)),
+          latLng: LatLng(35.68, 51.41), jobType: ''),
     ];
   }
 }

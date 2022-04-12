@@ -9,6 +9,7 @@ class JobData {
   String jobName;
   String jobDescription;
   String jobLocation;
+  String jobType;
   LatLng latLng;
   String jobPrice;
   Icon pin;
@@ -19,6 +20,7 @@ class JobData {
     required this.jobName,
     required this.jobDescription,
     required this.jobLocation,
+    required this.jobType,
     required this.latLng,
     required this.jobPrice,
     this.pin = const Icon(
@@ -35,6 +37,7 @@ class JobData {
       jobDescription: jobDescription,
       JobImages: JobImages,
       jobLocation: jobLocation,
+      jobType:jobType,
       latLng: latLng,
       pin: pin,
       jobPrice: jobPrice,

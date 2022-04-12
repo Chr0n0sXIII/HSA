@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:home_service_app/dataClasses/ImageHandler.dart';
 import 'dart:ui';
-
 import 'package:home_service_app/dataClasses/jobData.dart';
 
 class userData {

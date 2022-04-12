@@ -19,7 +19,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  User currentUser = new User();
+  
 
   final Future<FirebaseApp> _init = Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
             return Text(snapshot.error.toString());
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            return HomeView();
+            return loginView();
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
 

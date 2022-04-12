@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 import 'package:home_service_app/views/widgets/userProfile_FormWidget.dart';
 
+import '../dataClasses/User.dart';
+
 class UserProfileView extends StatefulWidget {
-  const UserProfileView({Key? key}) : super(key: key);
+  final User user;
+  const UserProfileView({Key? key, required this.user}) : super(key: key);
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();
@@ -22,7 +25,7 @@ class _UserProfileViewState extends State<UserProfileView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TopBar(),
+              TopBar(user: widget.user,),
               PageTitle("User Profile"),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -36,8 +39,6 @@ class _UserProfileViewState extends State<UserProfileView> {
         ),
       );
     }
-    return Scaffold(
-
-    );
+    return Scaffold();
   }
 }

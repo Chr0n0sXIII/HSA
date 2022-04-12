@@ -1,13 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:io';
+import 'package:latlng/latlng.dart';
 import 'dart:io' show File;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../dataClasses/User.dart';
 
 class Add_Job_Form extends StatefulWidget {
-  const Add_Job_Form({Key? key}) : super(key: key);
+  final User user;
+  const Add_Job_Form({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Add_Job_Form> createState() => _Add_Job_FormState();
@@ -42,6 +50,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   final job_Description_controller = TextEditingController();
   final job_Price_controller = TextEditingController();
 
+  String Address = "";
 
   @override
   void dispose() {
@@ -304,7 +313,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(40)),
               title: Text(
-                'Conform Your Listing',
+                'Confirm Your Listing',
                 textAlign: TextAlign.center,
               ),
               content: Container(
@@ -416,5 +425,81 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     Navigator.of(context).pop();
   }
 
-  void confirm() {}
+  void confirm() async {
+    String jobID = UuidValue(job_Title_controller.text).uuid;
+    Position pos = await _getGeoLocationPosition();
+    LatLng latLng = LatLng(pos.latitude, pos.longitude);
+
+    JobData job = JobData(
+        jobID: jobID,
+        jobName: job_Title_controller.text,
+        jobDescription: job_Description_controller.text,
+        jobLocation: Address,
+        jobType: selectedItem.toString(),
+        latLng: latLng,
+        jobPrice: job_Price_controller.text,
+        JobImages: imageURL_list);
+    widget.user.activeRequests.add(jobID);
+    FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
+    final val = await FirebaseFirestore.instance
+        .collection("users")
+        .where("uName", isEqualTo: widget.user.uName)
+        .get();
+
+    for (var doc in val.docs) {
+      doc.data().update("activeRequests",((value) => widget.user.activeRequests) );
+    }
+  }
+
+  /*getLocation() async {
+    Position pos;
+    if (await Geolocator.isLocationServiceEnabled()) {
+      pos = await Geolocator.getCurrentPosition();
+    } else {
+      await Geolocator.requestPermission();
+      return getLocation();
+    }
+    return LatLng(pos.latitude, pos.longitude);
+  }*/
+  Future<Position> _getGeoLocationPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.lowest);
+  }
+
+  Future<void> GetAddressFromLatLong(Position position) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    print(placemarks);
+    Placemark place = placemarks[0];
+    Address =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    setState(() {
+      Address = ' ${place.locality}';
+    });
+  }
 }
