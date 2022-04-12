@@ -22,12 +22,24 @@ class _AcceptWorkerViewState extends State<AcceptWorkerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(229, 229, 229, 1),
-      body: Column(
-        children: [
-          TopBar(user: widget.user),
-          PageTitle('Request From Workers'),
-          Footer(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopBar(user: widget.user),
+            PageTitle('Request From Workers'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(250, 8, 250, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  accpectWorkerJobDescription(),
+                  workerList()
+                ],
+              ),
+            ),
+            Footer(),
+          ],
+        ),
       ),
     );
   }
