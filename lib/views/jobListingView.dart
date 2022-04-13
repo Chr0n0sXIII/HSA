@@ -30,7 +30,27 @@ class _jobListingViewState extends State<jobListingView> {
   }
 
   searchBar() {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(left: 250,right: 250),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: TextField(
+              maxLines: 1,
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                hintText: 'Search Job...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30)
+                )
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   jobListingMapView() {
