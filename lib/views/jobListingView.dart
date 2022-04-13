@@ -19,7 +19,9 @@ class _jobListingViewState extends State<jobListingView> {
     'Plumbing',
     'Misc'
   ];
+  List<String> job_Distance = ['Closest', 'Farthest'];
   String? selected_Type = 'Plumbing';
+  String? selected_Distance = 'Closest';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,30 +63,47 @@ class _jobListingViewState extends State<jobListingView> {
               child: DropdownButtonHideUnderline(
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(30)
-                  ),
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(30)),
                   child: DropdownButton<String>(
-                    focusColor: Colors.transparent,
-                    value: selected_Type,
-                    items: job_Types.map((item) => 
-                      DropdownMenuItem(
-                        value: item,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Text(item),
-                        )
-                      )
-                    ).toList(),
-                    onChanged: (item) => 
-                      setState(() {
-                        selected_Type = item;
-                      }
-                    )
-                  ),
+                      focusColor: Colors.transparent,
+                      value: selected_Type,
+                      items: job_Types
+                          .map((item) => DropdownMenuItem(
+                              value: item,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(item),
+                              )))
+                          .toList(),
+                      onChanged: (item) => setState(() {
+                            selected_Type = item;
+                          })),
                 ),
-              )
-          )
+              )),
+          Expanded(
+              flex: 1,
+              child: DropdownButtonHideUnderline(
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(30)),
+                  child: DropdownButton<String>(
+                      focusColor: Colors.transparent,
+                      value: selected_Distance,
+                      items: job_Distance
+                          .map((item) => DropdownMenuItem(
+                              value: item,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(item),
+                              )))
+                          .toList(),
+                      onChanged: (item) => setState(() {
+                            selected_Distance = item;
+                          })),
+                ),
+              ))
         ],
       ),
     );
