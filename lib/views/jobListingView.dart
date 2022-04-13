@@ -49,7 +49,7 @@ class _jobListingViewState extends State<jobListingView> {
       child: Row(
         children: [
           Expanded(
-            flex: 1,
+            flex: 6,
             child: TextField(
               maxLines: 1,
               decoration: InputDecoration(
