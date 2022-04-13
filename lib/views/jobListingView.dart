@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
+import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
 import 'dart:html';
 import 'dart:ui' as ui;
 import 'package:google_maps/google_maps.dart' as gm;
 
+import '../dataClasses/User.dart';
+
 class jobListingView extends StatefulWidget {
-  const jobListingView({Key? key}) : super(key: key);
+  final User user;
+  const jobListingView({Key? key, required this.user}) : super(key: key);
 
   @override
   State<jobListingView> createState() => _jobListingViewState();
@@ -40,10 +44,15 @@ class _jobListingViewState extends State<jobListingView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            TopBar(user: widget.user),
             PageTitle('Job Listings'),
             searchBar(),
             Row(
-              children: [jobListingMapView(), jobList(jobName,jobDescription,jobLocation,jobPrice,jobImage)],
+              children: [
+                jobListingMapView(),
+                jobList(
+                    jobName, jobDescription, jobLocation, jobPrice, jobImage)
+              ],
             ),
             Footer(),
           ],
@@ -177,7 +186,8 @@ class _jobListingViewState extends State<jobListingView> {
     );
   }
 
-  jobList(String title, String desc, String location, String price, String image) {
+  jobList(
+      String title, String desc, String location, String price, String image) {
     return Container(
       height: 600,
       width: 600,
@@ -185,7 +195,7 @@ class _jobListingViewState extends State<jobListingView> {
           shrinkWrap: true,
           itemCount: total_jobs,
           itemBuilder: (context, index) {
-            return jobTile(title,desc,location,price,image);
+            return jobTile(title, desc, location, price, image);
           }),
     );
   }
@@ -221,7 +231,8 @@ class _jobListingViewState extends State<jobListingView> {
     return HtmlElementView(viewType: htmlId);
   }
 
-  Widget jobTile(String title, String desc, String location, String price, String image) {
+  Widget jobTile(
+      String title, String desc, String location, String price, String image) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -250,10 +261,7 @@ class _jobListingViewState extends State<jobListingView> {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     desc,
@@ -267,9 +275,7 @@ class _jobListingViewState extends State<jobListingView> {
                       Text(
                         location,
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Icon(
                         Icons.pin_drop,
@@ -280,10 +286,9 @@ class _jobListingViewState extends State<jobListingView> {
                   Text(
                     price,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red
-                    ),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
                   ),
                 ],
               ),
