@@ -27,6 +27,12 @@ class _jobListingViewState extends State<jobListingView> {
   String? selected_Type = 'Plumbing';
   String? selected_Distance = 'Closest';
   String? selected_Price = 'Low - High';
+  int total_jobs = 6;
+  String jobName = 'Placeholer Title';
+  String jobDescription = 'Placeholder Description';
+  String jobLocation = 'Placeholder Location';
+  String jobPrice = 'Placeholder Price';
+  String jobImage = 'https://picsum.photos/id/237/200/300';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +43,7 @@ class _jobListingViewState extends State<jobListingView> {
             PageTitle('Job Listings'),
             searchBar(),
             Row(
-              children: [jobListingMapView(), jobList()],
+              children: [jobListingMapView(), jobList(jobName,jobDescription,jobLocation,jobPrice,jobImage)],
             ),
             Footer(),
           ],
@@ -70,7 +76,7 @@ class _jobListingViewState extends State<jobListingView> {
                 child: DropdownButtonHideUnderline(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                        color: Colors.white,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(30)),
                     child: DropdownButton<String>(
@@ -97,7 +103,7 @@ class _jobListingViewState extends State<jobListingView> {
                 child: DropdownButtonHideUnderline(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                        color: Colors.white,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(30)),
                     child: DropdownButton<String>(
@@ -124,7 +130,7 @@ class _jobListingViewState extends State<jobListingView> {
                 child: DropdownButtonHideUnderline(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                        color: Colors.white,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(30)),
                     child: DropdownButton<String>(
@@ -154,9 +160,8 @@ class _jobListingViewState extends State<jobListingView> {
       padding: const EdgeInsets.fromLTRB(250, 10, 250, 10),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 3),
-          borderRadius: BorderRadius.circular(15)
-        ),
+            border: Border.all(color: Colors.grey, width: 3),
+            borderRadius: BorderRadius.circular(15)),
         height: 600,
         width: 600,
         child: Row(
@@ -172,8 +177,17 @@ class _jobListingViewState extends State<jobListingView> {
     );
   }
 
-  jobList() {
-    return Container();
+  jobList(String title, String desc, String location, String price, String image) {
+    return Container(
+      height: 600,
+      width: 600,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: total_jobs,
+          itemBuilder: (context, index) {
+            return jobTile(title,desc,location,price,image);
+          }),
+    );
   }
 
   googleMaps() {
@@ -205,5 +219,78 @@ class _jobListingViewState extends State<jobListingView> {
     });
 
     return HtmlElementView(viewType: htmlId);
+  }
+
+  Widget jobTile(String title, String desc, String location, String price, String image) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        height: 150,
+        width: 350,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            SizedBox(
+              height: 150,
+              width: 150,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  image,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Text(
+                    desc,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        location,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Icon(
+                        Icons.pin_drop,
+                        color: Colors.red,
+                      )
+                    ],
+                  ),
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
