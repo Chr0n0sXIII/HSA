@@ -10,6 +10,8 @@ import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/views/addJobView.dart';
 import 'package:home_service_app/views/acceptWorkerList.dart';
 import 'package:home_service_app/views/acceptWorkersView.dart';
+import 'package:home_service_app/views/addJobView.dart';
+import 'package:home_service_app/views/completedJobsView.dart';
 import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 
@@ -39,7 +41,12 @@ class _TileClusterState extends State<TileCluster> {
             user: widget.user,
           ),
           Row(
-            children: [CompleteJobTile(), AddNewJobTile(user: widget.user,)],
+            children: [
+              CompleteJobTile(
+                user: widget.user,
+              ),
+              AddNewJobTile(user: widget.user)
+            ],
           )
         ],
       ),
@@ -273,55 +280,68 @@ class AcceptWorksTile extends StatelessWidget {
 }
 
 class CompleteJobTile extends StatelessWidget {
-  const CompleteJobTile({Key? key}) : super(key: key);
+  final User user;
+  const CompleteJobTile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Container(
-        height: 150,
-        width: 215,
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(5, 190, 231, 1),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Completed',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 34,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Icon(
-                  Icons.check_box,
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Complete_Job_List_View(
+                      user: user,
+                    )));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          height: 150,
+          width: 215,
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(5, 190, 231, 1),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Completed',
+                style: TextStyle(
                   color: Colors.white,
-                  size: 50,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 34,
                 ),
-                Text(
-                  'Jobs',
-                  style: TextStyle(
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(
+                    Icons.check_box,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 34,
+                    size: 50,
                   ),
-                ),
-              ],
-            )
-          ],
+                  Text(
+                    'Jobs',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 34,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -335,6 +355,8 @@ class AddNewJobTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
       onTap: () {
         Navigator.push(
             context,
