@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
+import 'dart:html';
+import 'dart:ui' as ui;
+import 'package:google_maps/google_maps.dart' as gm;
 
 class jobListingView extends StatefulWidget {
   const jobListingView({Key? key}) : super(key: key);
@@ -147,10 +150,60 @@ class _jobListingViewState extends State<jobListingView> {
   }
 
   jobListingMapView() {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(250, 10, 250, 10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 3),
+          borderRadius: BorderRadius.circular(15)
+        ),
+        height: 600,
+        width: 600,
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                child: googleMaps(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   jobList() {
     return Container();
+  }
+
+  googleMaps() {
+    String htmlId = "7";
+
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
+      final myLatlng = gm.LatLng(10.640821, -61.398547);
+
+      final mapOptions = gm.MapOptions()
+        ..zoom = 13
+        ..center = gm.LatLng(10.640821, -61.398547);
+
+      final elem = DivElement()
+        ..id = htmlId
+        ..style.width = "100%"
+        ..style.height = "100%"
+        ..style.border = 'none'
+        ..style.borderRadius = '13px';
+
+      final map = gm.GMap(elem, mapOptions);
+
+      gm.Marker(gm.MarkerOptions()
+        ..position = myLatlng
+        ..map = map
+        ..title = 'Active Job Location');
+
+      return elem;
+    });
+
+    return HtmlElementView(viewType: htmlId);
   }
 }
