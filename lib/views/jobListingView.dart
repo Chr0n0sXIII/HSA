@@ -62,74 +62,83 @@ class _jobListingViewState extends State<jobListingView> {
           ),
           Expanded(
               flex: 1,
-              child: DropdownButtonHideUnderline(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: DropdownButton<String>(
-                      focusColor: Colors.transparent,
-                      value: selected_Type,
-                      items: job_Types
-                          .map((item) => DropdownMenuItem(
-                              value: item,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(item),
-                              )))
-                          .toList(),
-                      onChanged: (item) => setState(() {
-                            selected_Type = item;
-                          })),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: DropdownButtonHideUnderline(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: DropdownButton<String>(
+                        focusColor: Colors.transparent,
+                        value: selected_Type,
+                        items: job_Types
+                            .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(item),
+                                )))
+                            .toList(),
+                        onChanged: (item) => setState(() {
+                              selected_Type = item;
+                            })),
+                  ),
                 ),
               )),
           Expanded(
               flex: 1,
-              child: DropdownButtonHideUnderline(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: DropdownButton<String>(
-                      focusColor: Colors.transparent,
-                      value: selected_Distance,
-                      items: job_Distance
-                          .map((item) => DropdownMenuItem(
-                              value: item,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(item),
-                              )))
-                          .toList(),
-                      onChanged: (item) => setState(() {
-                            selected_Distance = item;
-                          })),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: DropdownButtonHideUnderline(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: DropdownButton<String>(
+                        focusColor: Colors.transparent,
+                        value: selected_Distance,
+                        items: job_Distance
+                            .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(item),
+                                )))
+                            .toList(),
+                        onChanged: (item) => setState(() {
+                              selected_Distance = item;
+                            })),
+                  ),
                 ),
               )),
           Expanded(
               flex: 1,
-              child: DropdownButtonHideUnderline(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: DropdownButton<String>(
-                      focusColor: Colors.transparent,
-                      value: selected_Price,
-                      items: job_Prices
-                          .map((item) => DropdownMenuItem(
-                              value: item,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(item),
-                              )))
-                          .toList(),
-                      onChanged: (item) => setState(() {
-                            selected_Price = item;
-                          })),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: DropdownButtonHideUnderline(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: DropdownButton<String>(
+                        focusColor: Colors.transparent,
+                        value: selected_Price,
+                        items: job_Prices
+                            .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(item),
+                                )))
+                            .toList(),
+                        onChanged: (item) => setState(() {
+                              selected_Price = item;
+                            })),
+                  ),
                 ),
               ))
         ],
