@@ -46,64 +46,63 @@ class _LoginWidgetState extends State<LoginWidget> {
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.only(top: 15.0),
               //padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 51,
-                width: 112,
-                child: ElevatedButton(
-                    onPressed: setlogin,
+              child: ElevatedButton(
+                  onPressed: setlogin,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
                     child: Text(
                       "Login",
                       style: const TextStyle(color: Colors.white),
                     ),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromRGBO(4, 30, 81, 1)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10)),
-                                    side: BorderSide(color: Colors.black))))),
-              ),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(4, 30, 81, 1)),
+                      shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(10)),
+                                  side: BorderSide(color: Colors.black))))),
             ),
             Container(
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.only(top: 15.0),
               //padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 51,
-                width: 112,
-                child: ElevatedButton(
-                    onPressed: setSignup,
+              child: ElevatedButton(
+                  onPressed: setSignup,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
                     child: Text(
                       "Signup",
                       style: const TextStyle(color: Colors.white),
                     ),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromRGBO(195, 166, 96, 1)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10)),
-                                    side: BorderSide(color: Colors.white))))),
-              ),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(195, 166, 96, 1)),
+                      shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(10)),
+                                  side: BorderSide(color: Colors.white))))),
             ),
           ],
         ),
         if (isLogin)
-          Expanded(
-            flex: 1,
-            child: Container(
+          Container(
+            height: 650,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
               color: Color.fromRGBO(229, 229, 229, 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "Email",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -112,24 +111,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: false,
+                    enableSuggestions: true,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: false,
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      controller: emailController,
-                    ),
+                    controller: emailController,
                   ),
-                  Text(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,top: 15),
+                  child: Text(
                     "Password",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -138,67 +140,67 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      onSubmitted: (String value) {
-                        getTextInputData();
-                      },
-                      controller: passController,
-                    ),
+                    onSubmitted: (String value) {
+                      getTextInputData();
+                    },
+                    controller: passController,
                   ),
-                  if (wrongcred)
-                    Container(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 200,
-                        height: 25,
-                        child: Text(
-                          "Wrong Email or Password",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              fontSize: 12),
-                        ),
-                      ),
-                    ),
+                ),
+                if (wrongcred)
                   Container(
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(20.0),
                     child: SizedBox(
-                      height: 55,
-                      width: 348,
-                      child: ElevatedButton(
-                          onPressed: getTextInputData,
-                          child: Text(
-                            "Login",
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromRGBO(195, 166, 96, 1)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(color: Colors.black))))),
+                      width: 200,
+                      height: 25,
+                      child: Text(
+                        "Wrong Email or Password",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                            fontSize: 12),
+                      ),
                     ),
                   ),
-                ],
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                        onPressed: getTextInputData,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(75, 10, 75, 10),
+                          child: Text(
+                            "Login",
+                            style: const TextStyle(fontSize: 25),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color.fromRGBO(195, 166, 96, 1)),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)
+                                )))),
+                  ),
+                ),
+              ],
             ),
           ),
         if (!isLogin)
