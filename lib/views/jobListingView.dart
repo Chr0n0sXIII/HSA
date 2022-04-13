@@ -157,7 +157,7 @@ class _jobListingViewState extends State<jobListingView> {
 
   jobListingMapView() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(250, 10, 250, 10),
+      padding: const EdgeInsets.fromLTRB(250, 10, 50, 10),
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey, width: 3),
