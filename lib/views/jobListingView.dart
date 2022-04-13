@@ -10,6 +10,16 @@ class jobListingView extends StatefulWidget {
 }
 
 class _jobListingViewState extends State<jobListingView> {
+  List<String> job_Types = [
+    'Yark Work',
+    'Cleaning',
+    'Landscaping',
+    'Painting',
+    'Maintainace',
+    'Plumbing',
+    'Misc'
+  ];
+  String? selected_Type = 'Plumbing';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +41,7 @@ class _jobListingViewState extends State<jobListingView> {
 
   searchBar() {
     return Padding(
-      padding: const EdgeInsets.only(left: 250,right: 250),
+      padding: const EdgeInsets.only(left: 250, right: 250),
       child: Row(
         children: [
           Expanded(
@@ -39,14 +49,41 @@ class _jobListingViewState extends State<jobListingView> {
             child: TextField(
               maxLines: 1,
               decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                hintText: 'Search Job...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30)
-                )
-              ),
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: 'Search Job...',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30))),
             ),
+          ),
+          Expanded(
+              flex: 1,
+              child: DropdownButtonHideUnderline(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(30)
+                  ),
+                  child: DropdownButton<String>(
+                    focusColor: Colors.transparent,
+                    value: selected_Type,
+                    items: job_Types.map((item) => 
+                      DropdownMenuItem(
+                        value: item,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(item),
+                        )
+                      )
+                    ).toList(),
+                    onChanged: (item) => 
+                      setState(() {
+                        selected_Type = item;
+                      }
+                    )
+                  ),
+                ),
+              )
           )
         ],
       ),
