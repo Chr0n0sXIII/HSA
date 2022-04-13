@@ -65,6 +65,7 @@ class _jobListingViewState extends State<jobListingView> {
               child: DropdownButtonHideUnderline(
                 child: Container(
                   decoration: BoxDecoration(
+                    color: Colors.white,
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(30)),
                   child: DropdownButton<String>(
@@ -88,6 +89,7 @@ class _jobListingViewState extends State<jobListingView> {
               child: DropdownButtonHideUnderline(
                 child: Container(
                   decoration: BoxDecoration(
+                    color: Colors.white,
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(30)),
                   child: DropdownButton<String>(
@@ -111,6 +113,7 @@ class _jobListingViewState extends State<jobListingView> {
               child: DropdownButtonHideUnderline(
                 child: Container(
                   decoration: BoxDecoration(
+                    color: Colors.white,
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(30)),
                   child: DropdownButton<String>(
