@@ -20,8 +20,10 @@ class _jobListingViewState extends State<jobListingView> {
     'Misc'
   ];
   List<String> job_Distance = ['Closest', 'Farthest'];
+  List<String> job_Prices = ['Low - High', 'High - Low'];
   String? selected_Type = 'Plumbing';
   String? selected_Distance = 'Closest';
+  String? selected_Price = 'Low - High';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +103,29 @@ class _jobListingViewState extends State<jobListingView> {
                           .toList(),
                       onChanged: (item) => setState(() {
                             selected_Distance = item;
+                          })),
+                ),
+              )),
+          Expanded(
+              flex: 1,
+              child: DropdownButtonHideUnderline(
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(30)),
+                  child: DropdownButton<String>(
+                      focusColor: Colors.transparent,
+                      value: selected_Price,
+                      items: job_Prices
+                          .map((item) => DropdownMenuItem(
+                              value: item,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(item),
+                              )))
+                          .toList(),
+                      onChanged: (item) => setState(() {
+                            selected_Price = item;
                           })),
                 ),
               ))
