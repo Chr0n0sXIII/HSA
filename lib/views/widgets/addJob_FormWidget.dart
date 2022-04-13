@@ -2,16 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:geocode/geocode.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:latlng/latlng.dart';
 import 'dart:io' show File;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
-
 import '../../dataClasses/User.dart';
 
 class Add_Job_Form extends StatefulWidget {
@@ -54,6 +53,10 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   String Address = "";
 
   bool uploading = false;
+
+  late Position pos;
+
+  late LatLng latlng;
 
   @override
   void dispose() {
@@ -219,7 +222,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: getlocation,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -376,7 +379,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                           ),
                         ),
                       ),
-                      Text('placeholder')
+                      Text(Address)
                     ],
                   ),
                 ),
@@ -428,10 +431,15 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     Navigator.of(context).pop();
   }
 
+  Future<void> getlocation() async {
+    pos = await _getGeoLocationPosition();
+    print(pos);
+    latlng = LatLng(pos.latitude, pos.longitude);
+    getAddressFromLatLng(pos);
+  }
+
   void confirm() async {
-    String jobID = UuidValue(job_Title_controller.text).uuid;
-    Position pos = await _getGeoLocationPosition();
-    LatLng latLng = LatLng(pos.latitude, pos.longitude);
+    String jobID = Uuid().v4();
 
     JobData job = JobData(
         jobID: jobID,
@@ -439,13 +447,13 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         jobDescription: job_Description_controller.text,
         jobLocation: Address,
         jobType: selectedItem.toString(),
-        latLng: latLng,
+        latLng: latlng,
         jobPrice: job_Price_controller.text,
         ActiveJobImages: imageURL_list,
         CompletedJobImages: []);
     widget.user.activeRequests.add(jobID);
     //add Job Data
-    FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
+    /* FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
     //Update User Data
     final val = await FirebaseFirestore.instance
         .collection("users")
@@ -456,11 +464,10 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       doc
           .data()
           .update("activeRequests", ((value) => widget.user.activeRequests));
-    }
-    upload( jobID);
+    }*/
+    upload(jobID);
   }
 
-  
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -491,26 +498,32 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         desiredAccuracy: LocationAccuracy.lowest);
   }
 
-  Future<void> GetAddressFromLatLong(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    print(placemarks);
-    Placemark place = placemarks[0];
-    Address =
-        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-    setState(() {
-      Address = ' ${place.locality}';
-    });
+  getAddressFromLatLng(Position pos) async {
+    try {
+      GeoCode geoCode = GeoCode();
+      var address =
+          await geoCode.reverseGeocoding(latitude: pos.latitude, longitude: pos.longitude);
+
+      
+
+      setState(() {
+        Address =
+            "${address.city}"; //here you can used place.country and other things also
+        print(Address);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   upload(String jobID) async {
-    String productId = await uplaodImageAndSaveItemInfo(jobID);
+    String productId = await uploadImageAndSaveItemInfo(jobID);
     setState(() {
       uploading = false;
     });
   }
 
-  Future<String> uplaodImageAndSaveItemInfo(String jobID) async {
+  Future<String> uploadImageAndSaveItemInfo(String jobID) async {
     setState(() {
       uploading = true;
     });

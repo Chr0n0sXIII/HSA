@@ -1,6 +1,7 @@
 
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:latlng/latlng.dart';
 import 'dart:ui';
@@ -48,6 +49,22 @@ class JobData {
       pin: pin,
       jobPrice: jobPrice,
       isCompleted: isCompleted,
+    };
+  }
+
+  Map<String, dynamic> ledgerItem(String amount, String type) {
+    var amountDouble = double.parse(amount);
+    if (type == "spent") {
+      amountDouble = double.parse("-" + amount);
+    }
+    return {
+      'ledger': FieldValue.arrayUnion([
+        {
+          "date": DateTime.now(),
+          "amount": amountDouble,
+        },
+      ]),
+      'saved': FieldValue.increment(amountDouble)
     };
   }
 }

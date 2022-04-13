@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 
@@ -72,14 +71,14 @@ class User {
     this.pfp = pfp;
   }
 
-  toMap() {
+   toMap() {
     return {
       uName: uName,
       email: email,
       about: about,
       contacts: contacts,
       skills: skills,
-      activeRequests: activeRequests,
+      activeRequests: activeRequests.toList(growable: false),
       completedRequests: completedRequests,
       activeJob: activeJob,
       completedJobs: completedJobs,
@@ -88,4 +87,6 @@ class User {
       pfp: pfp
     };
   }
+
+
 }

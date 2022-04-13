@@ -30,14 +30,16 @@ class _TileClusterState extends State<TileCluster> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserTile(
-            user: user,
+            user: widget.user,
           ),
           EditJobTile(
-            user: user,
+            user: widget.user,
           ),
-          AcceptWorksTile(user: user,),
+          AcceptWorksTile(
+            user: widget.user,
+          ),
           Row(
-            children: [CompleteJobTile(), AddNewJobTile()],
+            children: [CompleteJobTile(), AddNewJobTile(user: widget.user,)],
           )
         ],
       ),
@@ -207,7 +209,6 @@ class EditJobTile extends StatelessWidget {
       ),
     );
   }
-  
 }
 
 class AcceptWorksTile extends StatelessWidget {
@@ -328,19 +329,20 @@ class CompleteJobTile extends StatelessWidget {
 }
 
 class AddNewJobTile extends StatelessWidget {
-  const AddNewJobTile({Key? key}) : super(key: key);
+  final User user;
+  const AddNewJobTile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Add_New_Job_View(
-                                user: widget.user,
-                              )));
-      } ,
+            context,
+            MaterialPageRoute(
+                builder: (context) => Add_New_Job_View(
+                      user: user,
+                    )));
+      },
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Container(

@@ -44,6 +44,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   geolocator: ^8.2.0
   geocoding: ^2.0.4
+  geocode:  ^1.0.1
   uuid: ^3.0.6
   google_maps: ^6.1.0
 
