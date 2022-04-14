@@ -63,14 +63,9 @@ class UserTile extends StatefulWidget {
 }
 
 class _UserTileState extends State<UserTile> {
-  var isEmpty = false;
-
   @override
   Widget build(BuildContext context) {
     User user = widget.user;
-    if (user.pfpImage != null) {
-      isEmpty = true;
-    }
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(30)),
       hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
@@ -99,60 +94,57 @@ class _UserTileState extends State<UserTile> {
               ]),
           child: Row(
             children: [
-              isEmpty == false
-                  ? SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Image.asset(
-                        'assets/profile_picture_place_holder.png',
-                        scale: 0.6,
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    // ignore: unnecessary_new
+                    image: new DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(user.pfp))),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RatingBarIndicator(
+                      rating: user.userRating.toDouble(),
+                      direction: Axis.horizontal,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Color.fromRGBO(195, 166, 96, 1),
                       ),
-                    )
-                  : Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        user.skills,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
                           color: Colors.black,
-                          shape: BoxShape.circle,
-                          // ignore: unnecessary_new
-                          image: new DecorationImage(
-                              fit: BoxFit.cover, image: user.pfpImage.image)),
-                    ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RatingBarIndicator(
-                    rating: user.workerRating.toDouble(),
-                    direction: Axis.horizontal,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Color.fromRGBO(195, 166, 96, 1),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      user.skills,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      user.about,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        user.about,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
