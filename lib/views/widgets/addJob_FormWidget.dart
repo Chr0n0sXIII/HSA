@@ -442,6 +442,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   }
 
   Future confirm() async {
+    Navigator.of(context).pop();
+    renderLoadingView();
     final docJob = FirebaseFirestore.instance.collection('jobs').doc();
     await upload(docJob.id);
     final job = JobData(
@@ -461,6 +463,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     final docUser =
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
     docUser.update({'Active_Jobs': widget.user.activeJobs});
+    Navigator.of(context).pop();
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -541,5 +544,29 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     String value = await reference.getDownloadURL();
     imageRefs.add(value);
     print(value);
+  }
+
+  Future renderLoadingView() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(40)),
+              title: Text(
+                'Uploading Data...',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25
+                ),
+              ),
+              content: Container(
+                height: 200,
+                width: 200,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+        )
+    );
   }
 }
