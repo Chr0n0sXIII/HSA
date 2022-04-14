@@ -85,25 +85,57 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'ID' : user_ID,
-      'Name' : uName,
-      'Email' : email,
-      'Password' : userPassword,
-      'About' : about,
-      'Contacts' : contacts,
-      'Skills' : skills,
-      'Active_Jobs' : activeJobs,
-      'Completed_Request' : completedRequests,
-      'Curresnt_Job_Taken' : currentJobTaken,
-      'User_Rating' : userRating,
-      'Profile_Picture' : pfp
+      'ID': user_ID,
+      'Name': uName,
+      'Email': email,
+      'Password': userPassword,
+      'About': about,
+      'Contacts': contacts,
+      'Skills': skills,
+      'Active_Jobs': activeJobs,
+      'Completed_Request': completedRequests,
+      'Current_Job_Taken': currentJobTaken,
+      'Completed_Jobs' : completedJobs,
+      'User_Rating': userRating,
+      'Profile_Picture': pfp
     };
   }
 
   @override
   String toString() {
     // TODO: implement toString
-    print('\nID : ' + this.user_ID + '\nName : ' + this.uName + '\nEmail : ' + this.email + '\nContact : ' + this.contacts + '\nAbout : ' + this.about + '\nSkils : ' + this.skills + '\nRating : ' + this.userRating.toString());
+    print('\nID : ' +
+        this.user_ID +
+        '\nName : ' +
+        this.uName +
+        '\nEmail : ' +
+        this.email +
+        '\nContact : ' +
+        this.contacts +
+        '\nAbout : ' +
+        this.about +
+        '\nSkils : ' +
+        this.skills +
+        '\nRating : ' +
+        this.userRating.toString());
     return super.toString();
+  }
+
+  static User fromJson(Map<String, dynamic> json) {
+    return User(
+      user_ID: json['ID'],
+      uName: json['Name'],
+      email: json['Email'],
+      userPassword: json['Password'],
+      about: json['About'],
+      contacts: json['Contacts'],
+      skills: json['Skills'],
+      activeJobs: json['Active_Jobs'].cast<String>(),
+      completedRequests: json['Completed_Request'].cast<String>(),
+      completedJobs: json['Completed_Jobs'].cast<String>(),
+      currentJobTaken: json['Current_Job_Taken'],
+      userRating: json['User_Rating'],
+      pfp: json['Profile_Picture']
+    );
   }
 }
