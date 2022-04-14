@@ -204,17 +204,18 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ),
         if (!isLogin)
-          Expanded(
-            flex: 1,
-            child: Container(
+          Container(
+            height: 700,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
               color: Color.fromRGBO(229, 229, 229, 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "Email",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -223,24 +224,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                    child: TextField(
-                      obscureText: false,
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      controller: emailController,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: false,
+                    enableSuggestions: true,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)
+                    )
                   ),
-                  Text(
+                    controller: emailController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "First Name",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -249,24 +253,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: false,
+                    enableSuggestions: true,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: false,
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      controller: fnameController,
-                    ),
+                    controller: fnameController,
                   ),
-                  Text(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "Last Name",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -275,24 +282,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: false,
+                    enableSuggestions: true,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: false,
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      controller: lnameController,
-                    ),
+                    controller: lnameController,
                   ),
-                  Text(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "Password",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -301,24 +311,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 25),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 25),
-                      decoration: new InputDecoration.collapsed(hintText: ""),
-                      controller: passController,
-                    ),
+                    controller: passController,
                   ),
-                  Text(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  child: Text(
                     "Confirm Password",
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -327,51 +340,48 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.black,
                         fontSize: 25),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  child: TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: 30),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      )
                     ),
-                    child: TextField(
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      style: TextStyle(fontSize: 30),
-                      decoration: InputDecoration(
-                          hintText: "",
-                          errorText: _validateSamePass(),
-                          errorStyle: TextStyle(color: Colors.red)),
-                      controller: conpassController,
-                    ),
+                    controller: conpassController,
                   ),
-                  Container(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: Container(
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(20.0),
-                    child: SizedBox(
-                      height: 55,
-                      width: 348,
-                      child: ElevatedButton(
-                          onPressed: getTextInputData,
+                    child: ElevatedButton(
+                        onPressed: getTextInputData,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(75, 10, 75, 10),
                           child: Text(
                             "Signup",
-                            style: const TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 25),
                           ),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromRGBO(195, 166, 96, 1)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(color: Colors.black))))),
-                    ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color.fromRGBO(195, 166, 96, 1)),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                )))),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
       ],
