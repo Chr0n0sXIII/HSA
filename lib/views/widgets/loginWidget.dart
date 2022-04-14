@@ -422,53 +422,6 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
   }
 
-  authCredentials() async {
-    final value = await FirebaseFirestore.instance
-        .collection("credentials")
-        .where('uName', isEqualTo: emailController.text)
-        .get();
-    for (var doc in value.docs) {
-      String val = doc.get('Password');
-      //print(val.toString());
-      // print(passController.text);
-      print((passController.text.compareTo(val.toString())));
-      if (passController.text.compareTo(val.toString()) == 0) {
-        setState(() {
-          validated = true;
-        });
-      } else {
-        setState(() {
-          validated = false;
-        });
-      }
-    }
-  }
-
-  submitUser() {
-    var udata = userData(
-            uName: fnameController.text + " " + lnameController.text,
-            email: emailController.text,
-            about: "n/a",
-            contacts: "na",
-            skills: "na",
-            activeJob: "3",
-            activeRequests: ["1", "2"],
-            clientRating: "0",
-            workerRating: "0",
-            pfp:
-                "https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/shrekpfp.jpg?alt=media&token=174f1566-8caf-4969-8b66-a11b0b680027")
-        .toMap();
-    FirebaseFirestore.instance.collection("users").add(udata);
-  }
-
-  submitCredentials() {
-    var cred = userCredentials(
-            uName: emailController.text, Password: passController.text)
-        .toMap();
-
-    FirebaseFirestore.instance.collection("credentials").add(cred);
-  }
-
   loadUserProfile() async {}
 
   Future signUp(
