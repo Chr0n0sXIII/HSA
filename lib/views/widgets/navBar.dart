@@ -90,7 +90,7 @@ class TopBar extends StatelessWidget {
                           shape: BoxShape.circle,
                           // ignore: unnecessary_new
                           image: new DecorationImage(
-                              fit: BoxFit.cover, image: user.pfpImage.image)),
+                              fit: BoxFit.cover, image: NetworkImage(user.pfp))),
                     ),
               ),
               Dropdown(
