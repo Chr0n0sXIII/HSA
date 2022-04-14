@@ -44,7 +44,7 @@ class User {
     completedJobs = [""];
     currentJobTaken = "";
     userRating = 0;
-    pfp = "";
+    pfp = "https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/profile_picture_place_holder.png?alt=media&token=3bf2e229-8307-4992-9e5d-e21c451df858";
   }
 
   setUname(String uName) {
