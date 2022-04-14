@@ -13,30 +13,14 @@ class loginView extends StatelessWidget {
         body: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Flexible(
-                flex: 2,
-                fit: FlexFit.loose,
-                child: SizedBox(
-                  height: 1350,
-                  width: 850,
-                  child: LoginBannerWidget(),
-                ),
-              )
-            ]),
-            SizedBox(
-              width: 60,
+            Expanded(
+              flex: 2,
+              child: LoginBannerWidget()
             ),
-            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: 750,
-                  width: 480,
-                  child: LoginWidget(),
-                ),
-              ),
-            ]),
+            Expanded(
+              flex: 1,
+              child: LoginWidget(),
+            ),
           ],
         ));
     // TODO: implement build
