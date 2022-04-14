@@ -1,8 +1,9 @@
-
+import 'dart:convert';
 import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:geocode/geocode.dart';
 import 'package:latlng/latlng.dart';
 import 'dart:ui';
 
@@ -11,10 +12,10 @@ class JobData {
   String jobName;
   String jobDescription;
   String jobLocation;
-  String jobType;
-  LatLng latLng;
+  String? jobType;
+  double Latitude;
+  double Longitude;
   String jobPrice;
-  Icon pin;
   List<String> ActiveJobImages;
   List<String> CompletedJobImages;
   bool isCompleted;
@@ -25,32 +26,13 @@ class JobData {
     required this.jobDescription,
     required this.jobLocation,
     required this.jobType,
-    required this.latLng,
+    required this.Latitude,
+    required this.Longitude,
     required this.jobPrice,
-    this.pin = const Icon(
-      Icons.pin_drop,
-      color: Colors.red,
-    ),
     required this.ActiveJobImages,
     required this.CompletedJobImages,
     this.isCompleted = false,
   });
-
-  toMap() {
-    return {
-      jobID: jobID,
-      jobName: jobName,
-      jobDescription: jobDescription,
-      ActiveJobImages: ActiveJobImages,
-      CompletedJobImages: CompletedJobImages,
-      jobLocation: jobLocation,
-      jobType:jobType,
-      latLng: latLng,
-      pin: pin,
-      jobPrice: jobPrice,
-      isCompleted: isCompleted,
-    };
-  }
 
   Map<String, dynamic> ledgerItem(String amount, String type) {
     var amountDouble = double.parse(amount);
@@ -65,6 +47,22 @@ class JobData {
         },
       ]),
       'saved': FieldValue.increment(amountDouble)
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Job_ID' : jobID,
+      'Title' : jobName,
+      'Description' : jobDescription,
+      'Address' :jobLocation,
+      'Type' : jobType,
+      'Latitude' : Latitude,
+      'Longitude' : Longitude,
+      'Price' : jobPrice,
+      'Active_Job_Images' : ActiveJobImages,
+      'Completed_Job_Images' :CompletedJobImages,
+      'isCompleted' : isCompleted
     };
   }
 }
