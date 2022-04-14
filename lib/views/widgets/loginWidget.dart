@@ -10,6 +10,8 @@ import 'package:home_service_app/dataClasses/userData.dart';
 import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/homeView.dart';
 import "package:home_service_app/dataClasses/User.dart";
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key}) : super(key: key);
@@ -27,6 +29,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool isLogin = true;
   bool wrongcred = false;
   bool validated = false;
+  String errorComparePasswords = '';
+  Color errorComparePassworsColor = Colors.red;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -311,6 +315,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30))),
                         controller: passController,
+                        onChanged: (text) {
+                          _validateSamePass();
+                        },
                       ),
                     ),
                     Padding(
@@ -338,6 +345,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30))),
                         controller: conpassController,
+                        onChanged: (text) {
+                          _validateSamePass();
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(50, 10, 35, 0),
+                      child: Text(
+                        errorComparePasswords,
+                        style: TextStyle(color: errorComparePassworsColor),
                       ),
                     ),
                     Padding(
@@ -351,8 +368,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   " " +
                                   lnameController.text;
                               final password = passController.text;
+                              var bytes = utf8.encode(conpassController.text);
+                              String digest = sha256.convert(bytes).toString();
                               signUp(
-                                  name: name, email: email, password: password);
+                                  name: name, email: email, password: digest);
                             },
                             child: Padding(
                               padding:
@@ -381,10 +400,24 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   _validateSamePass() {
-    if (conpassController.text != passController.text) {
-      return "Passwords don't match";
+    var bytes_1 = utf8.encode(passController.text);
+    String digest_1 = sha256.convert(bytes_1).toString();
+    var bytes_2 = utf8.encode(conpassController.text);
+    String digest_2 = sha256.convert(bytes_2).toString();
+    print('Digest 1 :  $digest_1');
+    print('Digest 2 :  $digest_2');
+    if (digest_1.compareTo(digest_2) != 0) {
+      setState(() {
+        errorComparePasswords = "Passwords don't match!";
+        errorComparePassworsColor = Colors.red;
+        return;
+      });
+    } else {
+      setState(() {
+        errorComparePasswords = "Passwords match!";
+        errorComparePassworsColor = Colors.green;
+      });
     }
-    return null;
   }
 
   authCredentials() async {
