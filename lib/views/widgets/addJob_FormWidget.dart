@@ -42,6 +42,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
   List<String> imageURL_list = <String>[];
+  List<String> imageRefs = <String>[];
   bool imageUploaded = false;
 
   int activeIndex = 0;
@@ -410,7 +411,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(20)),
                               primary: Color.fromRGBO(11, 206, 131, 1)),
-                          onPressed: confirm,
+                          onPressed: () {
+                            confirm();
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
@@ -438,34 +441,26 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     getAddressFromLatLng(pos);
   }
 
-  void confirm() async {
-    String jobID = Uuid().v4();
-
-    JobData job = JobData(
-        jobID: jobID,
+  Future confirm() async {
+    final docJob = FirebaseFirestore.instance.collection('jobs').doc();
+    await upload(docJob.id);
+    final job = JobData(
+        jobID: docJob.id,
         jobName: job_Title_controller.text,
         jobDescription: job_Description_controller.text,
         jobLocation: Address,
-        jobType: selectedItem.toString(),
-        latLng: latlng,
+        jobType: selectedItem,
         jobPrice: job_Price_controller.text,
-        ActiveJobImages: imageURL_list,
-        CompletedJobImages: []);
-    widget.user.activeRequests.add(jobID);
-    //add Job Data
-    /* FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
-    //Update User Data
-    final val = await FirebaseFirestore.instance
-        .collection("users")
-        .where("uName", isEqualTo: widget.user.uName)
-        .get();
-
-    for (var doc in val.docs) {
-      doc
-          .data()
-          .update("activeRequests", ((value) => widget.user.activeRequests));
-    }*/
-    upload(jobID);
+        Latitude: pos.latitude,
+        Longitude: pos.longitude,
+        CompletedJobImages: [],
+        ActiveJobImages: imageRefs);
+    final jsonData = job.toJson();
+    await docJob.set(jsonData);
+    widget.user.addJob(docJob.id);
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    docUser.update({'Active_Jobs': widget.user.activeJobs});
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -501,10 +496,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   getAddressFromLatLng(Position pos) async {
     try {
       GeoCode geoCode = GeoCode();
-      var address =
-          await geoCode.reverseGeocoding(latitude: pos.latitude, longitude: pos.longitude);
-
-      
+      var address = await geoCode.reverseGeocoding(
+          latitude: pos.latitude, longitude: pos.longitude);
 
       setState(() {
         Address =
@@ -546,5 +539,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       SettableMetadata(contentType: 'image/jpeg'),
     );
     String value = await reference.getDownloadURL();
+    imageRefs.add(value);
+    print(value);
   }
 }
