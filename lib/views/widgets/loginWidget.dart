@@ -118,7 +118,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: false,
                     enableSuggestions: true,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -147,7 +147,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -231,7 +231,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: false,
                     enableSuggestions: true,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -260,7 +260,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: false,
                     enableSuggestions: true,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -289,7 +289,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: false,
                     enableSuggestions: true,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -318,7 +318,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -347,7 +347,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
