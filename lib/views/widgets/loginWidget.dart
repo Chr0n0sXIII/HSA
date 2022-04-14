@@ -92,7 +92,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
         if (isLogin)
           Container(
-            height: 650,
+            height: 700,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Color.fromRGBO(229, 229, 229, 1),
