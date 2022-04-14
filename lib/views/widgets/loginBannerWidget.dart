@@ -6,9 +6,9 @@ class LoginBannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(4, 30, 81, 1),
-      body: Row(
+    return Container(
+      color: Color.fromRGBO(4, 30, 81, 1),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
