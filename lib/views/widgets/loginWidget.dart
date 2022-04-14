@@ -189,7 +189,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: Container(
                           alignment: Alignment.center,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (emailController.text == '' ||
+                                    passController.text == '') {
+                                  showToast('Please Fill Out Fields!');
+                                  return;
+                                }
+                                authenticateUser();
+                              },
                               child: Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(75, 10, 75, 10),
@@ -395,11 +402,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     sha256.convert(bytes).toString();
                                 signUp(
                                     name: name, email: email, password: digest);
-                                showToast();
+                                showToast('Account Created! Login to Continue');
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>  loginView()));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => loginView()));
                               },
                               child: Padding(
                                 padding:
@@ -463,11 +470,45 @@ class _LoginWidgetState extends State<LoginWidget> {
     await docUser.set(jsonData);
   }
 
-  void showToast() {
+  void showToast(String msg) {
     Fluttertoast.showToast(
-      msg: 'Account Created! Login to Continue',
-      webPosition: 'center',
-      timeInSecForIosWeb: 4
-    );
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
+  }
+
+  authenticateUser() async {
+    String check = '';
+    String id = '';
+    var bytes = utf8.encode(passController.text);
+    String digest = sha256.convert(bytes).toString();
+    final value = await FirebaseFirestore.instance
+        .collection('users')
+        .where('Email', isEqualTo: emailController.text)
+        .get();
+    if (value.size == 0) {
+      showToast('Account Doesn`t Exist, Verify Email Spelling');
+      return;
+    }
+    for (var doc in value.docs) {
+      print(doc.get('Password'));
+      check = doc.get('Password');
+      id = doc.get('ID');
+    }
+    if (check != digest) {
+      showToast('Incorrect Password!');
+      return;
+    }
+    print(id);
+    final docUser = FirebaseFirestore.instance.collection('users').doc(id);
+    final snapshot = await docUser.get();
+    Map<String, dynamic>? jsonData = snapshot.data();
+    print(jsonData!['Name']);
+    User user = User.fromJson(jsonData);
+    showToast('Logged In!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: user,
+                )));
   }
 }
