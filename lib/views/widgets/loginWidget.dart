@@ -352,7 +352,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 10, 35, 0),
-                      child: Text(
+                      child: passController.text == '' && conpassController.text == ''
+                      ?Text('')
+                      :Text(
                         errorComparePasswords,
                         style: TextStyle(color: errorComparePassworsColor),
                       ),
