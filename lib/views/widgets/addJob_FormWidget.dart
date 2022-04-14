@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocode/geocode.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlng/latlng.dart';
 import 'dart:io' show File;
@@ -464,6 +466,13 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
     docUser.update({'Active_Jobs': widget.user.activeJobs});
     Navigator.of(context).pop();
+    showToast('Upload Successful! Job Added to Listing');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: widget.user,
+                )));
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -555,9 +564,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
               title: Text(
                 'Uploading Data...',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25
-                ),
+                style: TextStyle(fontSize: 25),
               ),
               content: Container(
                 height: 200,
@@ -566,7 +573,11 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                   child: CircularProgressIndicator(),
                 ),
               ),
-        )
-    );
+            ));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 }
