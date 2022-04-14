@@ -101,7 +101,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "Email",
                     textAlign: TextAlign.left,
@@ -113,7 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: false,
                     enableSuggestions: true,
@@ -130,7 +130,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15,top: 15),
+                  padding: const EdgeInsets.only(left: 35,top: 15),
                   child: Text(
                     "Password",
                     textAlign: TextAlign.left,
@@ -142,7 +142,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: true,
                     enableSuggestions: false,
@@ -214,7 +214,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "Email",
                     textAlign: TextAlign.left,
@@ -226,7 +226,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: false,
                     enableSuggestions: true,
@@ -243,7 +243,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "First Name",
                     textAlign: TextAlign.left,
@@ -255,7 +255,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: false,
                     enableSuggestions: true,
@@ -272,7 +272,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "Last Name",
                     textAlign: TextAlign.left,
@@ -284,7 +284,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: false,
                     enableSuggestions: true,
@@ -301,7 +301,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "Password",
                     textAlign: TextAlign.left,
@@ -313,7 +313,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: true,
                     enableSuggestions: false,
@@ -330,7 +330,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15,left: 15),
+                  padding: const EdgeInsets.only(top: 15,left: 35),
                   child: Text(
                     "Confirm Password",
                     textAlign: TextAlign.left,
@@ -342,7 +342,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                   child: TextField(
                     obscureText: true,
                     enableSuggestions: false,
