@@ -44,7 +44,8 @@ class User {
     completedJobs = [""];
     currentJobTaken = "";
     userRating = 0;
-    pfp = "https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/profile_picture_place_holder.png?alt=media&token=3bf2e229-8307-4992-9e5d-e21c451df858";
+    pfp =
+        "https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/profile_picture_place_holder.png?alt=media&token=3bf2e229-8307-4992-9e5d-e21c451df858";
   }
 
   setUname(String uName) {
@@ -83,6 +84,10 @@ class User {
     this.pfp = pfp;
   }
 
+  addJob(String jobID) {
+    activeJobs.add(jobID);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'ID': user_ID,
@@ -95,7 +100,7 @@ class User {
       'Active_Jobs': activeJobs,
       'Completed_Request': completedRequests,
       'Current_Job_Taken': currentJobTaken,
-      'Completed_Jobs' : completedJobs,
+      'Completed_Jobs': completedJobs,
       'User_Rating': userRating,
       'Profile_Picture': pfp
     };
@@ -123,19 +128,18 @@ class User {
 
   static User fromJson(Map<String, dynamic> json) {
     return User(
-      user_ID: json['ID'],
-      uName: json['Name'],
-      email: json['Email'],
-      userPassword: json['Password'],
-      about: json['About'],
-      contacts: json['Contacts'],
-      skills: json['Skills'],
-      activeJobs: json['Active_Jobs'].cast<String>(),
-      completedRequests: json['Completed_Request'].cast<String>(),
-      completedJobs: json['Completed_Jobs'].cast<String>(),
-      currentJobTaken: json['Current_Job_Taken'],
-      userRating: json['User_Rating'],
-      pfp: json['Profile_Picture']
-    );
+        user_ID: json['ID'],
+        uName: json['Name'],
+        email: json['Email'],
+        userPassword: json['Password'],
+        about: json['About'],
+        contacts: json['Contacts'],
+        skills: json['Skills'],
+        activeJobs: json['Active_Jobs'].cast<String>(),
+        completedRequests: json['Completed_Request'].cast<String>(),
+        completedJobs: json['Completed_Jobs'].cast<String>(),
+        currentJobTaken: json['Current_Job_Taken'],
+        userRating: json['User_Rating'],
+        pfp: json['Profile_Picture']);
   }
 }
