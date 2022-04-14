@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/dataClasses/userCredentials.dart';
@@ -12,6 +13,7 @@ import 'package:home_service_app/views/homeView.dart';
 import "package:home_service_app/dataClasses/User.dart";
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:home_service_app/views/loginView.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key}) : super(key: key);
@@ -59,11 +61,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromRGBO(4, 30, 81, 1)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10)),
-                                side: BorderSide(color: Colors.black))))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(10)),
+                                    side: BorderSide(color: Colors.black))))),
               ),
               Container(
                 alignment: Alignment.topLeft,
@@ -85,11 +88,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromRGBO(195, 166, 96, 1)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10)),
-                                side: BorderSide(color: Colors.white))))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(10)),
+                                    side: BorderSide(color: Colors.white))))),
               ),
             ],
           ),
@@ -97,16 +101,15 @@ class _LoginWidgetState extends State<LoginWidget> {
               ? Container(
                   height: 700,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(229, 229, 229, 1),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(7.0, 8.0))
-                    ]
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromRGBO(229, 229, 229, 1),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(7.0, 8.0))
+                      ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -212,16 +215,15 @@ class _LoginWidgetState extends State<LoginWidget> {
               : Container(
                   height: 700,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(229, 229, 229, 1),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(7.0, 8.0))
-                    ]
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromRGBO(229, 229, 229, 1),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(7.0, 8.0))
+                      ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -368,12 +370,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(50, 10, 35, 0),
-                        child: passController.text == '' && conpassController.text == ''
-                        ?Text('')
-                        :Text(
-                          errorComparePasswords,
-                          style: TextStyle(color: errorComparePassworsColor),
-                        ),
+                        child: passController.text == '' &&
+                                conpassController.text == ''
+                            ? Text('')
+                            : Text(
+                                errorComparePasswords,
+                                style:
+                                    TextStyle(color: errorComparePassworsColor),
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
@@ -387,9 +391,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     lnameController.text;
                                 final password = passController.text;
                                 var bytes = utf8.encode(conpassController.text);
-                                String digest = sha256.convert(bytes).toString();
+                                String digest =
+                                    sha256.convert(bytes).toString();
                                 signUp(
                                     name: name, email: email, password: digest);
+                                showToast();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>  loginView()));
                               },
                               child: Padding(
                                 padding:
@@ -451,5 +461,13 @@ class _LoginWidgetState extends State<LoginWidget> {
     print(user.toString());
     final jsonData = user.toJson();
     await docUser.set(jsonData);
+  }
+
+  void showToast() {
+    Fluttertoast.showToast(
+      msg: 'Account Created! Login to Continue',
+      webPosition: 'center',
+      timeInSecForIosWeb: 4
+    );
   }
 }
