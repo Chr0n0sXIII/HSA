@@ -155,7 +155,7 @@ class _MapViewState extends State<MapView> {
   }
 
   GoogleMap() {
-    String htmlId = "7";
+    String htmlId = widget.user.user_ID;
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
