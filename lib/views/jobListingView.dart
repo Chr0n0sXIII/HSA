@@ -304,8 +304,8 @@ class _jobListingViewState extends State<jobListingView> {
       job = JobData.fromJson(snapshot.data());
       jobs.add(job);
     }
-    total_jobs = allJobs.length;
     setState(() {
+      total_jobs = allJobs.length;
       allJobs = jobs;
     });
   }
