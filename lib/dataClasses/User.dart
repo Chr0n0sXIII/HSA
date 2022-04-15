@@ -122,7 +122,14 @@ class User {
         '\nSkils : ' +
         this.skills +
         '\nRating : ' +
-        this.userRating.toString());
+        this.userRating.toString() +
+        '\nActive Jobs : ' + 
+        activeJobs.toString() +
+        '\nCompleted Jobs : ' +
+        this.completedJobs.toString() +
+        '\nCurrent Job Taken : ' + 
+        this.currentJobTaken
+        );
     return super.toString();
   }
 
