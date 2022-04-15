@@ -21,9 +21,16 @@ class _Completed_LisingState extends State<Completed_Lising> {
   int total_Jobs = 0;
   bool imagesLoaded = false;
   bool reviewedByClient = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+  
   @override
   Widget build(BuildContext context) {
-    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
@@ -61,8 +68,8 @@ class _Completed_LisingState extends State<Completed_Lising> {
       }
     }
     setState(() {
-      total_Jobs = allJobs.length;
       allJobs = jobs;
+      total_Jobs = allJobs.length;
       recievedImages = true;
       imagesLoaded = true;
     });
@@ -165,5 +172,9 @@ class _Completed_LisingState extends State<Completed_Lising> {
         ),
       ),
     );
+  }
+
+  Future<void> LoadData() async {
+    await getJobs();
   }
 }

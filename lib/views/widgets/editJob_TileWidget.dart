@@ -17,9 +17,16 @@ class _editJobTileListingState extends State<editJobTileListing> {
   List<JobData> allJobs = [];
   bool recievedImages = false;
   int total_Jobs = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
@@ -55,8 +62,8 @@ class _editJobTileListingState extends State<editJobTileListing> {
       }
     }
     setState(() {
-      total_Jobs = allJobs.length;
       allJobs = jobs;
+      total_Jobs = allJobs.length;
       recievedImages = true;
     });
   }
@@ -192,4 +199,8 @@ class _editJobTileListingState extends State<editJobTileListing> {
   editThisJob() {}
 
   removeThisJob() {}
+
+  Future<void> LoadData() async {
+    await getJobs();
+  }
 }
