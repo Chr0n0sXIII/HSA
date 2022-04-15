@@ -1,10 +1,7 @@
 
-import 'dart:html';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:latlng/latlng.dart';
-import 'dart:ui';
 
 class JobData {
   String jobID;
@@ -38,33 +35,19 @@ class JobData {
 
   toMap() {
     return {
-      jobID: jobID,
-      jobName: jobName,
-      jobDescription: jobDescription,
-      ActiveJobImages: ActiveJobImages,
-      CompletedJobImages: CompletedJobImages,
-      jobLocation: jobLocation,
-      jobType:jobType,
-      latLng: latLng,
-      pin: pin,
-      jobPrice: jobPrice,
-      isCompleted: isCompleted,
+      'jobID': jobID,
+      'jobName': jobName,
+      'jobDescription': jobDescription,
+      'ActiveJobImages': ActiveJobImages,
+      'CompletedJobImages': CompletedJobImages,
+      'jobLocation': jobLocation,
+      'jobType':jobType,
+      'latLng': latLng.latitude.toString()+latLng.longitude.toString(),
+      //'pin': pin,
+      'jobPrice': jobPrice,
+      'isCompleted': isCompleted,
     };
   }
 
-  Map<String, dynamic> ledgerItem(String amount, String type) {
-    var amountDouble = double.parse(amount);
-    if (type == "spent") {
-      amountDouble = double.parse("-" + amount);
-    }
-    return {
-      'ledger': FieldValue.arrayUnion([
-        {
-          "date": DateTime.now(),
-          "amount": amountDouble,
-        },
-      ]),
-      'saved': FieldValue.increment(amountDouble)
-    };
-  }
+  
 }

@@ -452,8 +452,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         ActiveJobImages: imageURL_list,
         CompletedJobImages: []);
     widget.user.activeRequests.add(jobID);
+    widget.user.activeRequests.add(job.jobID);
     //add Job Data
-    /* FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
+    FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
     //Update User Data
     final val = await FirebaseFirestore.instance
         .collection("users")
@@ -464,7 +465,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       doc
           .data()
           .update("activeRequests", ((value) => widget.user.activeRequests));
-    }*/
+    }
     upload(jobID);
   }
 
@@ -501,10 +502,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   getAddressFromLatLng(Position pos) async {
     try {
       GeoCode geoCode = GeoCode();
-      var address =
-          await geoCode.reverseGeocoding(latitude: pos.latitude, longitude: pos.longitude);
-
-      
+      var address = await geoCode.reverseGeocoding(
+          latitude: pos.latitude, longitude: pos.longitude);
 
       setState(() {
         Address =

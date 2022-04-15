@@ -73,18 +73,18 @@ class User {
 
    toMap() {
     return {
-      uName: uName,
-      email: email,
-      about: about,
-      contacts: contacts,
-      skills: skills,
-      activeRequests: activeRequests.toList(growable: false),
-      completedRequests: completedRequests,
-      activeJob: activeJob,
-      completedJobs: completedJobs,
-      clientRating: clientRating,
-      workerRating: workerRating,
-      pfp: pfp
+      'uName': uName,
+      'email': email,
+      'about': about,
+      'contacts': contacts,
+      'skills': skills,
+      'activeRequests': activeRequests,
+      'completedRequests': completedRequests,
+      'activeJob': activeJob,
+      'completedJobs': completedJobs,
+      'clientRating': clientRating,
+      'workerRating': workerRating,
+      'pfp': pfp
     };
   }
 

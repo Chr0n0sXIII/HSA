@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:home_service_app/dataClasses/jobData.dart';
-import 'package:home_service_app/dataClasses/jobDataUtil.dart';
 import 'package:home_service_app/dataClasses/userCredentials.dart';
 import 'package:home_service_app/dataClasses/userCredentialsUtil.dart';
 import 'package:home_service_app/dataClasses/userData.dart';
-import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/homeView.dart';
 import "package:home_service_app/dataClasses/User.dart";
 
@@ -36,8 +32,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool isLogin = true;
   bool wrongcred = false;
   bool validated = false;
+  
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       children: [
         Row(
@@ -47,6 +45,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               margin: const EdgeInsets.only(top: 15.0),
               //padding: const EdgeInsets.all(20.0),
               child: SizedBox(
+                key: Key("switch login"),
                 height: 51,
                 width: 112,
                 child: ElevatedButton(
@@ -74,6 +73,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 height: 51,
                 width: 112,
                 child: ElevatedButton(
+                    key: Key("switch signup"),
                     onPressed: setSignup,
                     child: Text(
                       "Signup",
@@ -182,6 +182,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       height: 55,
                       width: 348,
                       child: ElevatedButton(
+                          key: Key("login lutton"),
                           onPressed: getTextInputData,
                           child: Text(
                             "Login",
@@ -353,6 +354,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       height: 55,
                       width: 348,
                       child: ElevatedButton(
+                        key: Key("signup button"),
                           onPressed: getTextInputData,
                           child: Text(
                             "Signup",
@@ -430,11 +432,11 @@ class _LoginWidgetState extends State<LoginWidget> {
   setlogin() {
     setState(() {
       isLogin = true;
-      widget.email = "";
-      widget.password = "";
-      widget.Fname = "";
-      widget.Lname = "";
-      widget.conPass = "";
+      passController.dispose();
+      emailController.dispose();
+      conpassController.dispose();
+      fnameController.dispose();
+      lnameController.dispose();
     });
   }
 
@@ -456,7 +458,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     return null;
   }
 
-  authCredentials() async {
+  Future<bool> authCredentials() async {
     final value = await FirebaseFirestore.instance
         .collection("credentials")
         .where('uName', isEqualTo: emailController.text)
@@ -470,12 +472,14 @@ class _LoginWidgetState extends State<LoginWidget> {
         setState(() {
           validated = true;
         });
+        return true;
       } else {
         setState(() {
           validated = false;
         });
       }
     }
+    return false;
   }
 
   submitUser() {

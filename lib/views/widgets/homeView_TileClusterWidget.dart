@@ -1,15 +1,9 @@
-import 'dart:async';
-import 'dart:html';
-import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/User.dart';
 import 'package:home_service_app/views/addJobView.dart';
 import 'package:home_service_app/views/acceptWorkerList.dart';
-import 'package:home_service_app/views/acceptWorkersView.dart';
 import 'package:home_service_app/views/editJobView.dart';
 import 'package:home_service_app/views/userProfileView.dart';
 

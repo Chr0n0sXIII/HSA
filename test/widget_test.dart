@@ -7,24 +7,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:home_service_app/views/loginView.dart';
 
-import 'package:home_service_app/main.dart';
+import 'package:home_service_app/views/widgets/loginWidget.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  Widget make({required Widget child}) {
+    return MaterialApp(
+      home: child,
+    );
+  }
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('LoginTest', (WidgetTester tester) async {
+    LoginWidget loginWidget = LoginWidget();
+    tester.pumpWidget(make(child: loginWidget));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Test code goes here.
   });
 }
