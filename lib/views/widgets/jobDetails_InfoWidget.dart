@@ -14,10 +14,10 @@ import '../../dataClasses/User.dart';
 
 class jobDetails_InfoWidget extends StatefulWidget {
   userData udata = UserDataUtil.TestData_UserData()[1];
-  JobData jdata = JobDataUtil.TestData_JobsData()[1];
+  //JobData jdata = JobDataUtil.TestData_JobsData()[1];
   final User user;
-
-  jobDetails_InfoWidget({Key? key, required this.user}) : super(key: key);
+  final JobData job;
+  jobDetails_InfoWidget({Key? key, required this.job, required this.user}) : super(key: key);
   @override
   jobDetails_InfoWidget_State createState() => jobDetails_InfoWidget_State();
 }
@@ -45,12 +45,15 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                 ]),
             child: Row(
               children: [
-                SizedBox(
-                  height: 100,
+                Container(
                   width: 100,
-                  child: Image.asset('assets/profile_picture_place_holder.png',
-                      scale: 0.65),
-                ),
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    // ignore: unnecessary_new
+                    image: new DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(widget.user.pfp)))),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +61,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: RatingBar.builder(
-                        initialRating: 4,
+                        initialRating: widget.user.userRating,
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
@@ -76,7 +79,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                       child: Text(
-                        widget.udata.uName,
+                        widget.user.uName,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.black,
@@ -116,7 +119,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
                       //Title
-                      widget.jdata.jobName,
+                      widget.job.jobName,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -128,7 +131,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       //Description
-                      widget.jdata.jobDescription,
+                      widget.job.jobDescription,
                       style: const TextStyle(
                           color: Color.fromRGBO(136, 134, 134, 1),
                           fontSize: 18,
@@ -163,7 +166,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                   child: Row(
                     children: [
                       Text(
-                        widget.jdata.jobLocation,
+                        widget.job.jobLocation,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Icon(
@@ -208,7 +211,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
-                        widget.jdata.jobPrice,
+                        '\$ ' + widget.job.jobPrice,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 229, 0, 0),
                             fontSize: 24,
@@ -245,15 +248,15 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
   requestJob() {}
 
   GoogleMap() {
-    String htmlId = "7";
+    String htmlId = "8";
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
-      final myLatlng = gm.LatLng(10.640821, -61.398547);
+      final myLatlng = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final mapOptions = gm.MapOptions()
         ..zoom = 13
-        ..center = gm.LatLng(10.640821, -61.398547);
+        ..center = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final elem = DivElement()
         ..id = htmlId
@@ -267,7 +270,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       gm.Marker(gm.MarkerOptions()
         ..position = myLatlng
         ..map = map
-        ..title = 'Active Job Location');
+        ..title = widget.job.jobName);
 
       return elem;
     });
