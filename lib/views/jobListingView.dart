@@ -36,6 +36,15 @@ class _jobListingViewState extends State<jobListingView> {
   String? selected_Distance = 'Closest';
   String? selected_Price = 'Low - High';
   int total_jobs = 0;
+  bool loaded = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,29 +191,27 @@ class _jobListingViewState extends State<jobListingView> {
   }
 
   jobList() {
-    getJobs();
     return Container(
-      height: 600,
-      width: 600,
-      child: total_jobs >= 0
-      ?ListView.builder(
-          shrinkWrap: true,
-          itemCount: total_jobs,
-          itemBuilder: (context, index) {
-            return jobTile(allJobs[index]);
-          })
-      :Center(
-        child: CircularProgressIndicator(),
-      )
-    );
+        height: 600,
+        width: 600,
+        child: total_jobs >= 1
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: total_jobs,
+                itemBuilder: (context, index) {
+                  return jobTile(allJobs[index]);
+                })
+            : Center(
+                child: CircularProgressIndicator(),
+              ));
   }
 
   googleMaps() {
-    String htmlId = "7";
+    String htmlId = "159753";
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
-      final myLatlng = gm.LatLng(10.640821, -61.398547);
+      //final myLatlng = gm.LatLng(10.640821, -61.398547);
 
       final mapOptions = gm.MapOptions()
         ..zoom = 13
@@ -218,11 +225,16 @@ class _jobListingViewState extends State<jobListingView> {
         ..style.borderRadius = '13px';
 
       final map = gm.GMap(elem, mapOptions);
-      gm.Marker(gm.MarkerOptions()
-        ..position = myLatlng
-        ..map = map
-        ..title = 'Active Job Location');
-
+      // gm.Marker(gm.MarkerOptions()
+      //   ..position = myLatlng
+      //   ..map = map
+      //   ..title = 'Active Job Location');
+      for (int i = 0; i < allJobs.length; i++) {
+        gm.Marker(gm.MarkerOptions()
+          ..position = gm.LatLng(allJobs[i].Latitude, allJobs[i].Longitude)
+          ..map = map
+          ..title = allJobs[i].jobName);
+      }
       return elem;
     });
 
@@ -237,13 +249,12 @@ class _jobListingViewState extends State<jobListingView> {
         hoverColor: Color.fromRGBO(195, 166, 96, 0.25),
         onTap: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => jobDetailsView(
-                user: widget.user, job: job,
-              )
-            )
-          );
+              context,
+              MaterialPageRoute(
+                  builder: (context) => jobDetailsView(
+                        user: widget.user,
+                        job: job,
+                      )));
         },
         child: Container(
           height: 150,
@@ -271,7 +282,8 @@ class _jobListingViewState extends State<jobListingView> {
                   children: [
                     Text(
                       job.jobName,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       job.jobDescription,
@@ -319,12 +331,18 @@ class _jobListingViewState extends State<jobListingView> {
     for (int i = 1; i < ids.length; i++) {
       docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
       snapshot = await docJob.get();
+      print(snapshot.data());
       job = JobData.fromJson(snapshot.data());
       jobs.add(job);
     }
     setState(() {
-      total_jobs = allJobs.length;
       allJobs = jobs;
+      total_jobs = allJobs.length;
+      loaded = true;
     });
+  }
+
+  Future<void> LoadData() async {
+    await getJobs();
   }
 }
