@@ -458,7 +458,10 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         Latitude: pos.latitude,
         Longitude: pos.longitude,
         CompletedJobImages: [],
-        ActiveJobImages: imageRefs);
+        ActiveJobImages: imageRefs,
+        clientReview: '',
+        workerReview: ''
+    );
     final jsonData = job.toJson();
     await docJob.set(jsonData);
     widget.user.addJob(docJob.id);

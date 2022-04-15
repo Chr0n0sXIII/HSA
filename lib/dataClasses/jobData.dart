@@ -17,6 +17,9 @@ class JobData {
   List<String> ActiveJobImages;
   List<String> CompletedJobImages;
   bool isCompleted;
+  bool isReviewed;
+  String clientReview;
+  String workerReview;
 
   JobData({
     required this.jobID,
@@ -30,6 +33,9 @@ class JobData {
     required this.ActiveJobImages,
     required this.CompletedJobImages,
     this.isCompleted = false,
+    this.isReviewed = false,
+    required this.clientReview,
+    required this.workerReview
   });
 
   Map<String, dynamic> toJson() {
@@ -44,7 +50,10 @@ class JobData {
       'Price': jobPrice,
       'Active_Job_Images': ActiveJobImages,
       'Completed_Job_Images': CompletedJobImages,
-      'isCompleted': isCompleted
+      'isCompleted': isCompleted,
+      'isReviewed' : isReviewed,
+      'Client_Review' : clientReview,
+      'Worker_Review' : workerReview
     };
   }
 
@@ -60,7 +69,10 @@ class JobData {
         jobPrice: json['Price'],
         ActiveJobImages: json['Active_Job_Images'].cast<String>(),
         CompletedJobImages: json['Completed_Job_Images'].cast<String>(),
-        isCompleted: json['isCompleted']
-        );
+        isCompleted: json['isCompleted'],
+        isReviewed: json['isReviewed'],
+        clientReview: json['Client_Review'],
+        workerReview: json['Worker_Review']
+    );
   }
 }
