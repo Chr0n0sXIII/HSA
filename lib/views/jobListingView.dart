@@ -181,7 +181,9 @@ class _jobListingViewState extends State<jobListingView> {
           children: [
             Expanded(
               child: Container(
-                child: googleMaps(),
+                child: loaded == true
+                ?googleMaps()
+                :Center(child: CircularProgressIndicator(),)
               ),
             )
           ],
