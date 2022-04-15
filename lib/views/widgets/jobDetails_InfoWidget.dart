@@ -45,15 +45,18 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                 ]),
             child: Row(
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    // ignore: unnecessary_new
-                    image: new DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(widget.user.pfp)))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      // ignore: unnecessary_new
+                      image: new DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(widget.user.pfp)))),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
