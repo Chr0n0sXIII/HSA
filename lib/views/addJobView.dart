@@ -16,15 +16,26 @@ class Add_New_Job_View extends StatefulWidget {
 
 class _Add_New_Job_ViewState extends State<Add_New_Job_View> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('[Add Job View] : Start');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(229, 229, 229, 1),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopBar(user: widget.user,),
+            TopBar(
+              user: widget.user,
+            ),
             PageTitle("Add a New Job For Listing"),
-            Add_Job_Form(user: widget.user,),
+            Add_Job_Form(
+              user: widget.user,
+            ),
             Footer(),
           ],
         ),

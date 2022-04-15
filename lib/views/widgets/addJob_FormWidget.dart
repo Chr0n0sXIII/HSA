@@ -277,6 +277,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     image = await _picker.pickMultiImage();
     imageURL_list.clear();
     ImageList.clear();
+    print('[Add Images] : Start');
     if (image != null) {
       setState(() {
         ImageList = ImageList + image!;
@@ -285,6 +286,8 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       });
     }
     imageUploaded = true;
+    print('[Image URL List ] : ' + imageURL_list.toString());
+    print('[ADD Images] : Finsh');
   }
 
   void addImage() {
@@ -460,13 +463,14 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         CompletedJobImages: [],
         ActiveJobImages: imageRefs,
         clientReview: '',
-        workerReview: ''
-    );
+        workerReview: '');
     final jsonData = job.toJson();
     await docJob.set(jsonData);
     widget.user.addJob(docJob.id);
     final docUser =
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    print('[Updated User]' + widget.user.toString());
+    print('[New Job Added]' + job.toString());
     docUser.update({'Active_Jobs': widget.user.activeJobs});
     Navigator.of(context).pop();
     showToast('Upload Successful! Job Added to Listing');

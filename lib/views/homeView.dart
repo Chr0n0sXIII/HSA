@@ -16,8 +16,14 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('\n[ Home View : Start ]');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    
     double screenH = MediaQuery.of(context).size.height;
     if (Responsive.isDesktop(context)) {
       return Scaffold(
@@ -35,7 +41,9 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MapView(user: widget.user,),
+                    MapView(
+                      user: widget.user,
+                    ),
                     TileCluster(
                       user: widget.user,
                     )

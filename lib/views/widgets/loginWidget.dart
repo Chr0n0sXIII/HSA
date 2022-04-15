@@ -31,6 +31,14 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool validated = false;
   String errorComparePasswords = '';
   Color errorComparePassworsColor = Colors.red;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('[Login View : Start ]');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,6 +55,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     onPressed: () {
                       setState(() {
                         isLogin = true;
+                        print(
+                            '[ElevatedButton(Login)] : isLogin Updated -> $isLogin');
                       });
                     },
                     child: Padding(
@@ -74,6 +84,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     onPressed: () {
                       setState(() {
                         isLogin = false;
+                        print(
+                            '[ElevatedButton(Signup)] : isLogin Updated -> $isLogin');
                       });
                     },
                     child: Padding(
@@ -438,8 +450,6 @@ class _LoginWidgetState extends State<LoginWidget> {
     String digest_1 = sha256.convert(bytes_1).toString();
     var bytes_2 = utf8.encode(conpassController.text);
     String digest_2 = sha256.convert(bytes_2).toString();
-    print('Digest 1 :  $digest_1');
-    print('Digest 2 :  $digest_2');
     if (digest_1.compareTo(digest_2) != 0) {
       setState(() {
         errorComparePasswords = "Passwords don't match!";
@@ -487,7 +497,6 @@ class _LoginWidgetState extends State<LoginWidget> {
       return;
     }
     for (var doc in value.docs) {
-      print(doc.get('Password'));
       check = doc.get('Password');
       id = doc.get('ID');
     }
@@ -495,12 +504,12 @@ class _LoginWidgetState extends State<LoginWidget> {
       showToast('Incorrect Password!');
       return;
     }
-    print(id);
     final docUser = FirebaseFirestore.instance.collection('users').doc(id);
     final snapshot = await docUser.get();
     Map<String, dynamic>? jsonData = snapshot.data();
-    print(jsonData!['Name']);
-    User user = User.fromJson(jsonData);
+    User user = User.fromJson(jsonData!);
+    print('Login Passed!');
+    print(user.toString());
     showToast('Logged In!');
     Navigator.push(
         context,
