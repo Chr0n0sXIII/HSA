@@ -35,11 +35,6 @@ class _jobListingViewState extends State<jobListingView> {
   String? selected_Distance = 'Closest';
   String? selected_Price = 'Low - High';
   int total_jobs = 0;
-  String jobName = 'Placeholer Title';
-  String jobDescription = 'Placeholder Description';
-  String jobLocation = 'Placeholder Location';
-  String jobPrice = 'Placeholder Price';
-  String jobImage = 'https://picsum.photos/id/237/200/300';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
