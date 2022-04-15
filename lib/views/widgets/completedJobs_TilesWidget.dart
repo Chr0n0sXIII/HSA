@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../../dataClasses/User.dart';
+import '../../dataClasses/jobData.dart';
+
 class Completed_Lising extends StatefulWidget {
-  const Completed_Lising({Key? key}) : super(key: key);
+  final User user;
+  const Completed_Lising({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Completed_Lising> createState() => _Completed_LisingState();
@@ -10,47 +15,60 @@ class Completed_Lising extends StatefulWidget {
 
 class _Completed_LisingState extends State<Completed_Lising> {
   List<String> workerImageURL_list = <String>[];
-  String j_title = 'Placeholder Title';
-  String j_description =
-      'Placeholder DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription';
-  String j_location = 'Placeholder Location';
-  String j_price = 'Placeholer Price';
+  List<JobData> allJobs = [];
   bool recievedImages = false;
   bool reviewed = false;
   int total_Jobs = 0;
+  bool imagesLoaded = false;
+  bool reviewedByClient = false;
   @override
   Widget build(BuildContext context) {
+    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
         children: [
           total_Jobs >= 1
-          ?GridView.builder(
-              shrinkWrap: true,
-              itemCount: total_Jobs,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemBuilder: (context, index) => completed_Review(
-                  j_title,
-                  j_description,
-                  j_location,
-                  j_price,
-                  recievedImages,
-                  workerImageURL_list,
-                  reviewed))
-          :Text(
-            'No Completed Jobs',
-            style: TextStyle(
-              fontSize: 40
-            ),
-          )
+              ? GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: total_Jobs,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (context, index) =>
+                      completed_Review(allJobs[index]))
+              : Text(
+                  'No Completed Jobs',
+                  style: TextStyle(fontSize: 40),
+                )
         ],
       ),
     );
   }
 
-  completed_Review(String jobTile, String job_description, String job_Location,
-      String job_Price, bool imagesLoaded, List<String> ImageURL_list, reviewedByClient) {
+  getJobs() async {
+    List<String> ids = widget.user.activeJobs;
+    var docJob;
+    var snapshot;
+    JobData job;
+    List<JobData> jobs = [];
+    for (int i = 1; i < ids.length; i++) {
+      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
+      snapshot = await docJob.get();
+      if (snapshot.data()['isCompleted'] == true) {
+        job = JobData.fromJson(snapshot.data());
+        jobs.add(job);
+        print(snapshot.data()['isCompleted']);
+      }
+    }
+    setState(() {
+      total_Jobs = allJobs.length;
+      allJobs = jobs;
+      recievedImages = true;
+      imagesLoaded = true;
+    });
+  }
+
+  completed_Review(JobData job) {
     return Container(
       margin: EdgeInsets.all(25),
       width: 400,
@@ -68,9 +86,9 @@ class _Completed_LisingState extends State<Completed_Lising> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               : CarouselSlider.builder(
-                  itemCount: ImageURL_list.length,
+                  itemCount: job.CompletedJobImages.length,
                   itemBuilder: (context, index, realIndex) {
-                    final ImageURL = ImageURL_list[index];
+                    final ImageURL = job.CompletedJobImages[index];
                     return buildWorkerImage(ImageURL, index);
                   },
                   options: CarouselOptions(
@@ -82,14 +100,14 @@ class _Completed_LisingState extends State<Completed_Lising> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              jobTile,
+              job.jobName,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              job_description,
+              job.jobDescription,
             ),
           ),
           Padding(
@@ -97,7 +115,7 @@ class _Completed_LisingState extends State<Completed_Lising> {
             child: Row(
               children: [
                 Text(
-                  job_Location,
+                  job.jobLocation,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Icon(
@@ -113,19 +131,21 @@ class _Completed_LisingState extends State<Completed_Lising> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  job_Price,
+                  job.jobPrice,
                   style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red),
                 ),
                 reviewedByClient == false
-                ?Icon(
-                  Icons.check_box_outline_blank,
-                  color : Colors.red,
-                )
-                :Icon(
-                  Icons.check_box,
-                  color: Colors.green,
-                )
+                    ? Icon(
+                        Icons.check_box_outline_blank,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.check_box,
+                        color: Colors.green,
+                      )
               ],
             ),
           )
@@ -138,7 +158,7 @@ class _Completed_LisingState extends State<Completed_Lising> {
     return Container(
       width: 400,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         child: Image.network(
           workerImageURL,
           fit: BoxFit.cover,

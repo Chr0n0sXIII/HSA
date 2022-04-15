@@ -24,7 +24,7 @@ class _Complete_Job_List_ViewState extends State<Complete_Job_List_View> {
         children: [
           TopBar(user: widget.user,),
           PageTitle("View Your Completed Jobs"),
-          Completed_Lising(),
+          Completed_Lising(user : widget.user),
           Footer(),
         ],
       )),

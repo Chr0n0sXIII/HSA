@@ -5,6 +5,7 @@ import 'dart:html';
 import 'dart:ui' as ui;
 
 import 'package:home_service_app/views/completeCurrentJobView.dart';
+import 'package:home_service_app/views/jobListingView.dart';
 
 import '../../dataClasses/User.dart';
 
@@ -75,7 +76,14 @@ class _MapViewState extends State<MapView> {
                   flex: 1,
                   child: active_Job == false
                       ? InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => jobListingView(
+                                      user: widget.user,
+                            )));
+                          },
                           child: Container(
                             decoration: const BoxDecoration(
                                 color: Color.fromRGBO(196, 196, 196, 1),

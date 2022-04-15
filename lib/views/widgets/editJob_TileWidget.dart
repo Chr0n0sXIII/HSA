@@ -1,52 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
+
+import '../../dataClasses/User.dart';
 
 class editJobTileListing extends StatefulWidget {
-  const editJobTileListing({ Key? key }) : super(key: key);
+  final User user;
+  const editJobTileListing({Key? key, required this.user}) : super(key: key);
 
   @override
   State<editJobTileListing> createState() => _editJobTileListingState();
 }
 
 class _editJobTileListingState extends State<editJobTileListing> {
-  List<String> ImageURL_list = <String>[];
-  String j_title = 'Placeholder Title';
-  String j_description = 'Placeholder Description';
-  String j_location = 'Placeholder Location';
-  String j_price = 'Placeholer Price';
+  List<JobData> allJobs = [];
   bool recievedImages = false;
-  int total_Jobs = 5;
+  int total_Jobs = 0;
   @override
   Widget build(BuildContext context) {
+    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
         children: [
           total_Jobs >= 1
-          ?GridView.builder(
-              shrinkWrap: true,
-              itemCount: total_Jobs,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemBuilder: (context, index) => edit_Tile(
-                  j_title,
-                  j_description,
-                  j_location,
-                  j_price,
-                  recievedImages,
-                  ImageURL_list))
-          :Text(
-            'You Have No Active Jobs',
-            style: TextStyle(
-              fontSize: 40
-            ),
-          )
+              ? GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: total_Jobs,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (context, index) => edit_Tile(allJobs[index]))
+              : Center(
+                  child: CircularProgressIndicator(),
+                )
         ],
       ),
     );
   }
 
-  edit_Tile(String j_title, String j_description, String j_location, String j_price, bool recievedImages, List<String> workerImageURL_list) {
+  getJobs() async {
+    List<String> ids = widget.user.activeJobs;
+    var docJob;
+    var snapshot;
+    JobData job;
+    List<JobData> jobs = [];
+    for (int i = 1; i < ids.length; i++) {
+      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
+      snapshot = await docJob.get();
+      if (snapshot.data()['isCompleted'] == false) {
+        job = JobData.fromJson(snapshot.data());
+        jobs.add(job);
+        print(snapshot.data()['isCompleted']);
+      }
+    }
+    setState(() {
+      total_Jobs = allJobs.length;
+      allJobs = jobs;
+      recievedImages = true;
+    });
+  }
+
+  edit_Tile(JobData job) {
     return Container(
       margin: EdgeInsets.all(25),
       width: 400,
@@ -64,9 +79,9 @@ class _editJobTileListingState extends State<editJobTileListing> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               : CarouselSlider.builder(
-                  itemCount: ImageURL_list.length,
+                  itemCount: job.ActiveJobImages.length,
                   itemBuilder: (context, index, realIndex) {
-                    final ImageURL = ImageURL_list[index];
+                    final ImageURL = job.ActiveJobImages[index];
                     return buildWorkerImage(ImageURL, index);
                   },
                   options: CarouselOptions(
@@ -78,14 +93,14 @@ class _editJobTileListingState extends State<editJobTileListing> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              j_title,
+              job.jobName,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              j_description,
+              job.jobDescription,
             ),
           ),
           Padding(
@@ -93,7 +108,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
             child: Row(
               children: [
                 Text(
-                  j_location,
+                  job.jobLocation,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Icon(
@@ -109,9 +124,11 @@ class _editJobTileListingState extends State<editJobTileListing> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  j_price,
+                  '\$ ' + job.jobPrice,
                   style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red),
                 ),
               ],
             ),
@@ -122,45 +139,35 @@ class _editJobTileListingState extends State<editJobTileListing> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(15),
-                    primary: Color.fromRGBO(54, 153, 244, 1),
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30)
-                    )
-                  ),
-                  onPressed: editThisJob,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        primary: Color.fromRGBO(54, 153, 244, 1),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30))),
+                    onPressed: editThisJob,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                      child: Text(
+                        'Edit',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  )
-                ),
+                    )),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(15),
-                    primary: Color.fromRGBO(244, 67, 54, 1),
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30)
-                    )
-                  ),
-                  onPressed: removeThisJob,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                    child: Text(
-                      'Remove',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        primary: Color.fromRGBO(244, 67, 54, 1),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30))),
+                    onPressed: removeThisJob,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                      child: Text(
+                        'Remove',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  )
-                )
+                    ))
               ],
             ),
           )
@@ -173,7 +180,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
     return Container(
       width: 400,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         child: Image.network(
           workerImageURL,
           fit: BoxFit.cover,

@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocode/geocode.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlng/latlng.dart';
 import 'dart:io' show File;
@@ -42,6 +44,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
   List<String> imageURL_list = <String>[];
+  List<String> imageRefs = <String>[];
   bool imageUploaded = false;
 
   int activeIndex = 0;
@@ -410,7 +413,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(20)),
                               primary: Color.fromRGBO(11, 206, 131, 1)),
-                          onPressed: confirm,
+                          onPressed: () {
+                            confirm();
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
@@ -438,35 +443,36 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     getAddressFromLatLng(pos);
   }
 
-  void confirm() async {
-    String jobID = Uuid().v4();
-
-    JobData job = JobData(
-        jobID: jobID,
+  Future confirm() async {
+    Navigator.of(context).pop();
+    renderLoadingView();
+    final docJob = FirebaseFirestore.instance.collection('jobs').doc();
+    await upload(docJob.id);
+    final job = JobData(
+        jobID: docJob.id,
         jobName: job_Title_controller.text,
         jobDescription: job_Description_controller.text,
         jobLocation: Address,
-        jobType: selectedItem.toString(),
-        latLng: latlng,
+        jobType: selectedItem,
         jobPrice: job_Price_controller.text,
-        ActiveJobImages: imageURL_list,
-        CompletedJobImages: []);
-    widget.user.activeRequests.add(jobID);
-    widget.user.activeRequests.add(job.jobID);
-    //add Job Data
-    FirebaseFirestore.instance.collection("openjobs").add(job.toMap());
-    //Update User Data
-    final val = await FirebaseFirestore.instance
-        .collection("users")
-        .where("uName", isEqualTo: widget.user.uName)
-        .get();
-
-    for (var doc in val.docs) {
-      doc
-          .data()
-          .update("activeRequests", ((value) => widget.user.activeRequests));
-    }
-    upload(jobID);
+        Latitude: pos.latitude,
+        Longitude: pos.longitude,
+        CompletedJobImages: [],
+        ActiveJobImages: imageRefs);
+    final jsonData = job.toJson();
+    await docJob.set(jsonData);
+    widget.user.addJob(docJob.id);
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    docUser.update({'Active_Jobs': widget.user.activeJobs});
+    Navigator.of(context).pop();
+    showToast('Upload Successful! Job Added to Listing');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: widget.user,
+                )));
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -545,5 +551,33 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
       SettableMetadata(contentType: 'image/jpeg'),
     );
     String value = await reference.getDownloadURL();
+    imageRefs.add(value);
+    print(value);
+  }
+
+  Future renderLoadingView() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(40)),
+              title: Text(
+                'Uploading Data...',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 25),
+              ),
+              content: Container(
+                height: 200,
+                width: 200,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 }
