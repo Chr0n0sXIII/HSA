@@ -281,7 +281,7 @@ class _jobListingViewState extends State<jobListingView> {
                     ],
                   ),
                   Text(
-                    job.jobPrice,
+                    '\$ ' + job.jobPrice,
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
