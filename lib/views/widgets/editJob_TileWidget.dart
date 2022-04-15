@@ -15,11 +15,6 @@ class editJobTileListing extends StatefulWidget {
 
 class _editJobTileListingState extends State<editJobTileListing> {
   List<JobData> allJobs = [];
-  List<String> ImageURL_list = <String>[];
-  String j_title = 'Placeholder Title';
-  String j_description = 'Placeholder Description';
-  String j_location = 'Placeholder Location';
-  String j_price = 'Placeholer Price';
   bool recievedImages = false;
   int total_Jobs = 0;
   @override
@@ -35,16 +30,9 @@ class _editJobTileListingState extends State<editJobTileListing> {
                   itemCount: total_Jobs,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
-                  itemBuilder: (context, index) => edit_Tile(
-                      j_title,
-                      j_description,
-                      j_location,
-                      j_price,
-                      recievedImages,
-                      ImageURL_list))
-              : Text(
-                  'You Have No Active Jobs',
-                  style: TextStyle(fontSize: 40),
+                  itemBuilder: (context, index) => edit_Tile(allJobs[index]))
+              : Center(
+                  child: CircularProgressIndicator(),
                 )
         ],
       ),
@@ -60,17 +48,20 @@ class _editJobTileListingState extends State<editJobTileListing> {
     for (int i = 1; i < ids.length; i++) {
       docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
       snapshot = await docJob.get();
-      job = JobData.fromJson(snapshot.data());
-      jobs.add(job);
+      if (snapshot.data()['isCompleted'] == false) {
+        job = JobData.fromJson(snapshot.data());
+        jobs.add(job);
+        print(snapshot.data()['isCompleted']);
+      }
     }
     setState(() {
       total_Jobs = allJobs.length;
       allJobs = jobs;
+      recievedImages = true;
     });
   }
 
-  edit_Tile(String j_title, String j_description, String j_location,
-      String j_price, bool recievedImages, List<String> workerImageURL_list) {
+  edit_Tile(JobData job) {
     return Container(
       margin: EdgeInsets.all(25),
       width: 400,
@@ -88,9 +79,9 @@ class _editJobTileListingState extends State<editJobTileListing> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               : CarouselSlider.builder(
-                  itemCount: ImageURL_list.length,
+                  itemCount: job.ActiveJobImages.length,
                   itemBuilder: (context, index, realIndex) {
-                    final ImageURL = ImageURL_list[index];
+                    final ImageURL = job.ActiveJobImages[index];
                     return buildWorkerImage(ImageURL, index);
                   },
                   options: CarouselOptions(
@@ -102,14 +93,14 @@ class _editJobTileListingState extends State<editJobTileListing> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              j_title,
+              job.jobName,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
-              j_description,
+              job.jobDescription,
             ),
           ),
           Padding(
@@ -117,7 +108,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
             child: Row(
               children: [
                 Text(
-                  j_location,
+                  job.jobLocation,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Icon(
@@ -133,7 +124,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  j_price,
+                  '\$ ' + job.jobPrice,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -189,7 +180,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
     return Container(
       width: 400,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         child: Image.network(
           workerImageURL,
           fit: BoxFit.cover,
