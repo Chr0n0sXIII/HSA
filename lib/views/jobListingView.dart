@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/pageTitle_Widget.dart';
@@ -17,6 +19,7 @@ class jobListingView extends StatefulWidget {
 }
 
 class _jobListingViewState extends State<jobListingView> {
+  List<JobData> allJobs = [];
   List<String> job_Types = [
     'Yark Work',
     'Cleaning',
@@ -31,7 +34,7 @@ class _jobListingViewState extends State<jobListingView> {
   String? selected_Type = 'Plumbing';
   String? selected_Distance = 'Closest';
   String? selected_Price = 'Low - High';
-  int total_jobs = 6;
+  int total_jobs = 0;
   String jobName = 'Placeholer Title';
   String jobDescription = 'Placeholder Description';
   String jobLocation = 'Placeholder Location';
@@ -48,11 +51,7 @@ class _jobListingViewState extends State<jobListingView> {
             PageTitle('Job Listings'),
             searchBar(),
             Row(
-              children: [
-                jobListingMapView(),
-                jobList(
-                    jobName, jobDescription, jobLocation, jobPrice, jobImage)
-              ],
+              children: [jobListingMapView(), jobList()],
             ),
             Footer(),
           ],
@@ -186,8 +185,8 @@ class _jobListingViewState extends State<jobListingView> {
     );
   }
 
-  jobList(
-      String title, String desc, String location, String price, String image) {
+  jobList() {
+    getJobs();
     return Container(
       height: 600,
       width: 600,
@@ -195,7 +194,7 @@ class _jobListingViewState extends State<jobListingView> {
           shrinkWrap: true,
           itemCount: total_jobs,
           itemBuilder: (context, index) {
-            return jobTile(title, desc, location, price, image);
+            return jobTile(allJobs[index]);
           }),
     );
   }
@@ -231,8 +230,7 @@ class _jobListingViewState extends State<jobListingView> {
     return HtmlElementView(viewType: htmlId);
   }
 
-  Widget jobTile(
-      String title, String desc, String location, String price, String image) {
+  Widget jobTile(JobData job) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -248,7 +246,7 @@ class _jobListingViewState extends State<jobListingView> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  image,
+                  job.ActiveJobImages[0],
                   fit: BoxFit.fill,
                 ),
               ),
@@ -260,11 +258,11 @@ class _jobListingViewState extends State<jobListingView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    job.jobName,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    desc,
+                    job.jobDescription,
                     maxLines: 1,
                     style: TextStyle(
                       fontSize: 16,
@@ -273,7 +271,7 @@ class _jobListingViewState extends State<jobListingView> {
                   Row(
                     children: [
                       Text(
-                        location,
+                        job.jobLocation,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -284,7 +282,7 @@ class _jobListingViewState extends State<jobListingView> {
                     ],
                   ),
                   Text(
-                    price,
+                    job.jobPrice,
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -297,5 +295,23 @@ class _jobListingViewState extends State<jobListingView> {
         ),
       ),
     );
+  }
+
+  getJobs() async {
+    List<String> ids = widget.user.activeJobs;
+    var docJob;
+    var snapshot;
+    JobData job;
+    List<JobData> jobs = [];
+    for (int i = 1; i < ids.length; i++) {
+      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
+      snapshot = await docJob.get();
+      job = JobData.fromJson(snapshot.data());
+      jobs.add(job);
+    }
+    total_jobs = allJobs.length;
+    setState(() {
+      allJobs = jobs;
+    });
   }
 }
