@@ -1,11 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
-import 'package:home_service_app/dataClasses/jobDataUtil.dart';
-import 'package:home_service_app/dataClasses/userData.dart';
-import 'package:home_service_app/dataClasses/userDataUtil.dart';
-import 'package:home_service_app/views/userProfileView.dart';
 import 'package:google_maps/google_maps.dart' as gm;
 import 'dart:html';
 import 'dart:ui' as ui;
@@ -13,7 +8,6 @@ import 'dart:ui' as ui;
 import '../../dataClasses/User.dart';
 
 class jobDetails_InfoWidget extends StatefulWidget {
-  userData udata = UserDataUtil.TestData_UserData()[1];
   //JobData jdata = JobDataUtil.TestData_JobsData()[1];
   final User user;
   final JobData job;

@@ -1,12 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:home_service_app/dataClasses/jobData.dart';
-import 'package:home_service_app/dataClasses/jobDataUtil.dart';
-import 'package:home_service_app/dataClasses/userCredentials.dart';
-import 'package:home_service_app/dataClasses/userCredentialsUtil.dart';
-import 'package:home_service_app/dataClasses/userData.dart';
 import 'package:home_service_app/views/homeView.dart';
 import "package:home_service_app/dataClasses/User.dart";
 import 'dart:convert';
