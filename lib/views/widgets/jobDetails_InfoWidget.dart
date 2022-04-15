@@ -251,7 +251,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
   requestJob() {}
 
   GoogleMap() {
-    String htmlId = "8";
+    String htmlId = widget.job.jobID;
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
