@@ -185,12 +185,16 @@ class _jobListingViewState extends State<jobListingView> {
     return Container(
       height: 600,
       width: 600,
-      child: ListView.builder(
+      child: total_jobs >= 0
+      ?ListView.builder(
           shrinkWrap: true,
           itemCount: total_jobs,
           itemBuilder: (context, index) {
             return jobTile(allJobs[index]);
-          }),
+          })
+      :Center(
+        child: CircularProgressIndicator(),
+      )
     );
   }
 
