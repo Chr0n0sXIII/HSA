@@ -98,7 +98,6 @@ class User {
       'Contacts': contacts,
       'Skills': skills,
       'Active_Jobs': activeJobs,
-      'Completed_Request': completedRequests,
       'Current_Job_Taken': currentJobTaken,
       'Completed_Jobs': completedJobs,
       'User_Rating': userRating,

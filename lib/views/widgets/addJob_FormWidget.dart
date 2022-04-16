@@ -463,7 +463,9 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
         CompletedJobImages: [],
         ActiveJobImages: imageRefs,
         clientReview: '',
-        workerReview: '');
+        workerReview: '',
+        job_Requests: []
+        );
     final jsonData = job.toJson();
     await docJob.set(jsonData);
     widget.user.addJob(docJob.id);
