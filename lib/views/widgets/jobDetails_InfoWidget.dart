@@ -262,7 +262,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
     widget.job.addRequest(widget.user.user_ID);
     final docJob =
         FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
-    docJob.update({'Job_Requests': widget.user.user_ID});
+    docJob.update({'Job_Requests': widget.job.job_Requests});
     showToast('Request For Job Sent!');
     Navigator.push(
         context,
