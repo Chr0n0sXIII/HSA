@@ -76,7 +76,7 @@ class JobData {
         isReviewed: json['isReviewed'],
         clientReview: json['Client_Review'],
         workerReview: json['Worker_Review'],
-        job_Requests: json['Job_Requests'].cast<String>(json)
+        job_Requests: json['Job_Requests'].cast<String>()
     );
   }
 }
