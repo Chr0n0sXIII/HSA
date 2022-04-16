@@ -155,8 +155,9 @@ class _MapViewState extends State<MapView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Completed_Current_Job_View(
-                                      user: widget.user)));
+                                  builder: (context) =>
+                                      Completed_Current_Job_View(
+                                          user: widget.user)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -166,20 +167,16 @@ class _MapViewState extends State<MapView> {
                                 fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                         )),
-                        SizedBox(
-                          width: 20,
-                        ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(244, 67, 54, 1),
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(30))),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Completed_Current_Job_View(
-                                      user: widget.user)));
+                          cancelJob();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -243,5 +240,61 @@ class _MapViewState extends State<MapView> {
     });
 
     return HtmlElementView(viewType: htmlId);
+  }
+
+  Future cancelJob() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30)),
+              title: Text(
+                'Are Your Sure About Cancelling This Job ?',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(11, 206, 131, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Completed_Current_Job_View(
+                                        user: widget.user)));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'Yes',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(244, 67, 54, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                ],
+              ),
+            ));
   }
 }
