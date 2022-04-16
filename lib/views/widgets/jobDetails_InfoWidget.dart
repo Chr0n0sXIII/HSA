@@ -260,6 +260,10 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       showToast('Request Already Made!');
     }
     widget.job.addRequest(widget.user.user_ID);
+    widget.user.setactiveJob(widget.job.jobID);
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
     final docJob =
         FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
     docJob.update({'Job_Requests': widget.job.job_Requests});
