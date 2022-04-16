@@ -22,23 +22,22 @@ class JobData {
   String workerReview;
   List<String> job_Requests;
 
-  JobData({
-    required this.jobID,
-    required this.jobName,
-    required this.jobDescription,
-    required this.jobLocation,
-    required this.jobType,
-    required this.Latitude,
-    required this.Longitude,
-    required this.jobPrice,
-    required this.ActiveJobImages,
-    required this.CompletedJobImages,
-    this.isCompleted = false,
-    this.isReviewed = false,
-    required this.clientReview,
-    required this.workerReview,
-    required this.job_Requests
-  });
+  JobData(
+      {required this.jobID,
+      required this.jobName,
+      required this.jobDescription,
+      required this.jobLocation,
+      required this.jobType,
+      required this.Latitude,
+      required this.Longitude,
+      required this.jobPrice,
+      required this.ActiveJobImages,
+      required this.CompletedJobImages,
+      this.isCompleted = false,
+      this.isReviewed = false,
+      required this.clientReview,
+      required this.workerReview,
+      required this.job_Requests});
 
   Map<String, dynamic> toJson() {
     return {
@@ -53,10 +52,10 @@ class JobData {
       'Active_Job_Images': ActiveJobImages,
       'Completed_Job_Images': CompletedJobImages,
       'isCompleted': isCompleted,
-      'isReviewed' : isReviewed,
-      'Client_Review' : clientReview,
-      'Worker_Review' : workerReview,
-      'Job_Requests' : job_Requests
+      'isReviewed': isReviewed,
+      'Client_Review': clientReview,
+      'Worker_Review': workerReview,
+      'Job_Requests': job_Requests
     };
   }
 
@@ -76,7 +75,19 @@ class JobData {
         isReviewed: json['isReviewed'],
         clientReview: json['Client_Review'],
         workerReview: json['Worker_Review'],
-        job_Requests: json['Job_Requests'].cast<String>()
-    );
+        job_Requests: json['Job_Requests'].cast<String>());
+  }
+
+  addRequest(String workerID) {
+    job_Requests.add(workerID);
+  }
+
+  checkRequest(String workerID) {
+    for (int i = 0; i < job_Requests.length; i++) {
+      if (workerID == job_Requests[i]) {
+        return 1;
+      }
+    }
+    return 0;
   }
 }
