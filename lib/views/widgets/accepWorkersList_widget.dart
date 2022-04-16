@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:home_service_app/views/acceptWorkersView.dart';
 
 import '../../dataClasses/User.dart';
+import '../../dataClasses/jobData.dart';
 
 class Active_Jobs_List extends StatefulWidget {
   final User user;
@@ -13,14 +15,18 @@ class Active_Jobs_List extends StatefulWidget {
 }
 
 class _Active_Jobs_ListState extends State<Active_Jobs_List> {
-  List<String> workerImageURL_list = <String>[];
-  String j_title = 'Placeholder Title';
-  String j_description = 'Placeholder Description';
-  String j_location = 'Placeholder Location';
-  String j_price = 'Placeholer Price';
-  bool recievedImages = false;
+  List<JobData> allJobs = [];
+  bool imagesLoaded = false;
   int jobReq = 0;
   int total_Jobs = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,14 +39,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                   itemCount: total_Jobs,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
-                  itemBuilder: (context, index) => JobList(
-                      j_title,
-                      j_description,
-                      j_location,
-                      j_price,
-                      recievedImages,
-                      workerImageURL_list,
-                      jobReq,widget.user))
+                  itemBuilder: (context, index) => JobList(allJobs[index], widget.user))
               : Text(
                   'No Active Jobs',
                   style: TextStyle(fontSize: 40),
@@ -50,14 +49,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
     );
   }
 
-  JobList(
-      String jobTile,
-      String job_description,
-      String job_Location,
-      String job_Price,
-      bool imagesLoaded,
-      List<String> ImageURL_list,
-      int jobRequest, User user) {
+  JobList(JobData job,User user) {
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(30)),
       hoverColor: Color.fromRGBO(4, 31, 81, 0.25),
@@ -86,9 +78,9 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                     child: Center(child: CircularProgressIndicator()),
                   )
                 : CarouselSlider.builder(
-                    itemCount: ImageURL_list.length,
+                    itemCount: job.ActiveJobImages.length,
                     itemBuilder: (context, index, realIndex) {
-                      final ImageURL = ImageURL_list[index];
+                      final ImageURL = job.ActiveJobImages[index];
                       return buildWorkerImage(ImageURL, index);
                     },
                     options: CarouselOptions(
@@ -100,14 +92,14 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
               child: Text(
-                jobTile,
+                job.jobName,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
               child: Text(
-                job_description,
+                job.jobDescription,
               ),
             ),
             Padding(
@@ -115,7 +107,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
               child: Row(
                 children: [
                   Text(
-                    job_Location,
+                    job.jobLocation,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Icon(
@@ -128,7 +120,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
               child: Text(
-                job_Price,
+                '\$ ' + job.jobPrice,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -141,16 +133,11 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                 children: [
                   Text(
                     'Requests : ',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                   Text(
-                     jobRequest.toString(),
-                     style: TextStyle(
-                       fontWeight: FontWeight.bold
-                     ),
+                  Text(
+                    (job.job_Requests.length - 1).toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -159,6 +146,33 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
         ),
       ),
     );
+  }
+
+  Future<void> LoadData() async {
+    await getJobs();
+  }
+
+  getJobs() async {
+    List<String> ids = widget.user.activeJobs;
+    var docJob;
+    var snapshot;
+    JobData job;
+    List<JobData> jobs = [];
+    for (int i = 1; i < ids.length; i++) {
+      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
+      snapshot = await docJob.get();
+      List<String> check = snapshot.data()['Job_Requests'].cast<String>();
+      if (check.length >= 2) {
+        job = JobData.fromJson(snapshot.data());
+        jobs.add(job);
+        print(snapshot.data()['isCompleted']);
+      }
+    }
+    setState(() {
+      allJobs = jobs;
+      total_Jobs = allJobs.length;
+      imagesLoaded = true;
+    });
   }
 
   Widget buildWorkerImage(String workerImageURL, int index) {
