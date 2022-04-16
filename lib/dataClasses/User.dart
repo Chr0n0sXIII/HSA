@@ -9,7 +9,6 @@ class User {
   late String contacts;
   late String skills;
   late List<String> activeJobs;
-  late List<String> completedRequests;
   late List<String> completedJobs;
   late String currentJobTaken;
   late double userRating;
@@ -24,7 +23,6 @@ class User {
     required this.contacts,
     required this.skills,
     required this.activeJobs,
-    required this.completedRequests,
     required this.currentJobTaken,
     required this.completedJobs,
     required this.userRating,
@@ -40,7 +38,6 @@ class User {
     contacts = "Na";
     skills = "Na";
     activeJobs = [""];
-    completedRequests = [""];
     completedJobs = [""];
     currentJobTaken = "";
     userRating = 0;
@@ -142,7 +139,6 @@ class User {
         contacts: json['Contacts'],
         skills: json['Skills'],
         activeJobs: json['Active_Jobs'].cast<String>(),
-        completedRequests: json['Completed_Request'].cast<String>(),
         completedJobs: json['Completed_Jobs'].cast<String>(),
         currentJobTaken: json['Current_Job_Taken'],
         userRating: json['User_Rating'],
