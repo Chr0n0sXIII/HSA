@@ -143,26 +143,54 @@ class _MapViewState extends State<MapView> {
         active_Job == true
             ? Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(195, 166, 96, 1),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30))),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Completed_Current_Job_View(
-                                  user: widget.user)));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        'Complete Job',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromRGBO(11, 206, 131, 1),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30))),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Completed_Current_Job_View(
+                                      user: widget.user)));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            'Complete Job',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                        SizedBox(
+                          width: 20,
+                        ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromRGBO(244, 67, 54, 1),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30))),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Completed_Current_Job_View(
+                                      user: widget.user)));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            'Cancel Job',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ],
+                ),
               )
             : Container()
       ],
