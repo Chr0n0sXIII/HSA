@@ -136,7 +136,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    (job.job_Requests.length - 1).toString(),
+                    (job.job_Requests.length).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
@@ -162,7 +162,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
       docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
       snapshot = await docJob.get();
       List<String> check = snapshot.data()['Job_Requests'].cast<String>();
-      if (check.length >= 2) {
+      if (check.length >= 1) {
         job = JobData.fromJson(snapshot.data());
         jobs.add(job);
         print(snapshot.data()['isCompleted']);
