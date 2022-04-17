@@ -1,6 +1,11 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:home_service_app/views/views.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../dataClasses/User.dart';
@@ -18,6 +23,7 @@ class Worker_Review_Fo extends StatefulWidget {
 
 class _Worker_Review_FoState extends State<Worker_Review_Fo> {
   final controller = CarouselController();
+  final reviewController = TextEditingController();
   List<String> imageURL_list = <String>[];
   bool imagesLoaded = false;
   int activeIndex = 0;
@@ -121,6 +127,7 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                       offset: Offset(7.0, 8.0))
                 ]),
                 child: TextField(
+                  controller: reviewController,
                   maxLines: 5,
                   maxLength: 250,
                   decoration: InputDecoration(
@@ -157,7 +164,9 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                         primary: Color.fromRGBO(11, 206, 131, 1),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20))),
-                    onPressed: () {},
+                    onPressed: () {
+                      submit();
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
@@ -213,5 +222,25 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
 
   moveToImage(int index) {
     controller.animateToPage(index);
+  }
+
+  void submit() async {
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    widget.job.addClientReview(reviewController.text);
+    docJob.update({'Client_Review': widget.job.clientReview});
+    docJob.update({'isReviewed': widget.job.isReviewed});
+    showToast('Review Completed!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Complete_Job_List_View(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 }
