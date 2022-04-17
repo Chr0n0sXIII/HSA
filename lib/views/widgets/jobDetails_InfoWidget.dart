@@ -285,7 +285,10 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       final myLatlng = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final mapOptions = gm.MapOptions()
-        ..zoom = 13
+        ..zoom = 11
+        ..zoomControl = false
+        ..disableDoubleClickZoom = true
+        ..scrollwheel = false
         ..center = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final elem = DivElement()
@@ -300,6 +303,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       gm.Marker(gm.MarkerOptions()
         ..position = myLatlng
         ..map = map
+        ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
         ..title = widget.job.jobName);
 
       return elem;
