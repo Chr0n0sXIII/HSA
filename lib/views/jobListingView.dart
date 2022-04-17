@@ -181,6 +181,15 @@ class _jobListingViewState extends State<jobListingView> {
           children: [
             Expanded(
               child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(7.0, 8.0))
+                  ]
+                ),
                 child: loaded == true
                 ?googleMaps()
                 :Center(child: CircularProgressIndicator(),)
