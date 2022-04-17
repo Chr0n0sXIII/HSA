@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+
+import '../../dataClasses/User.dart';
 
 class workerList extends StatefulWidget {
   final JobData job;
@@ -11,15 +14,19 @@ class workerList extends StatefulWidget {
 }
 
 class _workerListState extends State<workerList> {
-  int total_workers = 7;
-  String username = 'Placeholder Name';
-  String userSkills = 'Placholder Skills';
-  String userDesc = 'PlaceHolder Description';
-  String userImage = 'https://picsum.photos/id/237/200/300';
-  double userRating = 3;
+  List<User> allUsers = [];
+  int total_workers = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return total_workers >= 1
+    return total_workers > 0
         ? Container(
             width: 600,
             height: 650,
@@ -27,8 +34,7 @@ class _workerListState extends State<workerList> {
                 shrinkWrap: true,
                 itemCount: total_workers,
                 itemBuilder: (context, index) {
-                  return workerTile(
-                      username, userSkills, userDesc, userRating, userImage);
+                  return workerTile(allUsers[index]);
                 }),
           )
         : Text(
@@ -37,8 +43,7 @@ class _workerListState extends State<workerList> {
           );
   }
 
-  Widget workerTile(String name, String skills, String description,
-      double rating, String imageURL) {
+  Widget workerTile(User user) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
       child: Container(
@@ -69,7 +74,7 @@ class _workerListState extends State<workerList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RatingBarIndicator(
-                  rating: rating,
+                  rating: user.userRating,
                   direction: Axis.horizontal,
                   itemCount: 5,
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -81,7 +86,7 @@ class _workerListState extends State<workerList> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    name,
+                    user.uName,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: Colors.black,
@@ -93,7 +98,7 @@ class _workerListState extends State<workerList> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    skills,
+                    user.skills,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: Colors.black,
@@ -104,7 +109,7 @@ class _workerListState extends State<workerList> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    description,
+                    user.about,
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -158,4 +163,26 @@ class _workerListState extends State<workerList> {
   void acceptThisWorker() {}
 
   void rejectThisWorker() {}
+
+   Future<void> LoadData() async {
+    await getUsers();
+  }
+
+  getUsers() async {
+    List<String> ids = widget.job.job_Requests;
+    var docUser;
+    var snapshot;
+    User user;
+    List<User> users = [];
+    for (int i = 0; i < ids.length; i++) {
+      docUser = FirebaseFirestore.instance.collection('users').doc(ids[i]);
+      snapshot = await docUser.get();
+      user = User.fromJson(snapshot.data());
+      users.add(user);
+    }
+    setState(() {
+      allUsers = users;
+      total_workers = allUsers.length;
+    });
+  }
 }
