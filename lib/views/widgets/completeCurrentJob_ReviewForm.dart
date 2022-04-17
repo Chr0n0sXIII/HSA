@@ -12,33 +12,35 @@ import '../../dataClasses/User.dart';
 class Complete_Job_Form extends StatefulWidget {
   final User user;
   final JobData job;
-  const Complete_Job_Form({Key? key, required this.user, required this.job}) : super(key: key);
+  const Complete_Job_Form({Key? key, required this.user, required this.job})
+      : super(key: key);
 
   @override
   State<Complete_Job_Form> createState() => _Complete_Job_FormState();
 }
 
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
+  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   bool imageUploaded = false;
   bool imageLoadedFromWorker = false;
-  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   final controller = CarouselController();
   List<String> imageURL_list = <String>[];
   final ImagePicker _picker = ImagePicker();
   File? file;
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
-
-  List<String> workerImageURL_list = <String>[];
-
   String? review_Error;
-
   int activeIndex = 0;
 
-  String jobTile = 'PlaceHolder Title';
-  String job_description = "Placeholder Description";
-  String job_Location = 'Placeholder Location';
-  String job_Price = 'Placeholder Price';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.job.ActiveJobImages.length > 0) {
+      imageLoadedFromWorker = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -67,10 +69,10 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                               child: Center(child: CircularProgressIndicator()),
                             )
                           : CarouselSlider.builder(
-                              itemCount: workerImageURL_list.length,
+                              itemCount: widget.job.ActiveJobImages.length,
                               itemBuilder: (context, index, realIndex) {
                                 final workerImageURL =
-                                    workerImageURL_list[index];
+                                    widget.job.ActiveJobImages[index];
                                 return buildWorkerImage(workerImageURL, index);
                               },
                               options: CarouselOptions(
@@ -82,7 +84,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          jobTile,
+                          widget.job.jobName,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -90,7 +92,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          job_description,
+                          widget.job.jobDescription,
                         ),
                       ),
                       Padding(
@@ -98,7 +100,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         child: Row(
                           children: [
                             Text(
-                              job_Location,
+                              widget.job.jobLocation,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -112,7 +114,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          job_Price,
+                          '\$ ' + widget.job.jobPrice,
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
