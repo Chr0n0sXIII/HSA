@@ -53,7 +53,7 @@ class _Completed_LisingState extends State<Completed_Lising> {
   }
 
   getJobs() async {
-    List<String> ids = widget.user.activeJobs;
+    List<String> ids = widget.user.completedJobs;
     var docJob;
     var snapshot;
     JobData job;
@@ -61,11 +61,9 @@ class _Completed_LisingState extends State<Completed_Lising> {
     for (int i = 1; i < ids.length; i++) {
       docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
       snapshot = await docJob.get();
-      if (snapshot.data()['isCompleted'] == true) {
-        job = JobData.fromJson(snapshot.data());
-        jobs.add(job);
-        print(snapshot.data()['isCompleted']);
-      }
+      job = JobData.fromJson(snapshot.data());
+      jobs.add(job);
+      print(snapshot.data()['isCompleted']);
     }
     setState(() {
       allJobs = jobs;
