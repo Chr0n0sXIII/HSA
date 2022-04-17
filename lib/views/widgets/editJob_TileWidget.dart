@@ -116,6 +116,10 @@ class _editJobTileListingState extends State<editJobTileListing> {
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
               job.jobDescription,
+              maxLines: 1,
+              style: TextStyle(
+                overflow: TextOverflow.ellipsis
+              ),
             ),
           ),
           Padding(
