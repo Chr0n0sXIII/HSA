@@ -21,7 +21,6 @@ class _Completed_LisingState extends State<Completed_Lising> {
   bool reviewed = false;
   int total_Jobs = 0;
   bool imagesLoaded = false;
-  bool reviewedByClient = false;
 
   @override
   void initState() {
@@ -155,7 +154,7 @@ class _Completed_LisingState extends State<Completed_Lising> {
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ),
-                  reviewedByClient == false
+                  job.isReviewed == false
                       ? Icon(
                           Icons.check_box_outline_blank,
                           color: Colors.red,
