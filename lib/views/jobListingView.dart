@@ -247,7 +247,7 @@ class _jobListingViewState extends State<jobListingView> {
         gm.Marker(gm.MarkerOptions()
           ..position = gm.LatLng(allJobs[i].Latitude, allJobs[i].Longitude)
           ..map = map
-          ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/profile_picture_place_holder.png?alt=media&token=3bf2e229-8307-4992-9e5d-e21c451df858'
+          ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
           ..title = allJobs[i].jobName);
       }
       return elem;
