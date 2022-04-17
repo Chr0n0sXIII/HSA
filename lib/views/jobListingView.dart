@@ -209,7 +209,7 @@ class _jobListingViewState extends State<jobListingView> {
   }
 
   googleMaps() {
-    String htmlId = "159753";
+    String htmlId = widget.user.user_ID + allJobs.length.toString();
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
