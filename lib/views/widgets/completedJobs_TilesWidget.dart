@@ -93,7 +93,15 @@ class _Completed_LisingState extends State<Completed_Lising> {
         margin: EdgeInsets.all(25),
         width: 400,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white),
+            borderRadius: BorderRadius.circular(15), color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0))
+            ]
+            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -128,6 +136,10 @@ class _Completed_LisingState extends State<Completed_Lising> {
               padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
               child: Text(
                 job.jobDescription,
+                maxLines: 3,
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis
+                ),
               ),
             ),
             Padding(
