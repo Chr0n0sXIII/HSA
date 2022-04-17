@@ -278,43 +278,47 @@ class _jobListingViewState extends State<jobListingView> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      job.jobName,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      job.jobDescription,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 16,
+                child: Container(
+                  width: 400,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.jobName,
+                        style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          job.jobLocation,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                      Text(
+                        job.jobDescription,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 16,
+                          overflow: TextOverflow.ellipsis
                         ),
-                        Icon(
-                          Icons.pin_drop,
-                          color: Colors.red,
-                        )
-                      ],
-                    ),
-                    Text(
-                      '\$ ' + job.jobPrice,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
-                    ),
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            job.jobLocation,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.pin_drop,
+                            color: Colors.red,
+                          )
+                        ],
+                      ),
+                      Text(
+                        '\$ ' + job.jobPrice,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
