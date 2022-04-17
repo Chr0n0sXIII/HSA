@@ -308,7 +308,11 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     final docUser =
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
     widget.user.setactiveJob("");
+    widget.user.removeActiveJob(widget.job.jobID);
+    widget.user.addCompletedJob(widget.job.jobID);
     docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
+    docUser.update({'Active_Jobs': widget.user.activeJobs});
+    docUser.update({'Completed_Jobs': widget.user.completedJobs});
     showToast('Review Completed!');
     Navigator.push(
         context,
