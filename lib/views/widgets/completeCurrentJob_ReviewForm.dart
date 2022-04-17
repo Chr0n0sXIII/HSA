@@ -301,8 +301,10 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
         FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
     widget.job.addCompletedImage(imageRefs);
     widget.job.addWorkerReview(reviewController.text);
+    widget.job.setIsCompleted(true);
     docJob.update({'Worker_Review': widget.job.workerReview});
     docJob.update({'Completed_Job_Images': widget.job.CompletedJobImages});
+    docJob.update({'isCompleted': widget.job.isCompleted});
     final docUser =
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
     widget.user.setactiveJob("");
