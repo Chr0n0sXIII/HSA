@@ -43,10 +43,13 @@ class _Completed_LisingState extends State<Completed_Lising> {
                       crossAxisCount: 3),
                   itemBuilder: (context, index) =>
                       completed_Review(allJobs[index]))
-              : Text(
-                  'No Completed Jobs',
-                  style: TextStyle(fontSize: 40),
-                )
+              :Center(
+                child: CircularProgressIndicator(),
+              )
+              // : Text(
+              //     'No Completed Jobs',
+              //     style: TextStyle(fontSize: 40),
+              //   )
         ],
       ),
     );
