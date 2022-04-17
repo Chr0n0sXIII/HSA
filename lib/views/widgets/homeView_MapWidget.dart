@@ -160,7 +160,7 @@ class _MapViewState extends State<MapView> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       Completed_Current_Job_View(
-                                          user: widget.user)));
+                                          user: widget.user, job: job,)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/views/widgets/completeCurrentJob_ReviewForm.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
@@ -8,7 +9,9 @@ import '../dataClasses/User.dart';
 
 class Completed_Current_Job_View extends StatefulWidget {
   final User user;
-  const Completed_Current_Job_View({Key? key, required this.user}) : super(key: key);
+  final JobData job;
+  const Completed_Current_Job_View({Key? key, required this.user, required this.job})
+      : super(key: key);
 
   @override
   State<Completed_Current_Job_View> createState() =>
@@ -24,9 +27,11 @@ class _Completed_Current_Job_ViewState
       body: SingleChildScrollView(
           child: Column(
         children: [
-          TopBar(user: widget.user,),
+          TopBar(
+            user: widget.user,
+          ),
           PageTitle("Complete Current Job"),
-          Complete_Job_Form(),
+          Complete_Job_Form(user: widget.user, job: widget.job,),
           Footer(),
         ],
       )),
