@@ -59,6 +59,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
             MaterialPageRoute(
                 builder: (context) => AcceptWorkerView(
                       user: user,
+                      job : job
                     )));
       },
       child: Container(

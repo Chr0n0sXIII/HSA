@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 
 class workerList extends StatefulWidget {
-  const workerList({Key? key}) : super(key: key);
+  final JobData job;
+  const workerList({Key? key, required this.job}) : super(key: key);
 
   @override
   State<workerList> createState() => _workerListState();
@@ -18,22 +20,21 @@ class _workerListState extends State<workerList> {
   @override
   Widget build(BuildContext context) {
     return total_workers >= 1
-    ?Container(
-      width: 600,
-      height: 650,
-      child: ListView.builder(
-        shrinkWrap: true,
-          itemCount: total_workers,
-          itemBuilder: (context, index) {
-            return workerTile(username, userSkills, userDesc,userRating,userImage);
-          }),
-    )
-    : Text(
-      'No Worker Request For Current Job',
-      style: TextStyle(
-        fontSize: 24
-      ),
-    );
+        ? Container(
+            width: 600,
+            height: 650,
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: total_workers,
+                itemBuilder: (context, index) {
+                  return workerTile(
+                      username, userSkills, userDesc, userRating, userImage);
+                }),
+          )
+        : Text(
+            'No Worker Request For Current Job',
+            style: TextStyle(fontSize: 24),
+          );
   }
 
   Widget workerTile(String name, String skills, String description,
@@ -94,7 +95,10 @@ class _workerListState extends State<workerList> {
                   child: Text(
                     skills,
                     textAlign: TextAlign.start,
-                    style: TextStyle(color: Colors.black, fontSize: 14,fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
@@ -103,7 +107,10 @@ class _workerListState extends State<workerList> {
                     description,
                     maxLines: 1,
                     textAlign: TextAlign.start,
-                    style: TextStyle(color: Colors.grey, fontSize: 14,overflow: TextOverflow.ellipsis),
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ],
@@ -114,41 +121,31 @@ class _workerListState extends State<workerList> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(11, 206, 131, 1),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)
-                      )
-                    ),
-                    onPressed: acceptThisWorker, 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Accept',
-                        style: TextStyle(
-                          fontSize: 18
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(11, 206, 131, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: acceptThisWorker,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Accept',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    )
-                  ),
+                      )),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(244, 67, 54, 1),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)
-                      )
-                    ),
-                    onPressed: rejectThisWorker, 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Reject',
-                        style: TextStyle(
-                          fontSize: 18
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(244, 67, 54, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: rejectThisWorker,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Reject',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    )
-                  )
+                      ))
                 ],
               ),
             )
@@ -158,9 +155,7 @@ class _workerListState extends State<workerList> {
     );
   }
 
-  void acceptThisWorker() {
-  }
+  void acceptThisWorker() {}
 
-  void rejectThisWorker() {
-  }
+  void rejectThisWorker() {}
 }

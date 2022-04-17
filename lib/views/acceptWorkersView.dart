@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/acceptWorkers_JobDesc.dart';
@@ -11,7 +12,8 @@ import '../dataClasses/User.dart';
 
 class AcceptWorkerView extends StatefulWidget {
   final User user;
-  const AcceptWorkerView({Key? key, required this.user}) : super(key: key);
+  final JobData job;
+  const AcceptWorkerView({Key? key, required this.user, required this.job}) : super(key: key);
 
   @override
   State<AcceptWorkerView> createState() => _AcceptWorkerViewState();
@@ -32,8 +34,8 @@ class _AcceptWorkerViewState extends State<AcceptWorkerView> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  accpectWorkerJobDescription(),
-                  workerList()
+                  accpectWorkerJobDescription(job: widget.job,),
+                  workerList(job: widget.job,)
                 ],
               ),
             ),

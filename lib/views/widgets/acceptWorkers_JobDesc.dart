@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 
 class accpectWorkerJobDescription extends StatefulWidget {
-  const accpectWorkerJobDescription({Key? key}) : super(key: key);
+  final JobData job;
+  const accpectWorkerJobDescription({Key? key, required this.job}) : super(key: key);
 
   @override
   State<accpectWorkerJobDescription> createState() =>
@@ -100,5 +102,4 @@ class _accpectWorkerJobDescriptionState
       ),
     );
   }
-
 }
