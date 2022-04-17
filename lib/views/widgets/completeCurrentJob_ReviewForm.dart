@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
@@ -34,6 +37,8 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   String? review_Error;
   int activeIndex = 0;
   List<String> imageRefs = [];
+
+  final reviewController = TextEditingController();
 
   @override
   void initState() {
@@ -231,6 +236,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         offset: Offset(7.0, 8.0))
                   ]),
                   child: TextField(
+                    controller: reviewController,
                     maxLines: 5,
                     maxLength: 250,
                     decoration: InputDecoration(
@@ -289,9 +295,30 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     );
   }
 
-  void submit() {
-    uploadImageAndSaveItemInfo(widget.job.jobID);
-    
+  Future<void> submit() async {
+    await uploadImageAndSaveItemInfo(widget.job.jobID);
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    widget.job.addCompletedImage(imageRefs);
+    widget.job.addWorkerReview(reviewController.text);
+    docJob.update({'Worker_Review': widget.job.workerReview});
+    docJob.update({'Completed_Job_Images': widget.job.CompletedJobImages});
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    widget.user.setactiveJob("");
+    docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
+    showToast('Review Completed!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 
   Future<String> uploadImageAndSaveItemInfo(String jobID) async {
