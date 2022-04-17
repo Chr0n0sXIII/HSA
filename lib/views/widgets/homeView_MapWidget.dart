@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps/google_maps.dart' as gm;
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'dart:html';
 import 'dart:ui' as ui;
 
 import 'package:home_service_app/views/completeCurrentJobView.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:home_service_app/views/jobListingView.dart';
 
 import '../../dataClasses/User.dart';
@@ -262,12 +265,7 @@ class _MapViewState extends State<MapView> {
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30))),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Completed_Current_Job_View(
-                                        user: widget.user)));
+                        removeActiveJob();
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
@@ -296,5 +294,24 @@ class _MapViewState extends State<MapView> {
                 ],
               ),
             ));
+  }
+
+  removeActiveJob() {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    widget.user.setactiveJob("");
+    docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
+    showToast('Job Removed From Profile');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 }
