@@ -1,9 +1,11 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'dart:io' show File;
 
@@ -31,6 +33,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   List<XFile> ImageList = <XFile>[];
   String? review_Error;
   int activeIndex = 0;
+  List<String> imageRefs = [];
 
   @override
   void initState() {
@@ -286,7 +289,34 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     );
   }
 
-  void submit() {}
+  void submit() {
+    uploadImageAndSaveItemInfo(widget.job.jobID);
+    
+  }
+
+  Future<String> uploadImageAndSaveItemInfo(String jobID) async {
+    PickedFile? pickedFile;
+    String? productId = jobID;
+    for (int i = 0; i < ImageList.length; i++) {
+      file = File(ImageList[i].path);
+      pickedFile = PickedFile(file!.path);
+      await uploadImageToStorage(pickedFile, productId);
+    }
+    return productId;
+  }
+
+  uploadImageToStorage(PickedFile? pickedFile, String productId) async {
+    String? pId = const Uuid().v4();
+    Reference reference =
+        FirebaseStorage.instance.ref().child('Jobs/$productId/$pId');
+    await reference.putData(
+      await pickedFile!.readAsBytes(),
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+    String value = await reference.getDownloadURL();
+    imageRefs.add(value);
+    print(value);
+  }
 
   Widget buildImage(String imageURL, int index) {
     return Container(
