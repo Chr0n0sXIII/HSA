@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
 
 import '../../dataClasses/User.dart';
 
@@ -37,10 +38,16 @@ class _workerListState extends State<workerList> {
                   return workerTile(allUsers[index]);
                 }),
           )
-        : Text(
-            'No Worker Request For Current Job',
-            style: TextStyle(fontSize: 24),
+        : Padding(
+            padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
+    // : Text(
+    //     'No Worker Request For Current Job',
+    //     style: TextStyle(fontSize: 24),
+    // );
   }
 
   Widget workerTile(User user) {
@@ -130,7 +137,9 @@ class _workerListState extends State<workerList> {
                           primary: Color.fromRGBO(11, 206, 131, 1),
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30))),
-                      onPressed: acceptThisWorker,
+                      onPressed: () {
+                        acceptThisWorker(user);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -160,11 +169,23 @@ class _workerListState extends State<workerList> {
     );
   }
 
-  void acceptThisWorker() {}
+  void acceptThisWorker(User user) {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(user.user_ID);
+    user.setactiveJob(widget.job.jobID);
+    docUser.update({'Current_Job_Taken': user.currentJobTaken});
+    widget.job.clearRequest();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: user,
+                )));
+  }
 
   void rejectThisWorker() {}
 
-   Future<void> LoadData() async {
+  Future<void> LoadData() async {
     await getUsers();
   }
 
