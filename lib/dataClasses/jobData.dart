@@ -82,6 +82,27 @@ class JobData {
     job_Requests.add(workerID);
   }
 
+  addWorkerReview(String review) {
+    workerReview = review;
+  }
+
+  addClientReview(String review) {
+    clientReview = review;
+    isReviewed = true;
+  }
+
+  addCompletedImage(List<String> images) {
+    CompletedJobImages = images;
+  }
+
+  setIsCompleted(bool value) {
+    isCompleted = value;
+  }
+
+  clearRequest() {
+    job_Requests.clear();
+  }
+
   checkRequest(String workerID) {
     for (int i = 0; i < job_Requests.length; i++) {
       if (workerID == job_Requests[i]) {

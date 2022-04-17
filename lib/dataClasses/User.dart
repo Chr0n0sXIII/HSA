@@ -85,6 +85,14 @@ class User {
     activeJobs.add(jobID);
   }
 
+  removeActiveJob(String jobID) {
+    activeJobs.remove(jobID);
+  }
+
+  addCompletedJob(String jobID) {
+    completedJobs.add(jobID);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'ID': user_ID,
@@ -119,13 +127,12 @@ class User {
         this.skills +
         '\nRating : ' +
         this.userRating.toString() +
-        '\nActive Jobs : ' + 
+        '\nActive Jobs : ' +
         activeJobs.toString() +
         '\nCompleted Jobs : ' +
         this.completedJobs.toString() +
-        '\nCurrent Job Taken : ' + 
-        this.currentJobTaken
-        );
+        '\nCurrent Job Taken : ' +
+        this.currentJobTaken);
     return super.toString();
   }
 
