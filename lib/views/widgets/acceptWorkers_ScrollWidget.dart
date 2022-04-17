@@ -175,6 +175,9 @@ class _workerListState extends State<workerList> {
     user.setactiveJob(widget.job.jobID);
     docUser.update({'Current_Job_Taken': user.currentJobTaken});
     widget.job.clearRequest();
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    docJob.update({'Job_Requests': widget.job.job_Requests});
     Navigator.push(
         context,
         MaterialPageRoute(
