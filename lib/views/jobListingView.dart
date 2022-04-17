@@ -266,7 +266,15 @@ class _jobListingViewState extends State<jobListingView> {
           height: 150,
           width: 350,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              color: Colors.white, borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0))
+            ]
+          ),
           child: Row(
             children: [
               SizedBox(
