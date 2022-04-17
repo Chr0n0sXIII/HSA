@@ -41,7 +41,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                       crossAxisCount: 3),
                   itemBuilder: (context, index) => JobList(allJobs[index], widget.user))
               : Text(
-                  'No Active Jobs',
+                  'No New Job Requests',
                   style: TextStyle(fontSize: 40),
                 )
         ],
