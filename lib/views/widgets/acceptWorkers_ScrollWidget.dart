@@ -37,7 +37,7 @@ class _workerListState extends State<workerList> {
   }
 
   Widget workerTile(String name, String skills, String description,
-      double rating, String imageURL) {
+double rating, String imageURL) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
       child: Container(

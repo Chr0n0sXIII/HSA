@@ -91,7 +91,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
           isLogin == true
               ? Container(
-                  height: 700,
+                  height: 600,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromRGBO(229, 229, 229, 1),
@@ -114,16 +114,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                         child: TextField(
+                          key: Key('email'),
                           obscureText: false,
                           enableSuggestions: true,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -141,16 +142,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
                         child: TextField(
+                          key: const Key('password'),
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -181,6 +183,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: Container(
                           alignment: Alignment.center,
                           child: ElevatedButton(
+                              key: Key("loginButton"),
                               onPressed: () {
                                 if (emailController.text == '' ||
                                     passController.text == '') {
@@ -194,7 +197,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     const EdgeInsets.fromLTRB(75, 10, 75, 10),
                                 child: Text(
                                   "Login",
-                                  style: const TextStyle(fontSize: 25),
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ),
                               style: ButtonStyle(
@@ -235,7 +238,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -244,7 +247,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           obscureText: false,
                           enableSuggestions: true,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -262,16 +265,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
+                        padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
                         child: TextField(
                           obscureText: false,
                           enableSuggestions: true,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -289,7 +292,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -298,7 +301,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           obscureText: false,
                           enableSuggestions: true,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -316,7 +319,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -325,7 +328,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -346,7 +349,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -355,7 +358,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -405,7 +408,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     const EdgeInsets.fromLTRB(75, 10, 75, 10),
                                 child: Text(
                                   "Signup",
-                                  style: const TextStyle(fontSize: 25),
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ),
                               style: ButtonStyle(
@@ -489,14 +492,13 @@ class _LoginWidgetState extends State<LoginWidget> {
       showToast('Incorrect Password!');
       return;
     }
-    print(id);
     final docUser = FirebaseFirestore.instance.collection('users').doc(id);
     final snapshot = await docUser.get();
     Map<String, dynamic>? jsonData = snapshot.data();
-    print(jsonData!['Name']);
+    jsonData!['Name'];
     User user = User.fromJson(jsonData);
     showToast('Logged In!');
-    Navigator.push(
+   await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => HomeView(
