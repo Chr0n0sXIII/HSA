@@ -16,6 +16,6 @@ jobs:
         with:
           args: deploy --only hosting:homeserviceapp-a9232
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HOMESERVICEAPP_A9232 }}'
+          firebaseServiceAccount: '1//05Gr3ZK15BUHcCgYIARAAGAUSNwF-L9Irv7iCHGecCrVMywm70IwzlgOjpQeXS5OjwnhGvJJD7KIdv0rELCbz6eb-6yVmqzQdFOg'
           channelId: live
           projectId: homeserviceapp-a9232

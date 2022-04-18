@@ -41,6 +41,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     onPressed: () {
                       setState(() {
                         isLogin = true;
+                        isLogin = false;
+                        emailController.dispose();
+                        passController.dispose();
+                        fnameController.dispose();
+                        lnameController.dispose();
+                        conpassController.dispose();
                       });
                     },
                     child: Padding(
@@ -68,6 +74,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                     onPressed: () {
                       setState(() {
                         isLogin = false;
+                        emailController.dispose();
+                        passController.dispose();
+                        fnameController.dispose();
+                        lnameController.dispose();
+                        conpassController.dispose();
+                        
+                        
                       });
                     },
                     child: Padding(
@@ -498,7 +511,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     jsonData!['Name'];
     User user = User.fromJson(jsonData);
     showToast('Logged In!');
-   await Navigator.push(
+    await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => HomeView(
