@@ -41,7 +41,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                     onPressed: () {
                       setState(() {
                         isLogin = true;
-                        isLogin = false;
                         emailController.dispose();
                         passController.dispose();
                         fnameController.dispose();
