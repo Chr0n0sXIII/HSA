@@ -30,7 +30,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ProfileForm(),
+                  ProfileForm(user: widget.user,),
                 ],
               ),
               Footer()
