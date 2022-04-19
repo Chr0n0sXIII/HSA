@@ -8,7 +8,8 @@ import '../../dataClasses/User.dart';
 
 class workerList extends StatefulWidget {
   final JobData job;
-  const workerList({Key? key, required this.job}) : super(key: key);
+  final User currentUser;
+  const workerList({Key? key, required this.job, required this.currentUser}) : super(key: key);
 
   @override
   State<workerList> createState() => _workerListState();
@@ -187,7 +188,7 @@ class _workerListState extends State<workerList> {
         context,
         MaterialPageRoute(
             builder: (context) => HomeView(
-                  user: user,
+                  user: widget.currentUser,
                 )));
   }
 
