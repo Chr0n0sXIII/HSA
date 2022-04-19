@@ -18,6 +18,7 @@ class JobData {
   bool isAccepted;
   String clientReview;
   String workerReview;
+  List<String> job_Requests;
 
   JobData(
       {required this.jobID,
@@ -34,6 +35,7 @@ class JobData {
       this.isReviewed = false,
       this.isAccepted = false,
       required this.clientReview,
+      required this.job_Requests,
       required this.workerReview});
   setAccepted() {
     isAccepted = true;
@@ -55,7 +57,8 @@ class JobData {
       'isReviewed': isReviewed,
       'isAccepted': isAccepted,
       'Client_Review': clientReview,
-      'Worker_Review': workerReview
+      'Worker_Review': workerReview,
+      'Job_Requests': job_Requests
     };
   }
 
@@ -75,6 +78,41 @@ class JobData {
         isReviewed: json['isReviewed'],
         isAccepted: json['isAccepted'],
         clientReview: json['Client_Review'],
-        workerReview: json['Worker_Review']);
+        workerReview: json['Worker_Review'],
+        job_Requests: json['Job_Requests'].cast<String>());
+  }
+
+  addRequest(String workerID) {
+    job_Requests.add(workerID);
+  }
+
+  addWorkerReview(String review) {
+    workerReview = review;
+  }
+
+  addClientReview(String review) {
+    clientReview = review;
+    isReviewed = true;
+  }
+
+  addCompletedImage(List<String> images) {
+    CompletedJobImages = images;
+  }
+
+  setIsCompleted(bool value) {
+    isCompleted = value;
+  }
+
+  clearRequest() {
+    job_Requests.clear();
+  }
+
+  checkRequest(String workerID) {
+    for (int i = 0; i < job_Requests.length; i++) {
+      if (workerID == job_Requests[i]) {
+        return 1;
+      }
+    }
+    return 0;
   }
 }
