@@ -181,10 +181,11 @@ class _jobListingViewState extends State<jobListingView> {
           children: [
             Expanded(
               child: Container(
-                child: loaded == true
-                ?googleMaps()
-                :Center(child: CircularProgressIndicator(),)
-              ),
+                  child: loaded == true
+                      ? googleMaps()
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )),
             )
           ],
         ),
@@ -330,11 +331,13 @@ class _jobListingViewState extends State<jobListingView> {
     var snapshot;
     JobData job;
     List<JobData> jobs = [];
-    for (int i = 1; i < ids.length; i++) {
-      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
-      snapshot = await docJob.get();
-      print(snapshot.data());
-      job = JobData.fromJson(snapshot.data());
+    final value = await FirebaseFirestore.instance
+        .collection("jobs")
+        .where('isCompleted', isEqualTo: false)
+        .get();
+    for (var doc in value.docs) {
+      print(doc.data());
+      job = JobData.fromJson(doc.data());
       jobs.add(job);
     }
     setState(() {
