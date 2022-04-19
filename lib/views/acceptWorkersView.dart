@@ -35,7 +35,7 @@ class _AcceptWorkerViewState extends State<AcceptWorkerView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   accpectWorkerJobDescription(job: widget.job,),
-                  workerList(job: widget.job,)
+                  workerList(job: widget.job,currentUser: widget.user,)
                 ],
               ),
             ),
