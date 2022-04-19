@@ -296,6 +296,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
   }
 
   Future<void> submit() async {
+    List<String> comJob = [""];
     await uploadImageAndSaveItemInfo(widget.job.jobID);
     final docJob =
         FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
@@ -308,11 +309,12 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     final docUser =
         FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
     widget.user.setactiveJob("");
-    widget.user.removeActiveJob(widget.job.jobID);
-    widget.user.addCompletedJob(widget.job.jobID);
-    docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
-    docUser.update({'Active_Jobs': widget.user.activeJobs});
-    docUser.update({'Completed_Jobs': widget.user.completedJobs});
+    docUser.update({'Current_Job_Taken': ""});
+    final docClientUser = FirebaseFirestore.instance
+        .collection('users')
+        .doc('aQLa7Mef9YVKllpADt1H');
+    comJob.add(widget.job.jobID);
+    docClientUser.update({'Completed_Jobs': comJob});
     showToast('Review Completed!');
     Navigator.push(
         context,
