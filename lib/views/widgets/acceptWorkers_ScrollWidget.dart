@@ -68,12 +68,17 @@ class _workerListState extends State<workerList> {
             ]),
         child: Row(
           children: [
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset(
-                'assets/profile_picture_place_holder.png',
-                scale: 0.6,
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    // ignore: unnecessary_new
+                    image: new DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(user.pfp))),
               ),
             ),
             Column(

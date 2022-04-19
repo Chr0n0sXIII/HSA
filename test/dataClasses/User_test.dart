@@ -10,7 +10,6 @@ void main() {
       about: 'about',
       contacts: 'contacts',
       skills: 'skills',
-      completedRequests: ['completedRequests'],
       completedJobs: ['completedJobs'],
       pfp: 'pfp',
       activeJobs: ["activeJobs"],
@@ -40,7 +39,6 @@ void main() {
     expect(dclass.about, user.about);
     expect(dclass.activeJobs, user.activeJobs);
     expect(dclass.completedJobs, user.completedJobs);
-    expect(dclass.completedRequests, user.completedRequests);
     expect(dclass.contacts, user.contacts);
     expect(dclass.currentJobTaken, user.currentJobTaken);
     expect(dclass.email, user.email);

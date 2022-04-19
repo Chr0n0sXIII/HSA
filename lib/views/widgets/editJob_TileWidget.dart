@@ -52,13 +52,18 @@ class _editJobTileListingState extends State<editJobTileListing> {
     var snapshot;
     JobData job;
     List<JobData> jobs = [];
-    for (int i = 1; i < ids.length; i++) {
-      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
-      snapshot = await docJob.get();
-      if (snapshot.data()['isCompleted'] == false) {
-        job = JobData.fromJson(snapshot.data());
-        jobs.add(job);
-        print(snapshot.data()['isCompleted']);
+    docJob = await FirebaseFirestore.instance
+        .collection('jobs')
+        .where('isCompleted', isEqualTo: false)
+        .get();
+    for (var doc in docJob.docs) {
+      job = JobData.fromJson(doc.data());
+
+      for (var id in ids) {
+        if (job.jobID == id) {
+          jobs.add(job);
+          print(doc.data()['isCompleted']);
+        }
       }
     }
     setState(() {
@@ -71,23 +76,24 @@ class _editJobTileListingState extends State<editJobTileListing> {
   edit_Tile(JobData job) {
     return Container(
       margin: EdgeInsets.all(25),
-      width: 400,
+      width: 500,
+      height: 700,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
           boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]
-          ),
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(7.0, 8.0))
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           recievedImages == false
               ? Container(
-                  height: 200,
+                  height: 125,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Color.fromRGBO(196, 196, 196, 1)),
@@ -100,35 +106,33 @@ class _editJobTileListingState extends State<editJobTileListing> {
                     return buildWorkerImage(ImageURL, index);
                   },
                   options: CarouselOptions(
-                    height: 200,
+                    height: 125,
                     autoPlay: true,
                     viewportFraction: 1,
                     enableInfiniteScroll: true,
                   )),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+            padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
             child: Text(
               job.jobName,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+            padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
             child: Text(
               job.jobDescription,
               maxLines: 1,
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis
-              ),
+              style: TextStyle(overflow: TextOverflow.ellipsis),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+            padding: const EdgeInsets.fromLTRB(15, 5, 5, 5),
             child: Row(
               children: [
                 Text(
                   job.jobLocation,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Icon(
                   Icons.pin_drop,
@@ -138,13 +142,14 @@ class _editJobTileListingState extends State<editJobTileListing> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+            padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   '\$ ' + job.jobPrice,
                   style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.red),
@@ -153,7 +158,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -165,7 +170,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
                             borderRadius: new BorderRadius.circular(30))),
                     onPressed: editThisJob,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                       child: Text(
                         'Edit',
                         style: TextStyle(
@@ -180,7 +185,7 @@ class _editJobTileListingState extends State<editJobTileListing> {
                             borderRadius: new BorderRadius.circular(30))),
                     onPressed: removeThisJob,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Text(
                         'Remove',
                         style: TextStyle(

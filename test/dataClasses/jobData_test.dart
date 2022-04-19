@@ -16,7 +16,7 @@ void main() {
         clientReview: 'clientReview',
         Latitude: 0.00,
         Longitude: 0.00,
-        workerReview: 'workerReview');
+        workerReview: 'workerReview', job_Requests: []);
 
     final map = data.toJson();
 

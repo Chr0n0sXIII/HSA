@@ -181,19 +181,18 @@ class _jobListingViewState extends State<jobListingView> {
           children: [
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
+                  decoration: BoxDecoration(boxShadow: [
                     BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(7.0, 8.0))
-                  ]
-                ),
-                child: loaded == true
-                ?googleMaps()
-                :Center(child: CircularProgressIndicator(),)
-              ),
+                  ]),
+                  child: loaded == true
+                      ? googleMaps()
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )),
             )
           ],
         ),
@@ -210,6 +209,10 @@ class _jobListingViewState extends State<jobListingView> {
                 shrinkWrap: true,
                 itemCount: total_jobs,
                 itemBuilder: (context, index) {
+                  if (allJobs[index] == null) {
+                    print("help");
+                    index++;
+                  }
                   return jobTile(allJobs[index]);
                 })
             : Center(
@@ -247,7 +250,8 @@ class _jobListingViewState extends State<jobListingView> {
         gm.Marker(gm.MarkerOptions()
           ..position = gm.LatLng(allJobs[i].Latitude, allJobs[i].Longitude)
           ..map = map
-          ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
+          ..icon =
+              'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
           ..title = allJobs[i].jobName);
       }
       return elem;
@@ -275,15 +279,15 @@ class _jobListingViewState extends State<jobListingView> {
           height: 150,
           width: 350,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
               boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(7.0, 8.0))
-            ]
-          ),
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(7.0, 8.0))
+              ]),
           child: Row(
             children: [
               SizedBox(
@@ -307,16 +311,14 @@ class _jobListingViewState extends State<jobListingView> {
                     children: [
                       Text(
                         job.jobName,
-                        style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         job.jobDescription,
                         maxLines: 1,
                         style: TextStyle(
-                          fontSize: 16,
-                          overflow: TextOverflow.ellipsis
-                        ),
+                            fontSize: 16, overflow: TextOverflow.ellipsis),
                       ),
                       Row(
                         children: [
@@ -360,13 +362,17 @@ class _jobListingViewState extends State<jobListingView> {
         .where('isCompleted', isEqualTo: false)
         .get();
     for (var doc in value.docs) {
-      print(doc.data());
+      //print(doc.data());
       job = JobData.fromJson(doc.data());
-      jobs.add(job);
+      if (!job.isAccepted || !job.isCompleted) {
+        jobs.add(job);
+      }
     }
     setState(() {
-      allJobs = jobs;
+      allJobs.clear();
+      allJobs.addAll(jobs);
       total_jobs = allJobs.length;
+      print(total_jobs);
       loaded = true;
     });
   }

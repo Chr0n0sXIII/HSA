@@ -299,7 +299,8 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       gm.Marker(gm.MarkerOptions()
         ..position = myLatlng
         ..map = map
-        ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
+        ..icon =
+            'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
         ..title = widget.job.jobName);
 
       return elem;

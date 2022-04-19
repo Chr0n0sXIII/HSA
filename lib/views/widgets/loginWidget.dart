@@ -482,7 +482,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     final user = User.register(docUser.id, name, email, password);
-    print(user.toString());
+    //print(user.toString());
     final jsonData = user.toJson();
     await docUser.set(jsonData);
   }
@@ -518,7 +518,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     Map<String, dynamic>? jsonData = snapshot.data();
     User user = User.fromJson(jsonData!);
     print('Login Passed!');
-    print(user.toString());
+   // print(user.toString());
     showToast('Logged In!');
     await Navigator.push(
         context,

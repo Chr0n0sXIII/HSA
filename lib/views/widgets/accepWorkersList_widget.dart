@@ -39,7 +39,8 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                   itemCount: total_Jobs,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
-                  itemBuilder: (context, index) => JobList(allJobs[index], widget.user))
+                  itemBuilder: (context, index) =>
+                      JobList(allJobs[index], widget.user))
               : Text(
                   'No New Job Requests',
                   style: TextStyle(fontSize: 40),
@@ -49,7 +50,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
     );
   }
 
-  JobList(JobData job,User user) {
+  JobList(JobData job, User user) {
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(30)),
       hoverColor: Color.fromRGBO(4, 31, 81, 0.25),
@@ -57,24 +58,21 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AcceptWorkerView(
-                      user: user,
-                      job : job
-                    )));
+                builder: (context) => AcceptWorkerView(user: user, job: job)));
       },
       child: Container(
         margin: EdgeInsets.all(25),
         width: 400,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: Offset(7.0, 8.0))
-            ]
-            ),
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -93,26 +91,27 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
                       return buildWorkerImage(ImageURL, index);
                     },
                     options: CarouselOptions(
-                      height: 200,
+                      height: 125,
                       autoPlay: true,
                       viewportFraction: 1,
                       enableInfiniteScroll: true,
                     )),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
               child: Text(
                 job.jobName,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
               child: Text(
                 job.jobDescription,
+                style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
               child: Row(
                 children: [
                   Text(
@@ -127,7 +126,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
               child: Text(
                 '\$ ' + job.jobPrice,
                 style: TextStyle(
@@ -137,7 +136,7 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(15, 5, 8, 5),
               child: Row(
                 children: [
                   Text(
@@ -167,14 +166,17 @@ class _Active_Jobs_ListState extends State<Active_Jobs_List> {
     var snapshot;
     JobData job;
     List<JobData> jobs = [];
-    for (int i = 1; i < ids.length; i++) {
-      docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
-      snapshot = await docJob.get();
-      List<String> check = snapshot.data()['Job_Requests'].cast<String>();
-      if (check.length >= 1) {
-        job = JobData.fromJson(snapshot.data());
-        jobs.add(job);
-        print(snapshot.data()['isCompleted']);
+    docJob = await FirebaseFirestore.instance.collection('jobs').get();
+    for (var doc in docJob.docs) {
+      job = JobData.fromJson(doc.data());
+      for (var id in ids) {
+        List<String> check = job.job_Requests;
+        if (check.length >= 1) {
+          if (job.jobID == id) {
+            jobs.add(job);
+          }
+          //print(snapshot.data()['isCompleted']);
+        }
       }
     }
     setState(() {
