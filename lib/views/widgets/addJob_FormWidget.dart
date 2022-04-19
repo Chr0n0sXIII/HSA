@@ -30,7 +30,7 @@ class _Add_Job_FormState extends State<Add_Job_Form> {
     'Cleaning',
     'Landscaping',
     'Painting',
-    'Maintainace',
+    'Maintenance',
     'Plumbing',
     'Misc'
   ];
