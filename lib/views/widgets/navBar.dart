@@ -36,6 +36,7 @@ class TopBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               InkWell(
+                key: Key("TopbarHomeButton"),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -56,8 +57,9 @@ class TopBar extends StatelessWidget {
                 width: 60,
               ),
               InkWell(
-                onTap: () {
-                  Navigator.push(
+                key: Key("TopbarJobListing"),
+                onTap: () async {
+                  await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => jobListingView(

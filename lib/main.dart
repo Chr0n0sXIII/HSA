@@ -7,10 +7,7 @@ import 'package:http/http.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //MongoDb.connect();
-  //mongo.initCredentials();
-  //db.initJData();
-  //db.initUData();
+  
   runApp(
     MyApp(),
   );

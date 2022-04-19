@@ -1,10 +1,3 @@
-import 'dart:convert';
-import 'dart:html';
-
-import "package:flutter/material.dart";
-import 'package:geocode/geocode.dart';
-import 'package:latlng/latlng.dart';
-
 class JobData {
   String jobID;
   String jobName;

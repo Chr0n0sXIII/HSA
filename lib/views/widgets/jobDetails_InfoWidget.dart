@@ -16,7 +16,6 @@ import 'dart:ui' as ui;
 import '../../dataClasses/User.dart';
 
 class jobDetails_InfoWidget extends StatefulWidget {
-  userData udata = UserDataUtil.TestData_UserData()[1];
   //JobData jdata = JobDataUtil.TestData_JobsData()[1];
   final User user;
   final JobData job;

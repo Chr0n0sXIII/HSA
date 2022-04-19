@@ -1,30 +1,56 @@
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
-import 'package:latlng/latlng.dart';
 
 void main() {
-   test('Test Job Data toMap', () {
+  test('Test Job Data toMap', () {
     JobData data = JobData(
         jobID: "jobID",
         jobName: 'jobName',
         jobDescription: 'jobDescription',
         jobLocation: 'jobLocation',
         jobType: 'jobType',
-        latLng: LatLng(0, 0),
         jobPrice: 'jobPrice',
         ActiveJobImages: ['ActiveJobImages'],
-        CompletedJobImages: ['CompletedJobImages']);
+        CompletedJobImages: ['CompletedJobImages'],
+        clientReview: 'clientReview',
+        Latitude: 0.00,
+        Longitude: 0.00,
+        workerReview: 'workerReview');
 
-    final map = data.toMap();
+    final map = data.toJson();
 
-    expect(map['jobID'], 'jobID');
-    expect(map['jobName'], 'jobName');
-    expect(map['jobDescription'], 'jobDescription');
-    expect(map['jobLocation'], 'jobLocation');
-    expect(map['jobType'], 'jobType');
-    expect(map['latLng'], '0.00.0');
-    expect(map['jobPrice'], 'jobPrice');
-    expect(map['ActiveJobImages'], ['ActiveJobImages']);
-    expect(map['CompletedJobImages'], ['CompletedJobImages']);
+    expect(map['Job_ID'], 'jobID');
+    expect(map['Title'], 'jobName');
+    expect(map['Description'], 'jobDescription');
+    expect(map['Address'], 'jobLocation');
+    expect(map['Type'], 'jobType');
+    expect(map['Latitude'], 0.00);
+    expect(map['Longitude'], 0.00);
+    expect(map['Price'], 'jobPrice');
+    expect(map['Client_Review'], 'clientReview');
+    expect(map['Worker_Review'], 'workerReview');
+    expect(map['Active_Job_Images'], ['ActiveJobImages']);
+    expect(map['Completed_Job_Images'], ['CompletedJobImages']);
+    expect(map["isCompleted"], false);
+    expect(map["isCompleted"], false);
+    expect(map["isReviewed"], false);
+
+    final dclass = JobData.fromJson(map);
+    
+    expect(dclass.ActiveJobImages,data.ActiveJobImages);
+    expect(dclass.Latitude,data.Latitude);
+    expect(dclass.Longitude,data.Longitude);
+    expect(dclass.clientReview,data.clientReview);
+    expect(dclass.isCompleted,data.isCompleted);
+    expect(dclass.isReviewed,data.isReviewed);
+    expect(dclass.jobDescription,data.jobDescription);
+    expect(dclass.jobID,data.jobID);
+    expect(dclass.jobLocation,data.jobLocation);
+    expect(dclass.jobName,data.jobName);
+    expect(dclass.jobPrice,data.jobPrice);
+    expect(dclass.jobType,data.jobType);
+    expect(dclass.workerReview,data.workerReview);
+
   });
 }
