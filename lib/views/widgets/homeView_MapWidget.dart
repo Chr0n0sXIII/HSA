@@ -28,9 +28,7 @@ class _MapViewState extends State<MapView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.user.currentJobTaken != "") {
-      LoadJob();
-    }
+    checkJob();
   }
 
   bool active_Job = false;
@@ -160,7 +158,9 @@ class _MapViewState extends State<MapView> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       Completed_Current_Job_View(
-                                          user: widget.user, job: job,)));
+                                        user: widget.user,
+                                        job: job,
+                                      )));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -313,5 +313,15 @@ class _MapViewState extends State<MapView> {
   void showToast(String msg) {
     Fluttertoast.showToast(
         msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
+  }
+
+  Future<void> checkJob() async {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    final snapshot = await docUser.get();
+    widget.user.setactiveJob(snapshot.data()!['Current_Job_Taken']);
+     if (widget.user.currentJobTaken != "") {
+      LoadJob();
+    }
   }
 }
