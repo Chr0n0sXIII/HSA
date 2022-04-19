@@ -1,39 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'dart:io' show File;
 
+import '../../dataClasses/User.dart';
+
 class Complete_Job_Form extends StatefulWidget {
-  const Complete_Job_Form({Key? key}) : super(key: key);
+  final User user;
+  final JobData job;
+  const Complete_Job_Form({Key? key, required this.user, required this.job})
+      : super(key: key);
 
   @override
   State<Complete_Job_Form> createState() => _Complete_Job_FormState();
 }
 
 class _Complete_Job_FormState extends State<Complete_Job_Form> {
+  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   bool imageUploaded = false;
   bool imageLoadedFromWorker = false;
-  final staticImage = 'https://static.thenounproject.com/png/3322766-200.png';
   final controller = CarouselController();
   List<String> imageURL_list = <String>[];
   final ImagePicker _picker = ImagePicker();
   File? file;
   List<XFile>? image = <XFile>[];
   List<XFile> ImageList = <XFile>[];
-
-  List<String> workerImageURL_list = <String>[];
-
   String? review_Error;
-
   int activeIndex = 0;
+  List<String> imageRefs = [];
 
-  String jobTile = 'PlaceHolder Title';
-  String job_description = "Placeholder Description";
-  String job_Location = 'Placeholder Location';
-  String job_Price = 'Placeholder Price';
+  final reviewController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.job.ActiveJobImages.length > 0) {
+      imageLoadedFromWorker = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,10 +77,10 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                               child: Center(child: CircularProgressIndicator()),
                             )
                           : CarouselSlider.builder(
-                              itemCount: workerImageURL_list.length,
+                              itemCount: widget.job.ActiveJobImages.length,
                               itemBuilder: (context, index, realIndex) {
                                 final workerImageURL =
-                                    workerImageURL_list[index];
+                                    widget.job.ActiveJobImages[index];
                                 return buildWorkerImage(workerImageURL, index);
                               },
                               options: CarouselOptions(
@@ -77,7 +92,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          jobTile,
+                          widget.job.jobName,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -85,7 +100,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          job_description,
+                          widget.job.jobDescription,
                         ),
                       ),
                       Padding(
@@ -93,7 +108,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         child: Row(
                           children: [
                             Text(
-                              job_Location,
+                              widget.job.jobLocation,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -107,7 +122,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                         child: Text(
-                          job_Price,
+                          '\$ ' + widget.job.jobPrice,
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -221,6 +236,7 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
                         offset: Offset(7.0, 8.0))
                   ]),
                   child: TextField(
+                    controller: reviewController,
                     maxLines: 5,
                     maxLength: 250,
                     decoration: InputDecoration(
@@ -279,7 +295,61 @@ class _Complete_Job_FormState extends State<Complete_Job_Form> {
     );
   }
 
-  void submit() {}
+  Future<void> submit() async {
+    await uploadImageAndSaveItemInfo(widget.job.jobID);
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    widget.job.addCompletedImage(imageRefs);
+    widget.job.addWorkerReview(reviewController.text);
+    widget.job.setIsCompleted(true);
+    docJob.update({'Worker_Review': widget.job.workerReview});
+    docJob.update({'Completed_Job_Images': widget.job.CompletedJobImages});
+    docJob.update({'isCompleted': widget.job.isCompleted});
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(widget.user.user_ID);
+    widget.user.setactiveJob("");
+    widget.user.removeActiveJob(widget.job.jobID);
+    widget.user.addCompletedJob(widget.job.jobID);
+    docUser.update({'Current_Job_Taken': widget.user.currentJobTaken});
+    docUser.update({'Active_Jobs': widget.user.activeJobs});
+    docUser.update({'Completed_Jobs': widget.user.completedJobs});
+    showToast('Review Completed!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
+  }
+
+  Future<String> uploadImageAndSaveItemInfo(String jobID) async {
+    PickedFile? pickedFile;
+    String? productId = jobID;
+    for (int i = 0; i < ImageList.length; i++) {
+      file = File(ImageList[i].path);
+      pickedFile = PickedFile(file!.path);
+      await uploadImageToStorage(pickedFile, productId);
+    }
+    return productId;
+  }
+
+  uploadImageToStorage(PickedFile? pickedFile, String productId) async {
+    String? pId = const Uuid().v4();
+    Reference reference =
+        FirebaseStorage.instance.ref().child('Jobs/$productId/$pId');
+    await reference.putData(
+      await pickedFile!.readAsBytes(),
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+    String value = await reference.getDownloadURL();
+    imageRefs.add(value);
+    print(value);
+  }
 
   Widget buildImage(String imageURL, int index) {
     return Container(

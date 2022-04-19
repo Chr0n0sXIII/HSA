@@ -181,11 +181,19 @@ class _jobListingViewState extends State<jobListingView> {
           children: [
             Expanded(
               child: Container(
-                  child: loaded == true
-                      ? googleMaps()
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        )),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(7.0, 8.0))
+                  ]
+                ),
+                child: loaded == true
+                ?googleMaps()
+                :Center(child: CircularProgressIndicator(),)
+              ),
             )
           ],
         ),
@@ -210,14 +218,17 @@ class _jobListingViewState extends State<jobListingView> {
   }
 
   googleMaps() {
-    String htmlId = "159753";
+    String htmlId = widget.user.user_ID + allJobs.length.toString();
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
       //final myLatlng = gm.LatLng(10.640821, -61.398547);
 
       final mapOptions = gm.MapOptions()
-        ..zoom = 13
+        ..zoom = 9
+        ..zoomControl = false
+        ..disableDoubleClickZoom = true
+        ..scrollwheel = false
         ..center = gm.LatLng(10.640821, -61.398547);
 
       final elem = DivElement()
@@ -236,6 +247,7 @@ class _jobListingViewState extends State<jobListingView> {
         gm.Marker(gm.MarkerOptions()
           ..position = gm.LatLng(allJobs[i].Latitude, allJobs[i].Longitude)
           ..map = map
+          ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
           ..title = allJobs[i].jobName);
       }
       return elem;
@@ -263,7 +275,15 @@ class _jobListingViewState extends State<jobListingView> {
           height: 150,
           width: 350,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              color: Colors.white, borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0))
+            ]
+          ),
           child: Row(
             children: [
               SizedBox(
@@ -279,43 +299,47 @@ class _jobListingViewState extends State<jobListingView> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      job.jobName,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      job.jobDescription,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 16,
+                child: Container(
+                  width: 400,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.jobName,
+                        style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          job.jobLocation,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                      Text(
+                        job.jobDescription,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 16,
+                          overflow: TextOverflow.ellipsis
                         ),
-                        Icon(
-                          Icons.pin_drop,
-                          color: Colors.red,
-                        )
-                      ],
-                    ),
-                    Text(
-                      '\$ ' + job.jobPrice,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
-                    ),
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            job.jobLocation,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.pin_drop,
+                            color: Colors.red,
+                          )
+                        ],
+                      ),
+                      Text(
+                        '\$ ' + job.jobPrice,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],

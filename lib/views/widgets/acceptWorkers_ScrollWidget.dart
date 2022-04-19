@@ -1,43 +1,56 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/homeView.dart';
+
+import '../../dataClasses/User.dart';
 
 class workerList extends StatefulWidget {
-  const workerList({Key? key}) : super(key: key);
+  final JobData job;
+  const workerList({Key? key, required this.job}) : super(key: key);
 
   @override
   State<workerList> createState() => _workerListState();
 }
 
 class _workerListState extends State<workerList> {
-  int total_workers = 7;
-  String username = 'Placeholder Name';
-  String userSkills = 'Placholder Skills';
-  String userDesc = 'PlaceHolder Description';
-  String userImage = 'https://picsum.photos/id/237/200/300';
-  double userRating = 3;
+  List<User> allUsers = [];
+  int total_workers = 0;
+
   @override
-  Widget build(BuildContext context) {
-    return total_workers >= 1
-    ?Container(
-      width: 600,
-      height: 650,
-      child: ListView.builder(
-        shrinkWrap: true,
-          itemCount: total_workers,
-          itemBuilder: (context, index) {
-            return workerTile(username, userSkills, userDesc,userRating,userImage);
-          }),
-    )
-    : Text(
-      'No Worker Request For Current Job',
-      style: TextStyle(
-        fontSize: 24
-      ),
-    );
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
   }
 
-  Widget workerTile(String name, String skills, String description,
-double rating, String imageURL) {
+  @override
+  Widget build(BuildContext context) {
+    return total_workers > 0
+        ? Container(
+            width: 600,
+            height: 650,
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: total_workers,
+                itemBuilder: (context, index) {
+                  return workerTile(allUsers[index]);
+                }),
+          )
+        : Padding(
+            padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+    // : Text(
+    //     'No Worker Request For Current Job',
+    //     style: TextStyle(fontSize: 24),
+    // );
+  }
+
+  Widget workerTile(User user) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
       child: Container(
@@ -68,7 +81,7 @@ double rating, String imageURL) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RatingBarIndicator(
-                  rating: rating,
+                  rating: user.userRating,
                   direction: Axis.horizontal,
                   itemCount: 5,
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -80,7 +93,7 @@ double rating, String imageURL) {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    name,
+                    user.uName,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: Colors.black,
@@ -92,18 +105,24 @@ double rating, String imageURL) {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    skills,
+                    user.skills,
                     textAlign: TextAlign.start,
-                    style: TextStyle(color: Colors.black, fontSize: 14,fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
                   child: Text(
-                    description,
+                    user.about,
                     maxLines: 1,
                     textAlign: TextAlign.start,
-                    style: TextStyle(color: Colors.grey, fontSize: 14,overflow: TextOverflow.ellipsis),
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ],
@@ -114,41 +133,33 @@ double rating, String imageURL) {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(11, 206, 131, 1),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)
-                      )
-                    ),
-                    onPressed: acceptThisWorker, 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Accept',
-                        style: TextStyle(
-                          fontSize: 18
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(11, 206, 131, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: () {
+                        acceptThisWorker(user);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Accept',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    )
-                  ),
+                      )),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(244, 67, 54, 1),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)
-                      )
-                    ),
-                    onPressed: rejectThisWorker, 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Reject',
-                        style: TextStyle(
-                          fontSize: 18
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(244, 67, 54, 1),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30))),
+                      onPressed: rejectThisWorker,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Reject',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    )
-                  )
+                      ))
                 ],
               ),
             )
@@ -158,9 +169,44 @@ double rating, String imageURL) {
     );
   }
 
-  void acceptThisWorker() {
+  void acceptThisWorker(User user) {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(user.user_ID);
+    user.setactiveJob(widget.job.jobID);
+    docUser.update({'Current_Job_Taken': user.currentJobTaken});
+    widget.job.clearRequest();
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    docJob.update({'Job_Requests': widget.job.job_Requests});
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeView(
+                  user: user,
+                )));
   }
 
-  void rejectThisWorker() {
+  void rejectThisWorker() {}
+
+  Future<void> LoadData() async {
+    await getUsers();
+  }
+
+  getUsers() async {
+    List<String> ids = widget.job.job_Requests;
+    var docUser;
+    var snapshot;
+    User user;
+    List<User> users = [];
+    for (int i = 0; i < ids.length; i++) {
+      docUser = FirebaseFirestore.instance.collection('users').doc(ids[i]);
+      snapshot = await docUser.get();
+      user = User.fromJson(snapshot.data());
+      users.add(user);
+    }
+    setState(() {
+      allUsers = users;
+      total_workers = allUsers.length;
+    });
   }
 }

@@ -1,10 +1,21 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:home_service_app/views/views.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../dataClasses/User.dart';
+import '../../dataClasses/jobData.dart';
+
 class Worker_Review_Fo extends StatefulWidget {
-  const Worker_Review_Fo({Key? key}) : super(key: key);
+  final User user;
+  final JobData job;
+  const Worker_Review_Fo({Key? key, required this.user, required this.job})
+      : super(key: key);
 
   @override
   State<Worker_Review_Fo> createState() => _Worker_Review_FoState();
@@ -12,11 +23,23 @@ class Worker_Review_Fo extends StatefulWidget {
 
 class _Worker_Review_FoState extends State<Worker_Review_Fo> {
   final controller = CarouselController();
-  bool imagesLoaded = false;
+  final reviewController = TextEditingController();
   List<String> imageURL_list = <String>[];
+  bool imagesLoaded = false;
   int activeIndex = 0;
 
   String? review_Error;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.job.CompletedJobImages.length > 0) {
+      imagesLoaded = true;
+      imageURL_list = widget.job.CompletedJobImages;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,10 +54,7 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Images From Worker',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
@@ -47,9 +67,10 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                       ? Center(child: CircularProgressIndicator())
                       : CarouselSlider.builder(
                           carouselController: controller,
-                          itemCount: imageURL_list.length,
+                          itemCount: widget.job.CompletedJobImages.length,
                           itemBuilder: (context, index, realIndex) {
-                            final imageURL = imageURL_list[index];
+                            final imageURL =
+                                widget.job.CompletedJobImages[index];
                             return buildImage(imageURL, index);
                           },
                           options: CarouselOptions(
@@ -71,8 +92,7 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                               padding: EdgeInsets.all(15),
                               primary: Color.fromRGBO(4, 30, 81, 1)),
                           onPressed: back,
-                          child: Icon(Icons.arrow_back)
-                      ),
+                          child: Icon(Icons.arrow_back)),
                       buildImageIndicator(),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -94,36 +114,29 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Worker Review',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
                 width: 500,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(7.0,8.0)
-                    )
-                  ]
-                ),
+                      offset: Offset(7.0, 8.0))
+                ]),
                 child: TextField(
+                  controller: reviewController,
                   maxLines: 5,
                   maxLength: 250,
                   decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Write your review...',
-                    errorText: review_Error,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5)
-                    )
-                  ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Write your review...',
+                      errorText: review_Error,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
                 ),
               ),
               Padding(
@@ -140,31 +153,30 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
                     color: Color.fromRGBO(195, 166, 96, 1),
                   ),
                   onRatingUpdate: (rating) {
-                      print(rating);
+                    print(rating);
                   },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(11, 206, 131, 1),
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20)
-                    )
-                  ),
-                  onPressed: (){}, 
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(11, 206, 131, 1),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(20))),
+                    onPressed: () {
+                      submit();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  )
-                ),
+                    )),
               )
             ],
           ),
@@ -210,5 +222,25 @@ class _Worker_Review_FoState extends State<Worker_Review_Fo> {
 
   moveToImage(int index) {
     controller.animateToPage(index);
+  }
+
+  void submit() async {
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    widget.job.addClientReview(reviewController.text);
+    docJob.update({'Client_Review': widget.job.clientReview});
+    docJob.update({'isReviewed': widget.job.isReviewed});
+    showToast('Review Completed!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Complete_Job_List_View(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
   }
 }

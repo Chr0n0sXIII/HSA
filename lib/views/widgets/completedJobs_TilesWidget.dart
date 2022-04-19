@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:home_service_app/views/views.dart';
 
 import '../../dataClasses/User.dart';
 import '../../dataClasses/jobData.dart';
@@ -20,10 +21,16 @@ class _Completed_LisingState extends State<Completed_Lising> {
   bool reviewed = false;
   int total_Jobs = 0;
   bool imagesLoaded = false;
-  bool reviewedByClient = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+  
   @override
   Widget build(BuildContext context) {
-    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
@@ -36,17 +43,20 @@ class _Completed_LisingState extends State<Completed_Lising> {
                       crossAxisCount: 3),
                   itemBuilder: (context, index) =>
                       completed_Review(allJobs[index]))
-              : Text(
-                  'No Completed Jobs',
-                  style: TextStyle(fontSize: 40),
-                )
+              :Center(
+                child: CircularProgressIndicator(),
+              )
+              // : Text(
+              //     'No Completed Jobs',
+              //     style: TextStyle(fontSize: 40),
+              //   )
         ],
       ),
     );
   }
 
   getJobs() async {
-    List<String> ids = widget.user.activeJobs;
+    List<String> ids = widget.user.completedJobs;
     var docJob;
     var snapshot;
     JobData job;
@@ -54,102 +64,125 @@ class _Completed_LisingState extends State<Completed_Lising> {
     for (int i = 1; i < ids.length; i++) {
       docJob = FirebaseFirestore.instance.collection('jobs').doc(ids[i]);
       snapshot = await docJob.get();
-      if (snapshot.data()['isCompleted'] == true) {
-        job = JobData.fromJson(snapshot.data());
-        jobs.add(job);
-        print(snapshot.data()['isCompleted']);
-      }
+      job = JobData.fromJson(snapshot.data());
+      jobs.add(job);
+      print(snapshot.data()['isCompleted']);
     }
     setState(() {
-      total_Jobs = allJobs.length;
       allJobs = jobs;
+      total_Jobs = allJobs.length;
       recievedImages = true;
       imagesLoaded = true;
     });
   }
 
   completed_Review(JobData job) {
-    return Container(
-      margin: EdgeInsets.all(25),
-      width: 400,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          imagesLoaded == false
-              ? Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Color.fromRGBO(196, 196, 196, 1)),
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              : CarouselSlider.builder(
-                  itemCount: job.CompletedJobImages.length,
-                  itemBuilder: (context, index, realIndex) {
-                    final ImageURL = job.CompletedJobImages[index];
-                    return buildWorkerImage(ImageURL, index);
-                  },
-                  options: CarouselOptions(
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      hoverColor: Color.fromRGBO(4, 31, 81, 0.25),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Worker_Review_View(
+                      user: widget.user,
+                      job: job,
+                    )));
+      },
+      child: Container(
+        margin: EdgeInsets.all(25),
+        width: 400,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0))
+            ]
+            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            imagesLoaded == false
+                ? Container(
                     height: 200,
-                    autoPlay: true,
-                    viewportFraction: 1,
-                    enableInfiniteScroll: true,
-                  )),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
-            child: Text(
-              job.jobName,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color.fromRGBO(196, 196, 196, 1)),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : CarouselSlider.builder(
+                    itemCount: job.CompletedJobImages.length,
+                    itemBuilder: (context, index, realIndex) {
+                      final ImageURL = job.CompletedJobImages[index];
+                      return buildWorkerImage(ImageURL, index);
+                    },
+                    options: CarouselOptions(
+                      height: 200,
+                      autoPlay: true,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: true,
+                    )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              child: Text(
+                job.jobName,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
-            child: Text(
-              job.jobDescription,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
-            child: Row(
-              children: [
-                Text(
-                  job.jobLocation,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              child: Text(
+                job.jobDescription,
+                maxLines: 3,
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis
                 ),
-                Icon(
-                  Icons.pin_drop,
-                  color: Colors.red,
-                )
-              ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  job.jobPrice,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
-                ),
-                reviewedByClient == false
-                    ? Icon(
-                        Icons.check_box_outline_blank,
-                        color: Colors.red,
-                      )
-                    : Icon(
-                        Icons.check_box,
-                        color: Colors.green,
-                      )
-              ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              child: Row(
+                children: [
+                  Text(
+                    job.jobLocation,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(
+                    Icons.pin_drop,
+                    color: Colors.red,
+                  )
+                ],
+              ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    job.jobPrice,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  ),
+                  job.isReviewed == false
+                      ? Icon(
+                          Icons.check_box_outline_blank,
+                          color: Colors.red,
+                        )
+                      : Icon(
+                          Icons.check_box,
+                          color: Colors.green,
+                        )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -165,5 +198,9 @@ class _Completed_LisingState extends State<Completed_Lising> {
         ),
       ),
     );
+  }
+
+  Future<void> LoadData() async {
+    await getJobs();
   }
 }

@@ -10,7 +10,6 @@ class User {
   late String contacts;
   late String skills;
   late List<String> activeJobs;
-  late List<String> completedRequests;
   late List<String> completedJobs;
   late String currentJobTaken;
   late double userRating;
@@ -25,7 +24,6 @@ class User {
     required this.contacts,
     required this.skills,
     required this.activeJobs,
-    required this.completedRequests,
     required this.currentJobTaken,
     required this.completedJobs,
     required this.userRating,
@@ -41,7 +39,6 @@ class User {
     contacts = "Na";
     skills = "Na";
     activeJobs = [""];
-    completedRequests = [""];
     completedJobs = [""];
     currentJobTaken = "";
     userRating = 0;
@@ -89,6 +86,14 @@ class User {
     activeJobs.add(jobID);
   }
 
+  removeActiveJob(String jobID) {
+    activeJobs.remove(jobID);
+  }
+
+  addCompletedJob(String jobID) {
+    completedJobs.add(jobID);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'ID': user_ID,
@@ -99,7 +104,6 @@ class User {
       'Contacts': contacts,
       'Skills': skills,
       'Active_Jobs': activeJobs,
-      'Completed_Request': completedRequests,
       'Current_Job_Taken': currentJobTaken,
       'Completed_Jobs': completedJobs,
       'User_Rating': userRating,
@@ -123,7 +127,13 @@ class User {
         '\nSkils : ' +
         this.skills +
         '\nRating : ' +
-        this.userRating.toString());
+        this.userRating.toString() +
+        '\nActive Jobs : ' +
+        activeJobs.toString() +
+        '\nCompleted Jobs : ' +
+        this.completedJobs.toString() +
+        '\nCurrent Job Taken : ' +
+        this.currentJobTaken);
     return super.toString();
   }
 
@@ -137,7 +147,6 @@ class User {
         contacts: json['Contacts'],
         skills: json['Skills'],
         activeJobs: json['Active_Jobs'].cast<String>(),
-        completedRequests: json['Completed_Request'].cast<String>(),
         completedJobs: json['Completed_Jobs'].cast<String>(),
         currentJobTaken: json['Current_Job_Taken'],
         userRating: json['User_Rating'],

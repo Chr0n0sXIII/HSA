@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:home_service_app/dataClasses/jobData.dart';
+import 'package:home_service_app/views/jobListingView.dart';
+import 'package:home_service_app/views/userProfileView.dart';
 import 'package:google_maps/google_maps.dart' as gm;
 import 'dart:html';
 import 'dart:ui' as ui;
@@ -11,7 +16,8 @@ class jobDetails_InfoWidget extends StatefulWidget {
   //JobData jdata = JobDataUtil.TestData_JobsData()[1];
   final User user;
   final JobData job;
-  jobDetails_InfoWidget({Key? key, required this.job, required this.user}) : super(key: key);
+  jobDetails_InfoWidget({Key? key, required this.job, required this.user})
+      : super(key: key);
   @override
   jobDetails_InfoWidget_State createState() => jobDetails_InfoWidget_State();
 }
@@ -42,14 +48,15 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      // ignore: unnecessary_new
-                      image: new DecorationImage(
-                        fit: BoxFit.cover, image: NetworkImage(widget.user.pfp)))),
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          // ignore: unnecessary_new
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(widget.user.pfp)))),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -164,12 +171,13 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                     children: [
                       Text(
                         widget.job.jobLocation,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Icon(
                         Icons.pin_drop,
                         color: Colors.red,
-                        )
+                      )
                     ],
                   ),
                 ),
@@ -224,13 +232,14 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromRGBO(11, 206, 131, 1)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                side: BorderSide(color: Colors.white))),
-                        fixedSize:
-                            MaterialStateProperty.all<Size>(Size.fromHeight(50)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    side: BorderSide(color: Colors.white))),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                            Size.fromHeight(50)),
                       ),
                     )
                   ]),
@@ -242,7 +251,27 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
     // TODO: implement build
   }
 
-  requestJob() {}
+  requestJob() {
+    if (widget.job.checkRequest(widget.user.user_ID) == 1) {
+      showToast('Request Already Made!');
+    }
+    widget.job.addRequest(widget.user.user_ID);
+    final docJob =
+        FirebaseFirestore.instance.collection('jobs').doc(widget.job.jobID);
+    docJob.update({'Job_Requests': widget.job.job_Requests});
+    showToast('Request For Job Sent!');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => jobListingView(
+                  user: widget.user,
+                )));
+  }
+
+  void showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, webPosition: 'center', timeInSecForIosWeb: 4);
+  }
 
   GoogleMap() {
     String htmlId = widget.job.jobID;
@@ -252,7 +281,10 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       final myLatlng = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final mapOptions = gm.MapOptions()
-        ..zoom = 13
+        ..zoom = 11
+        ..zoomControl = false
+        ..disableDoubleClickZoom = true
+        ..scrollwheel = false
         ..center = gm.LatLng(widget.job.Latitude, widget.job.Longitude);
 
       final elem = DivElement()
@@ -267,6 +299,7 @@ class jobDetails_InfoWidget_State extends State<jobDetails_InfoWidget> {
       gm.Marker(gm.MarkerOptions()
         ..position = myLatlng
         ..map = map
+        ..icon = 'https://firebasestorage.googleapis.com/v0/b/homeserviceapp-a9232.appspot.com/o/map-icon.png?alt=media&token=86092967-270e-487d-8e37-eea7a5741f49'
         ..title = widget.job.jobName);
 
       return elem;

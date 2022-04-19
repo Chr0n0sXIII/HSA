@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_service_app/dataClasses/jobData.dart';
 import 'package:home_service_app/views/widgets/navBar.dart';
 import 'package:home_service_app/views/widgets/footer_Widget.dart';
 import 'package:home_service_app/views/responsive.dart';
@@ -9,7 +10,8 @@ import '../dataClasses/User.dart';
 
 class Worker_Review_View extends StatefulWidget {
   final User user;
-  const Worker_Review_View({Key? key, required this.user}) : super(key: key);
+  final JobData job;
+  const Worker_Review_View({Key? key, required this.user, required this.job}) : super(key: key);
 
   @override
   State<Worker_Review_View> createState() => _Worker_Review_ViewState();
@@ -23,9 +25,11 @@ class _Worker_Review_ViewState extends State<Worker_Review_View> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopBar(user: widget.user,),
+            TopBar(
+              user: widget.user,
+            ),
             PageTitle("Review This Worker"),
-            Worker_Review_Fo(),
+            Worker_Review_Fo(user: widget.user, job: widget.job,),
             Footer(),
           ],
         ),

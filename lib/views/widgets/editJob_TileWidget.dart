@@ -17,9 +17,16 @@ class _editJobTileListingState extends State<editJobTileListing> {
   List<JobData> allJobs = [];
   bool recievedImages = false;
   int total_Jobs = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LoadData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getJobs();
     return Padding(
       padding: const EdgeInsets.fromLTRB(250, 8, 250, 8),
       child: Column(
@@ -55,8 +62,8 @@ class _editJobTileListingState extends State<editJobTileListing> {
       }
     }
     setState(() {
-      total_Jobs = allJobs.length;
       allJobs = jobs;
+      total_Jobs = allJobs.length;
       recievedImages = true;
     });
   }
@@ -66,7 +73,15 @@ class _editJobTileListingState extends State<editJobTileListing> {
       margin: EdgeInsets.all(25),
       width: 400,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+          borderRadius: BorderRadius.circular(15), color: Colors.white,
+          boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(7.0, 8.0))
+            ]
+          ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -101,6 +116,10 @@ class _editJobTileListingState extends State<editJobTileListing> {
             padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
             child: Text(
               job.jobDescription,
+              maxLines: 1,
+              style: TextStyle(
+                overflow: TextOverflow.ellipsis
+              ),
             ),
           ),
           Padding(
@@ -192,4 +211,8 @@ class _editJobTileListingState extends State<editJobTileListing> {
   editThisJob() {}
 
   removeThisJob() {}
+
+  Future<void> LoadData() async {
+    await getJobs();
+  }
 }
